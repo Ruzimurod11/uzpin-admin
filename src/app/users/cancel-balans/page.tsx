@@ -6,7 +6,7 @@ import CancelBalansBox from "@/components/CancelBalans";
 
 export const metadata: Metadata = {
   title: "Bekor qilinganlar",
-  description: "This is Next.js Form Layout page for NextAdmin Dashboard Kit",
+  description: "",
 };
 
 const CancelBalans = () => {

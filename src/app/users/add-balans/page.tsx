@@ -6,7 +6,7 @@ import AddBalansBox from "@/components/AddBalans";
 
 export const metadata: Metadata = {
   title: "Balansni To'ldirish",
-  description: "This is Next.js Form Layout page for NextAdmin Dashboard Kit",
+  description: "",
 };
 
 const AddBalans = () => {

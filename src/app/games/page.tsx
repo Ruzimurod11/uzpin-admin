@@ -5,8 +5,7 @@ import GamesBox from "@/components/GamesBox";
 
 export const metadata: Metadata = {
   title: "ADMIN || O'YINLAR",
-  description:
-    "This is Next.js Calender page for NextAdmin  Tailwind CSS Admin Dashboard Kit",
+  description: "",
 };
 
 const GamesPage = () => {

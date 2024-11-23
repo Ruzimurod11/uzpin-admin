@@ -5,7 +5,7 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: "Admin Boshqaruvi",
-  description: "This is Next.js Home page for NextAdmin Dashboard Kit",
+  description: "",
 };
 
 export default function Home() {

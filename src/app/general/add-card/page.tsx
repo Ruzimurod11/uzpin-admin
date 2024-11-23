@@ -4,8 +4,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "Karta Qo'shish",
-  description:
-    "This is Next.js Calender page for NextAdmin  Tailwind CSS Admin Dashboard Kit",
+  description: " ",
 };
 
 const GamesPage = () => {

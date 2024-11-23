@@ -5,8 +5,7 @@ import NotiveBox from "@/components/NotiveBox";
 
 export const metadata: Metadata = {
   title: "ADMIN || Bildirishnomalar",
-  description:
-    "This is Next.js Calender page for NextAdmin  Tailwind CSS Admin Dashboard Kit",
+  description: " ",
 };
 
 const GamesPage = () => {

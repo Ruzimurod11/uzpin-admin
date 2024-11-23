@@ -6,7 +6,7 @@ import ConfirmBalansBox from "@/components/ConfirmBalans";
 
 export const metadata: Metadata = {
   title: "Balansni tekshirish",
-  description: "This is Next.js Form Layout page for NextAdmin Dashboard Kit",
+  description: "",
 };
 
 const ConfirmBalans = () => {

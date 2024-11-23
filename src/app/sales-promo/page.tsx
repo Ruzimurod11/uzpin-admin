@@ -5,8 +5,7 @@ import SalesPromoBox from "@/components/SalesPromo";
 
 export const metadata: Metadata = {
   title: "Sotilgan Promokodlar",
-  description:
-    "This is Next.js Calender page for NextAdmin  Tailwind CSS Admin Dashboard Kit",
+  description: " ",
 };
 
 const GamesPage = () => {
