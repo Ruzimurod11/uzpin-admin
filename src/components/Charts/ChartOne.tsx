@@ -21,9 +21,9 @@ const ChartOne: React.FC = () => {
     chart: {
       fontFamily: "Satoshi, sans-serif",
       height: 310,
-      type: "line",
+      type: "area",
       toolbar: {
-        show: false,
+        show: true,
       },
     },
     fill: {
@@ -71,7 +71,7 @@ const ChartOne: React.FC = () => {
       },
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
     tooltip: {
       fixed: {
@@ -128,7 +128,7 @@ const ChartOne: React.FC = () => {
       <div className="mb-3.5 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Payments Overview
+            Sotuvlar
           </h4>
         </div>
         <CustomCalendar />
@@ -138,7 +138,7 @@ const ChartOne: React.FC = () => {
           <ReactApexChart
             options={options}
             series={series}
-            type="line"
+            type="area"
             height={310}
           />
         </div>

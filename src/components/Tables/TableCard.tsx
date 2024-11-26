@@ -6,7 +6,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 
 const productData = [
   {
-    image: "/images/game.png",
+    image: "/images/cardhumo.jpg",
     name: "HUMO",
     number: 9860170112522017,
     name2: "Sherzodjon Akramov",

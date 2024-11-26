@@ -23,7 +23,7 @@ const TableUser = () => {
         </h4>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
+      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center">
           <p className="font-medium">E-Pochta</p>
         </div>
@@ -42,14 +42,14 @@ const TableUser = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Joriy hisob</p>
         </div>
-        {/* <div className="col-span-1 flex items-center">
+        <div className="col-span-1 flex items-center">
           <p className="font-medium"></p>
-        </div> */}
+        </div>
       </div>
 
       {productData.map((product, key) => (
         <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
           key={key}
         >
           <div className="col-span-2 flex items-center">
@@ -94,7 +94,7 @@ const TableUser = () => {
               </p>
             </div>
           </div>
-          {/* <div className="col-span-1 flex cursor-pointer items-center gap-2">
+          <div className="col-span-1 flex cursor-pointer items-center gap-2">
             <div className="rounded bg-blue-600 px-3 py-1 text-white">
               <FaEye />
             </div>
@@ -104,7 +104,7 @@ const TableUser = () => {
             <div className="rounded bg-[red] px-3 py-1 text-white">
               <MdOutlineDeleteOutline />
             </div>
-          </div> */}
+          </div>
         </div>
       ))}
     </div>

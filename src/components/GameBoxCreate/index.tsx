@@ -11,9 +11,11 @@ const GamesBoxCreate = () => {
             Yangi O&apos;yin Malumotlari
           </h3>
         </div>
-        <div className="flex flex-col gap-5.5 p-6.5">
-          <SelectGroupOne />
-          <div>
+        <div className="grid grid-cols-6 gap-5.5 p-6.5">
+          <div className="col-span-6">
+            <SelectGroupOne />
+          </div>
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Asosiy rasm
             </label>
@@ -22,7 +24,7 @@ const GamesBoxCreate = () => {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             />
           </div>
-          <div>
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Banner rasmi
             </label>
@@ -32,7 +34,7 @@ const GamesBoxCreate = () => {
             />
           </div>
 
-          <div>
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Video
             </label>
@@ -41,7 +43,7 @@ const GamesBoxCreate = () => {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             />
           </div>
-          <div>
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Video Use Code
             </label>
@@ -50,98 +52,100 @@ const GamesBoxCreate = () => {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default Input
+              Video Izoh [UZ]
             </label>
             <input
               type="text"
-              placeholder="Default Input"
+              placeholder="Video Izoh"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default Input
+              Video Izoh [RU]
             </label>
             <input
               type="text"
-              placeholder="Default Input"
+              placeholder="Video Izoh"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default Input
+              Video Izoh [EN]
             </label>
             <input
               type="text"
-              placeholder="Default Input"
+              placeholder="Video Izoh"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default Input
+              O&apos;yin Nomi [UZ]
             </label>
             <input
               type="text"
-              placeholder="Default Input"
+              placeholder="O'yin Nomi"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default Input
+              O&apos;yin Nomi [RU]
             </label>
             <input
               type="text"
-              placeholder="Default Input"
+              placeholder="O'yin Nomi"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default Input
+              O&apos;yin Nomi [EN]
             </label>
             <input
               type="text"
-              placeholder="Default Input"
+              placeholder="O'yin Nomi"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             />
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default textarea
+              Izoh [UZ]
             </label>
             <textarea
               rows={6}
-              placeholder="Default textarea"
+              placeholder="Izoh"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             ></textarea>
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default textarea
+              Izoh [RU]
             </label>
             <textarea
               rows={6}
-              placeholder="Default textarea"
+              placeholder="Izoh"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             ></textarea>
           </div>
-          <div>
+          <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Default textarea
+              Izoh [EN]
             </label>
             <textarea
               rows={6}
-              placeholder="Default textarea"
+              placeholder="Izoh"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             ></textarea>
           </div>
-          <SwitcherThree />
-          <div className="flex justify-end">
+          <div className="col-span-6">
+            <SwitcherThree />
+          </div>
+          <div className="col-span-6 flex justify-end">
             <button className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white">
               SAQLASH
             </button>

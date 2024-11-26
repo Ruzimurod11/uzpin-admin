@@ -11,7 +11,7 @@ import { RiHome6Line, RiMenuFold2Line } from "react-icons/ri";
 import { IoStatsChart } from "react-icons/io5";
 import { CgGames } from "react-icons/cg";
 import { CiCircleCheck } from "react-icons/ci";
-import { FaRegCircleUser, FaUsers } from "react-icons/fa6";
+import { FaRegCircleUser, FaRobot, FaUsers } from "react-icons/fa6";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -69,6 +69,19 @@ const menuGroups = [
           // { label: "Afzalliklar", route: "/general/advantage" },
           // { label: "Ijtimoiy Tarmoqlar", route: "/general/social-network" },
           // { label: "Sozlamalar", route: "/general/settings" },
+        ],
+      },
+      {
+        icon: <FaRobot className="text-2xl" />,
+        label: "Bot Promokod",
+        route: "#",
+        children: [
+          { label: "Umumiy qo'lanma", route: "/telegram-bot/general" },
+          { label: "Qo'llanma Video", route: "/telegram-bot/videos" },
+          { label: "Aloqa", route: "/telegram-bot/contack" },
+          { label: "O'yinlar", route: "/telegram-bot/games" },
+          { label: "Promokodlar", route: "/telegram-bot/promo-codes" },
+          { label: "Sotilgan Promokodlar", route: "/telegram-bot/sales-promo" },
         ],
       },
     ],
