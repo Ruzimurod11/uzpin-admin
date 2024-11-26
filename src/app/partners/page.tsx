@@ -1,22 +1,21 @@
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableCard from "@/components/Tables/TableCard";
+import TableUser from "@/components/Tables/TableUser";
 
 export const metadata: Metadata = {
-  title: "Karta Qo'shish",
-  description: " ",
+  title: "Hamkorlar",
+  description: "",
 };
-
-const GamesPage = () => {
+const PartnorPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Karta Qo'shish" />
-        <TableCard />
+        <Breadcrumb pageName="Hamkorlar" />
+        <TableUser />
       </div>
     </DefaultLayout>
   );
 };
 
-export default GamesPage;
+export default PartnorPage;

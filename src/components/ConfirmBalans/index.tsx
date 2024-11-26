@@ -1,7 +1,9 @@
+import TableBalans from "../Tables/TableBalans";
+
 const ConfirmBalansBox = () => {
   return (
     <>
-      <div>Pul tashaganlarni shu yerdan ko`riladi</div>
+      <TableBalans />
     </>
   );
 };

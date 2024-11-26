@@ -1,18 +1,31 @@
+"use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
-import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import ConfirmBalansBox from "@/components/ConfirmBalans";
-
-export const metadata: Metadata = {
-  title: "Balansni tekshirish",
-  description: "",
-};
+import { useState } from "react";
 
 const ConfirmBalans = () => {
+  const [active, setActive] = useState(true);
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Tasdiqlangan Balans" />
+      <div className="mb-4 flex w-full gap-4 rounded bg-slate-300 px-4 py-2">
+        <button
+          className={` rounded border border-slate-400 px-4 py-2  ${active && "bg-yellow-700 text-white"}`}
+          onClick={() => setActive(true)}
+        >
+          Tasqidlangan Balans
+        </button>
+        <button
+          className={` rounded border border-slate-400 px-4 py-2  ${!active && "bg-yellow-700 text-white"}`}
+          onClick={() => setActive(false)}
+        >
+          Bekor Qilingan Balans
+        </button>
+      </div>
+      <Breadcrumb
+        pageName={active ? "Tasdiqlangan Balans" : "Bekor Qilingan Balans"}
+      />
       <ConfirmBalansBox />
     </DefaultLayout>
   );

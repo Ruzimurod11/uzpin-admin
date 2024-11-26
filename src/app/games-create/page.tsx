@@ -1,22 +1,22 @@
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableCard from "@/components/Tables/TableCard";
+import GamesBoxCreate from "@/components/GameBoxCreate";
 
 export const metadata: Metadata = {
-  title: "Karta Qo'shish",
-  description: " ",
+  title: "O'YINLAR QO'SHISH",
+  description: "",
 };
 
-const GamesPage = () => {
+const GamesCreatePage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Karta Qo'shish" />
-        <TableCard />
+        <Breadcrumb pageName="O'yin Yaratish" />
+        <GamesBoxCreate />
       </div>
     </DefaultLayout>
   );
 };
 
-export default GamesPage;
+export default GamesCreatePage;

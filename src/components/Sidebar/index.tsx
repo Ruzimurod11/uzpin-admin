@@ -11,7 +11,7 @@ import { RiHome6Line, RiMenuFold2Line } from "react-icons/ri";
 import { IoStatsChart } from "react-icons/io5";
 import { CgGames } from "react-icons/cg";
 import { CiCircleCheck } from "react-icons/ci";
-import { FaRegCircleUser } from "react-icons/fa6";
+import { FaRegCircleUser, FaUsers } from "react-icons/fa6";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -44,6 +44,11 @@ const menuGroups = [
         route: "/sales-promo",
       },
       {
+        icon: <FaUsers className="text-2xl" />,
+        label: "Hamkorlar",
+        route: "/partners",
+      },
+      {
         icon: <FaRegCircleUser className="text-2xl" />,
         label: "Foydalanuvchilar",
         route: "#",
@@ -51,7 +56,7 @@ const menuGroups = [
           { label: "Foydalanuvchilar", route: "/users/user" },
           { label: "Balansni To'ldirish", route: "/users/add-balans" },
           { label: "Tasdiqlangan Balans", route: "/users/confirm-balans" },
-          { label: "Bekor qilinganlar", route: "/users/cancel-balans" },
+          // { label: "Bekor qilinganlar", route: "/users/cancel-balans" },
         ],
       },
       {
@@ -60,10 +65,10 @@ const menuGroups = [
         route: "#",
         children: [
           { label: "Karta Qo'shish", route: "/general/add-card" },
-          { label: "Yordam Sahifa", route: "/general/help" },
-          { label: "Afzalliklar", route: "/general/advantage" },
-          { label: "Ijtimoiy Tarmoqlar", route: "/general/social-network" },
-          { label: "Sozlamalar", route: "/general/settings" },
+          // { label: "Yordam Sahifa", route: "/general/help" },
+          // { label: "Afzalliklar", route: "/general/advantage" },
+          // { label: "Ijtimoiy Tarmoqlar", route: "/general/social-network" },
+          // { label: "Sozlamalar", route: "/general/settings" },
         ],
       },
     ],
