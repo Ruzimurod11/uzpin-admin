@@ -1,20 +1,20 @@
 import Link from "next/link";
-import TableGame from "../Tables/TableGame";
+import TableAllPromo from "../Tables/TableAllPromo";
 
-const GamesBox = () => {
+const PromoBoxDetails = () => {
   return (
     <>
-      <TableGame />
+      <TableAllPromo />
       <div className="flex justify-end">
-        <Link
-          href="games-create"
+        {/* <Link
+          href="promo-create"
           className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
         >
           +
-        </Link>
+        </Link> */}
       </div>
     </>
   );
 };
 
-export default GamesBox;
+export default PromoBoxDetails;

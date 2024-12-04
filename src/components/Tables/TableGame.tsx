@@ -3,6 +3,7 @@ import { Product } from "../../../types/product";
 import { FaEye } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import Link from "next/link";
 
 const productData = [
   {
@@ -15,7 +16,7 @@ const productData = [
   },
 ];
 
-const TableTwo = () => {
+const TableGame = () => {
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-4 py-6 md:px-6 xl:px-9">
@@ -28,7 +29,7 @@ const TableTwo = () => {
         <div className="col-span-2 flex items-center">
           <p className="font-medium">O&apos;yin nomi</p>
         </div>
-        <div className="col-span-2 hidden items-center sm:flex">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Asosiy Rams</p>
         </div>
         <div className="col-span-2 flex items-center">
@@ -47,14 +48,14 @@ const TableTwo = () => {
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
           key={key}
         >
-          <div className="col-span-2 flex items-center">
+          <Link href={`games/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {key + 1}. {product.name}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 hidden items-center sm:flex">
+          </Link>
+          <div className="col-span-2 flex items-center">
             <div className="h-12.5 w-15 rounded-md">
               <Image src={product.image} width={60} height={50} alt="Product" />
             </div>
@@ -69,9 +70,11 @@ const TableTwo = () => {
             <div className="rounded bg-blue-600 px-3 py-1 text-white">
               <FaEye />
             </div>
-            <div className="rounded bg-[orange] px-3 py-1 text-white">
-              <FiEdit2 />
-            </div>
+            <Link href="games-create">
+              <div className="rounded bg-[orange] px-3 py-1 text-white">
+                <FiEdit2 />
+              </div>
+            </Link>
             <div className="rounded bg-[red] px-3 py-1 text-white">
               <MdOutlineDeleteOutline />
             </div>
@@ -82,4 +85,4 @@ const TableTwo = () => {
   );
 };
 
-export default TableTwo;
+export default TableGame;

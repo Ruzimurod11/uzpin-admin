@@ -26,7 +26,7 @@ const TableBalans = () => {
         <div className="col-span-2 flex items-center">
           <p className="font-medium">E-Pochta</p>
         </div>
-        <div className="col-span-1 hidden items-center sm:flex">
+        <div className="col-span-1flex items-center">
           <p className="font-medium">Pul miqdori</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -56,7 +56,7 @@ const TableBalans = () => {
               </p>
             </div>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.price}

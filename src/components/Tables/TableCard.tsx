@@ -28,7 +28,7 @@ const TableCard = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Karta rasmi</p>
         </div>
-        <div className="col-span-1 hidden items-center sm:flex">
+        <div className="col-span-1flex items-center">
           <p className="font-medium">Karta nomi</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -68,7 +68,7 @@ const TableCard = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.name}
@@ -82,21 +82,21 @@ const TableCard = () => {
               </p>
             </div>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.name2}
               </p>
             </div>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.type}
               </p>
             </div>
           </div>
-          <div className="col-span-1 hidden items-center sm:flex">
+          <div className="col-span-1flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.active}

@@ -1,13 +1,14 @@
+import React from "react";
 import Link from "next/link";
-import TableGame from "../Tables/TableGame";
+import TableGameDetails from "../Tables/TableGameDetails";
 
-const GamesBox = () => {
+const GameBoxDetails = () => {
   return (
     <>
-      <TableGame />
+      <TableGameDetails />
       <div className="flex justify-end">
         <Link
-          href="games-create"
+          href="promo-create"
           className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
         >
           +
@@ -17,4 +18,4 @@ const GamesBox = () => {
   );
 };
 
-export default GamesBox;
+export default GameBoxDetails;
