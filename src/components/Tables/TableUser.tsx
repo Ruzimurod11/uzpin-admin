@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { BiTransfer } from "react-icons/bi";
+import { CiDollar } from "react-icons/ci";
 import { FaEye } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -96,13 +98,13 @@ const TableUser = () => {
           </div>
           <div className="col-span-1 flex cursor-pointer items-center gap-2">
             <div className="rounded bg-blue-600 px-3 py-1 text-white">
-              <FaEye />
+              <BiTransfer />
             </div>
             <div className="rounded bg-[orange] px-3 py-1 text-white">
               <FiEdit2 />
             </div>
-            <div className="rounded bg-[red] px-3 py-1 text-white">
-              <MdOutlineDeleteOutline />
+            <div className="rounded bg-[green] px-3 py-1 text-white">
+              <CiDollar />
             </div>
           </div>
         </div>

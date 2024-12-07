@@ -1,7 +1,12 @@
 import React from "react";
+import TableSalesPromoBox from "../Tables/TableSalesPromoBox";
 
 const SalesPromoBox = () => {
-  return <div>SalesPromoBox</div>;
+  return (
+    <>
+      <TableSalesPromoBox />
+    </>
+  );
 };
 
 export default SalesPromoBox;
