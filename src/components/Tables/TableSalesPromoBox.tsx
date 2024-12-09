@@ -69,13 +69,13 @@ const TableSalesPromoBox = () => {
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5"
           key={key}
         >
-          <Link href={`games/${key}`} className="col-span-1 flex items-center">
+          <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {key + 1}. {product.name}
               </p>
             </div>
-          </Link>
+          </div>
           <div className="col-span-2 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {product.userName}

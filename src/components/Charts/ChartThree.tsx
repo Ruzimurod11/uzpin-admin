@@ -1,7 +1,6 @@
 import { ApexOptions } from "apexcharts";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
-import DefaultSelectOption from "@/components/SelectOption/DefaultSelectOption";
 
 const ChartThree: React.FC = () => {
   const series = [65, 34, 12, 56];

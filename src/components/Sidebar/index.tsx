@@ -3,7 +3,6 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -43,45 +42,30 @@ const menuGroups = [
         label: "Sotilgan Promokodlar",
         route: "/sales-promo",
       },
-      {
-        icon: <FaUsers className="text-2xl" />,
-        label: "Hamkorlar",
-        route: "/partners",
-      },
+
       {
         icon: <FaRegCircleUser className="text-2xl" />,
         label: "Foydalanuvchilar",
         route: "#",
         children: [
           { label: "Foydalanuvchilar", route: "/users/user" },
-          { label: "Balansni To'ldirish", route: "/users/add-balans" },
+          // { label: "Balansni To'ldirish", route: "/users/add-balans" },
           { label: "Tasdiqlangan Balans", route: "/users/confirm-balans" },
-          // { label: "Bekor qilinganlar", route: "/users/cancel-balans" },
         ],
       },
       {
         icon: <RiMenuFold2Line className="text-2xl" />,
         label: "Umumiy",
         route: "#",
-        children: [
-          { label: "Karta Qo'shish", route: "/general/add-card" },
-          // { label: "Yordam Sahifa", route: "/general/help" },
-          // { label: "Afzalliklar", route: "/general/advantage" },
-          // { label: "Ijtimoiy Tarmoqlar", route: "/general/social-network" },
-          // { label: "Sozlamalar", route: "/general/settings" },
-        ],
+        children: [{ label: "Karta Qo'shish", route: "/general/add-card" }],
       },
       {
-        icon: <FaRobot className="text-2xl" />,
-        label: "Bot Promokod",
+        icon: <FaUsers className="text-2xl" />,
+        label: "Hamkorlar",
         route: "#",
         children: [
-          { label: "Umumiy qo'lanma", route: "/telegram-bot/general" },
-          { label: "Qo'llanma Video", route: "/telegram-bot/videos" },
-          { label: "Aloqa", route: "/telegram-bot/contack" },
-          { label: "O'yinlar", route: "/telegram-bot/games" },
-          { label: "Promokodlar", route: "/telegram-bot/promo-codes" },
-          { label: "Sotilgan Promokodlar", route: "/telegram-bot/sales-promo" },
+          { label: "Hamkor Nomi", route: "/partners/partner" },
+          { label: "Ummumiy Ma'lumotlar", route: "/partners/tg-general" },
         ],
       },
     ],

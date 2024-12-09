@@ -102,22 +102,20 @@ const TableGameDetails = () => {
       ))}
 
       {modal && (
-        <div className="z-5000 absolute left-[50%] top-[50%] h-max w-[500px] translate-x-[-50%] translate-y-[-100%] rounded-lg bg-white px-4 py-4 shadow-2xl dark:bg-gray-dark dark:shadow-card">
-          <div className="col-span-6">
-            <div className="flex justify-between">
-              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Promokod qo&apos;shish
-              </label>
-              <button className="mb-3 text-sm" onClick={() => setModal(false)}>
-                ❌
-              </button>
-            </div>
-            <textarea className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white" />
-            <div className="flex justify-end">
-              <button className="mt-4 rounded bg-green-900 px-4 py-2 text-white ">
-                Qo&apos;shish
-              </button>
-            </div>
+        <div className="z-5000 absolute left-[50%] top-[50%] flex h-[500px] w-[800px] translate-x-[-50%] translate-y-[-50%] flex-col rounded-lg bg-white px-4 py-4 shadow-2xl dark:bg-gray-dark dark:shadow-card">
+          <div className="mb-3 flex items-center justify-between">
+            <label className="block text-body-sm font-medium text-dark dark:text-white">
+              Promokod qo&apos;shish
+            </label>
+            <button className="text-sm" onClick={() => setModal(false)}>
+              ❌
+            </button>
+          </div>
+          <textarea className="w-full flex-grow resize-none rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white" />
+          <div className="mt-4 flex justify-end">
+            <button className="rounded bg-green-900 px-4 py-2 text-white">
+              Qo&apos;shish
+            </button>
           </div>
         </div>
       )}

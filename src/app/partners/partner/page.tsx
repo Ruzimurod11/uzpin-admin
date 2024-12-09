@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableUser from "@/components/Tables/TableUser";
 import Link from "next/link";
+import TablePartner from "@/components/Tables/TablePartner";
 
 export const metadata: Metadata = {
   title: "Hamkorlar",
@@ -13,10 +13,10 @@ const PartnorPage = () => {
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
         <Breadcrumb pageName="Hamkorlar" />
-        <TableUser />
+        <TablePartner />
         <div className="flex w-full justify-end">
           <Link
-            href="games-create"
+            href="/partnor-create"
             className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
           >
             +
