@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BiTransfer } from "react-icons/bi";
 import { CiDollar } from "react-icons/ci";
-import { FaEye } from "react-icons/fa6";
+import { FaEye, FaMoneyBillTransfer } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
@@ -97,15 +98,24 @@ const TableUser = () => {
             </div>
           </div>
           <div className="col-span-1 flex cursor-pointer items-center gap-2">
-            <div className="rounded bg-blue-600 px-3 py-1 text-white">
-              <BiTransfer />
-            </div>
-            <div className="rounded bg-[orange] px-3 py-1 text-white">
+            <Link
+              href={"user-edit"}
+              className="rounded bg-[orange] px-3 py-1 text-white"
+            >
               <FiEdit2 />
-            </div>
-            <div className="rounded bg-[green] px-3 py-1 text-white">
+            </Link>
+            <Link
+              href={"money-received"}
+              className="rounded bg-[darkblue] px-3 py-1 text-white"
+            >
+              <FaMoneyBillTransfer />
+            </Link>
+            <Link
+              href={"add-balans"}
+              className="rounded bg-[green] px-3 py-1 text-white"
+            >
               <CiDollar />
-            </div>
+            </Link>
           </div>
         </div>
       ))}
