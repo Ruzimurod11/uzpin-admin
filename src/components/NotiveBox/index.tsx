@@ -1,7 +1,9 @@
+import TableNavigation from "../Tables/TableNavigaton";
+
 const NotiveBox = () => {
   return (
     <>
-      <div className="">Faqat yaxshi xabarlar bolsin... 😎</div>
+      <TableNavigation />
     </>
   );
 };
