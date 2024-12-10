@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BiTransfer } from "react-icons/bi";
 import { CiDollar } from "react-icons/ci";
 import { FaEye } from "react-icons/fa6";
@@ -103,12 +104,12 @@ const TablePartner = () => {
           </div>
 
           <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
-            {/* <div className="rounded bg-blue-600 px-3 py-1 text-white">
-              <BiTransfer />
-            </div>
-            <div className="rounded bg-[orange] px-3 py-1 text-white">
+            <Link
+              href={"/partnor-create"}
+              className="rounded bg-[orange] px-3 py-1 text-white"
+            >
               <FiEdit2 />
-            </div> */}
+            </Link>
             <div className="rounded bg-[red] px-3 py-1 text-white">
               <MdOutlineDeleteOutline />
             </div>

@@ -12,13 +12,13 @@ const User = () => {
           className={` rounded border border-slate-400 px-4 py-2  ${active && "bg-primary text-white"}`}
           onClick={() => setActive(true)}
         >
-          SUM
+          Oddiy Mijoz
         </button>
         <button
           className={` rounded border border-slate-400 px-4 py-2  ${!active && "bg-primary text-white"}`}
           onClick={() => setActive(false)}
         >
-          DOLLOR
+          Sotuvchi
         </button>
       </div>
 

@@ -64,7 +64,7 @@ const menuGroups = [
         label: "Hamkorlar",
         route: "#",
         children: [
-          { label: "Hamkor Nomi", route: "/partners/partner" },
+          { label: "Hamkorlar", route: "/partners/partner" },
           { label: "Ummumiy Ma'lumotlar", route: "/partners/tg-general" },
         ],
       },

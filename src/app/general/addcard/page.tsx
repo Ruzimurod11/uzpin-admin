@@ -2,6 +2,7 @@
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import SwitcherThree from "@/components/SelectOption/SwitcherThree";
+import DefaultSelectOption from "@/components/SelectOption/DefaultSelectOption";
 
 // export const metadata: Metadata = {
 //   title: "O'YINLAR QO'SHISH",
@@ -59,11 +60,12 @@ const AddCardPage = () => {
             </div>
             <div className="col-span-3">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Karta turi
+                Valyuta turi
               </label>
-              <input
-                type="text"
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
+
+              <DefaultSelectOption
+                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[12px]"
+                options={["SUMM", "RUBL", "DOLLOR"]}
               />
             </div>
 

@@ -35,7 +35,7 @@ const MoneyRecived = () => {
           <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
             <MdOutlineAttachMoney />
           </div>
-          <p className="text-xl dark:text-slate-200">
+          <p className="dark:text-slate-200">
             Hozirgi hisob so&apos;mda: <b>123 313</b>
           </p>
         </div>
@@ -43,8 +43,16 @@ const MoneyRecived = () => {
           <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
             <MdOutlineAttachMoney />
           </div>
-          <p className="text-xl dark:text-slate-200">
+          <p className="dark:text-slate-200">
             Hozirgi hisob dollorda: <b>1.13</b>
+          </p>
+        </div>
+        <div className="flex w-full items-center gap-2 rounded bg-white px-3 py-4 dark:bg-slate-900">
+          <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
+            <MdOutlineAttachMoney />
+          </div>
+          <p className="dark:text-slate-200">
+            Hozirgi hisob rublda: <b>1.13</b>
           </p>
         </div>
       </div>

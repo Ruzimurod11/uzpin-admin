@@ -2,6 +2,7 @@
 import { useState } from "react";
 import DefaultSelectOption from "../SelectOption/DefaultSelectOption";
 import TableInfos from "../Tables/TableInfos";
+import CustomCalendar2 from "../Charts/CustomCalendar2";
 
 const CalendarBox = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
@@ -14,8 +15,8 @@ const CalendarBox = () => {
           <p className="text-2xl">Ma&apos;lumotlar</p>
           <div className="flex items-center gap-2">
             Saralash:
-            <DefaultSelectOption options={["1 kunlik", "1 haftalik"]} />
-            {["All", "ID", "Vaucher"].map((filter) => (
+            <CustomCalendar2 />
+            {["ID", "Vaucher"].map((filter) => (
               <button
                 key={filter}
                 className={`text-nowrap rounded-[5px] px-6 py-1 ${
@@ -32,7 +33,7 @@ const CalendarBox = () => {
         </div>
 
         <div className="mb-2 mt-4 flex gap-2 overflow-x-auto">
-          {["Bot Nomi 1", "Bot Nomi 2", "Bot Nomi 3", "Bot Nomi 4"].map(
+          {["UzpinBot", "SardorBor", "TonyBot", "AnotherBot"].map(
             (botName, index) => (
               <button
                 key={index}
@@ -48,7 +49,8 @@ const CalendarBox = () => {
             ),
           )}
         </div>
-        <TableInfos />
+        <TableInfos name={"PUBG"} />
+        <TableInfos name={"FREEFIRE"} />
       </div>
     </>
   );

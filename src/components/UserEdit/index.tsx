@@ -33,7 +33,7 @@ const UserEdit = () => {
               value="jamshidqayimov0399@jmail.com"
             />
           </div>
-          <div className="col-span-3">
+          {/* <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               User valyuta turi
             </label>
@@ -41,7 +41,7 @@ const UserEdit = () => {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px]"
               options={["SUMM", ["DOLLOR"]]}
             />
-          </div>
+          </div> */}
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Foydalanuvchi turi
