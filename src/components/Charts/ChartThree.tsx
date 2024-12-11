@@ -3,14 +3,17 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 const ChartThree: React.FC = () => {
-  const [state, setState] = React.useState({
-    series: [65, 34, 12, 56], // eski qiymatlar
+  const [state, setState] = React.useState<{
+    series: number[];
+    options: ApexOptions;
+  }>({
+    series: [65, 34, 12, 56], // the original series values
     options: {
       chart: {
         width: 380,
-        type: "pie", // grafik turini "pie" qilib o'zgartirdik
+        type: "pie", // changed to 'pie' chart type
       },
-      labels: ["60UC", "120UC", "180UC", "1200UC"], // nomlar o'zgarmadi
+      labels: ["60UC", "120UC", "180UC", "1200UC"], // unchanged labels
       responsive: [
         {
           breakpoint: 480,
@@ -19,7 +22,7 @@ const ChartThree: React.FC = () => {
               width: 200,
             },
             legend: {
-              position: "bottom", // legendani pastga joylashtirish
+              position: "bottom", // place legend at the bottom
             },
           },
         },
