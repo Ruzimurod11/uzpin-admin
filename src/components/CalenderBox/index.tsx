@@ -33,7 +33,7 @@ const CalendarBox = () => {
         </div>
 
         <div className="mb-2 mt-4 flex gap-2 overflow-x-auto">
-          {["UzpinBot", "SardorBor", "TonyBot", "AnotherBot"].map(
+          {["Uzpin Sayt", "UzpinBot", "SardorBot", "TonyBot", "AnotherBot"].map(
             (botName, index) => (
               <button
                 key={index}

@@ -7,13 +7,13 @@ const ChartThree: React.FC = () => {
     series: number[];
     options: ApexOptions;
   }>({
-    series: [65, 34, 12, 56], // the original series values
+    series: [65, 34, 12, 56],
     options: {
       chart: {
         width: 380,
-        type: "pie", // changed to 'pie' chart type
+        type: "pie",
       },
-      labels: ["60UC", "120UC", "180UC", "1200UC"], // unchanged labels
+      labels: ["60UC", "120UC", "180UC", "1200UC"],
       responsive: [
         {
           breakpoint: 480,
@@ -22,7 +22,7 @@ const ChartThree: React.FC = () => {
               width: 200,
             },
             legend: {
-              position: "bottom", // place legend at the bottom
+              position: "bottom",
             },
           },
         },
