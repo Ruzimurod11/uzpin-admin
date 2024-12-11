@@ -60,7 +60,7 @@ const Header = (props: {
               src={"/images/logo/logo-icon.svg"}
               alt="Logo"
             /> */}
-            UPGROW
+            UZPIN
           </Link>
         </div>
 

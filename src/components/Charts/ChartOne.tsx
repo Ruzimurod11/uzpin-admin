@@ -7,7 +7,7 @@ const ChartOne: React.FC = () => {
   const series = [
     {
       name: "Received Amount",
-      data: [0, 20, 35, 45, 35, 55, 65, 50, 65, 75, 60, 75],
+      data: [0, 20, 35, 45, 35, 55, 65, 50, 65, 75, 60, 75, 60, 40, 45],
     },
   ];
 
@@ -94,18 +94,21 @@ const ChartOne: React.FC = () => {
     xaxis: {
       type: "category",
       categories: [
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
+        "1",
+        "3",
+        "5",
+        "7",
+        "9",
+        "11",
+        "13",
+        "15",
+        "17",
+        "19",
+        "21",
+        "23",
+        "25",
+        "27",
+        "29",
       ],
       axisBorder: {
         show: false,
@@ -128,7 +131,7 @@ const ChartOne: React.FC = () => {
       <div className="mb-3.5 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Sotuvlar
+            Oxirgi Bir Oyda Sotilgan Kodlar
           </h4>
         </div>
         <CustomCalendar />
@@ -145,9 +148,9 @@ const ChartOne: React.FC = () => {
       </div>
 
       <div className="flex flex-col gap-2 text-center xsm:flex-row xsm:gap-0">
-        <div className="border-stroke dark:border-dark-3 xsm:w-full xsm:border-r">
-          <p className="font-medium">Received Amount</p>
-          <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
+        <div className="flex items-center justify-center gap-4 border-stroke dark:border-dark-3 xsm:w-full xsm:border-r">
+          <p className="font-medium">30 Kunlik Sotuv</p>
+          <h4 className="text-xl font-bold text-dark dark:text-white">
             $45,070.00
           </h4>
         </div>

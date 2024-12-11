@@ -11,6 +11,7 @@ import { IoStatsChart } from "react-icons/io5";
 import { CgGames } from "react-icons/cg";
 import { CiCircleCheck } from "react-icons/ci";
 import { FaRegCircleUser, FaRobot, FaUsers } from "react-icons/fa6";
+import Image from "next/image";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -88,10 +89,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       >
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5 xl:py-10">
           <Link href="/">
-            {/* <Image
+            <Image
               width={176}
               height={32}
-              src={"/images/logo/logo-dark.svg"}
+              src={"/images/logo/logo.svg"}
               alt="Logo"
               priority
               className="dark:hidden"
@@ -105,8 +106,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               priority
               className="hidden dark:block"
               style={{ width: "auto", height: "auto" }}
-            /> */}
-            UPGROW
+            />
           </Link>
 
           <button
