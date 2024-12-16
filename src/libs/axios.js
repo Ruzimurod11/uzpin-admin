@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 10000,
@@ -19,9 +20,10 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    const router = useRouter();
     if (error.response && error.response.status === 401) {
       console.warn("User is not authenticated. Redirecting to login...");
-      window.location.href = "/login";
+      router.push("/login");
     }
     return Promise.reject(error);
   },
