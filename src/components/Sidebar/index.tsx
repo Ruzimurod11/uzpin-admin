@@ -51,7 +51,8 @@ const menuGroups = [
         children: [
           { label: "Foydalanuvchilar", route: "/users/user" },
           // { label: "Balansni To'ldirish", route: "/users/add-balans" },
-          { label: "Tasdiqlangan Balans", route: "/users/confirm-balans" },
+          // { label: "Tasdiqlangan Balans", route: "/users/confirm-balans" },
+          { label: "Tranzaksiyalar", route: "/users/confirm-balans" },
         ],
       },
       {

@@ -13,16 +13,16 @@ const PartnorPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Ummumiy Ma'lumotlar" />
+        {/* <Breadcrumb pageName="Ummumiy Ma'lumotlar" /> */}
         <TableTgGeneral />
-        <div className="flex w-full justify-end">
+        {/* <div className="flex w-full justify-end">
           <Link
             href="/general-info-create"
             className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
           >
             +
           </Link>
-        </div>
+        </div> */}
       </div>
     </DefaultLayout>
   );
