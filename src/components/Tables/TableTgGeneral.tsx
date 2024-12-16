@@ -17,6 +17,25 @@ const TableTgGeneral = () => {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-4 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center">
+          {/* <p className="font-medium">Nomi</p> */}
+        </div>
+        <div className="col-span-1 flex items-center">
+          {/* <p className="font-medium">Video</p> */}
+        </div>
+        {/* <div className="col-span-4 flex items-center">
+          <p className="font-medium">Izoh</p>
+        </div> */}
+        <div className="col-span-1 flex items-center justify-end">
+          <Link
+            href="/general-info-create"
+            className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
+          >
+            +
+          </Link>
+          {/* <p className="font-medium">ejdbhe</p> */}
+        </div>
+
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Nomi</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -25,7 +44,7 @@ const TableTgGeneral = () => {
         {/* <div className="col-span-4 flex items-center">
           <p className="font-medium">Izoh</p>
         </div> */}
-        <div className="col-span-1 flex items-center">
+        <div className="col-span-1 flex items-center justify-end">
           <p className="font-medium"></p>
         </div>
       </div>

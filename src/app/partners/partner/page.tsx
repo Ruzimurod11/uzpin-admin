@@ -14,14 +14,14 @@ const PartnorPage = () => {
       <div className="mx-auto max-w-7xl">
         {/* <Breadcrumb pageName="Hamkorlar" /> */}
         <TablePartner />
-        <div className="flex w-full justify-end">
+        {/* <div className="flex w-full justify-end">
           <Link
             href="/partnor-create"
             className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
           >
             +
           </Link>
-        </div>
+        </div> */}
       </div>
     </DefaultLayout>
   );
