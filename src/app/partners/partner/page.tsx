@@ -12,7 +12,7 @@ const PartnorPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Hamkorlar" />
+        {/* <Breadcrumb pageName="Hamkorlar" /> */}
         <TablePartner />
         <div className="flex w-full justify-end">
           <Link
