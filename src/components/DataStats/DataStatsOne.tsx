@@ -1,7 +1,9 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { dataStats } from "../../../types/dataStats";
+import axiosInstance from "@/libs/axios";
 
-const dataStatsList = [
+const dataStatsListTemplate = [
   {
     icon: (
       <svg
@@ -37,7 +39,7 @@ const dataStatsList = [
     ),
     color: "#3FD97F",
     title: "Barcha foydalanuvchilar",
-    value: "123456",
+    value: "01",
   },
   {
     icon: (
@@ -115,6 +117,35 @@ const dataStatsList = [
 ];
 
 const DataStatsOne: React.FC<dataStats> = () => {
+  const [dataStatsList, setDataStatsList] = useState(dataStatsListTemplate);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axiosInstance.get("/root/analytics/general"); // API endpoint
+        const {
+          total_users,
+          total_promocodes,
+          sold_promocodes,
+          residue_promocodes,
+        } = response.data;
+
+        const updatedStatsList = [
+          { ...dataStatsListTemplate[0], value: total_users },
+          { ...dataStatsListTemplate[1], value: total_promocodes },
+          { ...dataStatsListTemplate[2], value: sold_promocodes },
+          { ...dataStatsListTemplate[3], value: residue_promocodes },
+        ];
+
+        setDataStatsList(updatedStatsList);
+      } catch (error) {
+        console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 xl:grid-cols-4 2xl:gap-7.5">

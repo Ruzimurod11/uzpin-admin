@@ -12,16 +12,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setLoading(false), 1000);
+  // }, []);
 
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        {loading ? <Loader /> : children}
+        {/* {loading ? <Loader /> : children} */}
+        {children}
       </body>
     </html>
   );

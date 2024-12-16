@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
@@ -12,6 +12,8 @@ import { CgGames } from "react-icons/cg";
 import { CiCircleCheck } from "react-icons/ci";
 import { FaRegCircleUser, FaRobot, FaUsers } from "react-icons/fa6";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -20,7 +22,7 @@ interface SidebarProps {
 
 const menuGroups = [
   {
-    name: "ADMIN MENU",
+    name: "",
     menuItems: [
       {
         icon: <RiHome6Line className="text-2xl" />,
@@ -75,9 +77,19 @@ const menuGroups = [
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
-
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!Cookies.get("access_token")) {
+      router.push("/login");
+    }
+  }, [router]);
+
+  if (!Cookies.get("access_token")) {
+    return null;
+  }
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside

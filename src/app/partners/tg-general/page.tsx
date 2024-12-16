@@ -13,7 +13,7 @@ const PartnorPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Ummumiy Ma'lumotlar" />
+        {/* <Breadcrumb pageName="Ummumiy Ma'lumotlar" /> */}
         <TableTgGeneral />
         <div className="flex w-full justify-end">
           <Link

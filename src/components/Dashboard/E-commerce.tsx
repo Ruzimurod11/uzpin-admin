@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import DataStatsOne from "@/components/DataStats/DataStatsOne";
 import ChartOne from "../Charts/ChartOne";
