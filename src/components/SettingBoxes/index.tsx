@@ -100,7 +100,7 @@ const SettingBoxes = () => {
                 <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                   <div className="w-full sm:w-1/2">
                     <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                      Login
+                      Email
                     </label>
                     <div className="relative">
                       <span className="absolute left-4.5 top-1/2 -translate-y-1/2">

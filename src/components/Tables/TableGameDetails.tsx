@@ -35,8 +35,14 @@ const TableGameDetails = () => {
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Narx USD</p>
         </div>
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium"></p>
+        <div className="col-span-2 flex items-center justify-end">
+          <Link
+            href="promo-create"
+            className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
+          >
+            +
+          </Link>
+          {/* <p className="font-medium"></p> */}
         </div>
       </div>
 
@@ -53,36 +59,36 @@ const TableGameDetails = () => {
             </div>
           </Link>
 
-          <div className="col-span-2 flex items-center">
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.sold}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
+          </Link>
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.nosold}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
+          </Link>
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.priceUZS}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
+          </Link>
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.priceUSD}
               </p>
             </div>
-          </div>
+          </Link>
 
-          <div className="col-span-2 flex cursor-pointer items-center gap-2">
+          <div className="col-span-2 flex cursor-pointer items-center justify-end gap-2">
             <Link href="promo-create">
               <div className="rounded bg-[orange] px-3 py-1 text-white">
                 <FiEdit2 />

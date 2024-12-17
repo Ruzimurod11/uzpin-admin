@@ -13,16 +13,16 @@ const CardPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Karta Qo'shish" />
+        {/* <Breadcrumb pageName="Karta Qo'shish" /> */}
         <TableCard />
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <Link
             href="addcard"
             className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
           >
             +
           </Link>
-        </div>
+        </div> */}
       </div>
     </DefaultLayout>
   );

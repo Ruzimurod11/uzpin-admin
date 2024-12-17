@@ -9,7 +9,7 @@ const ConfirmBalans = () => {
   const [active, setActive] = useState(true);
   return (
     <DefaultLayout>
-      <div className="mb-4 flex w-full gap-4 rounded bg-slate-200 px-4 py-2">
+      {/* <div className="mb-4 flex w-full gap-4 rounded bg-slate-200 px-4 py-2">
         <button
           className={` rounded border border-slate-400 px-4 py-2  ${active && "bg-primary text-white"}`}
           onClick={() => setActive(true)}
@@ -22,10 +22,10 @@ const ConfirmBalans = () => {
         >
           Bekor Qilingan Balans
         </button>
-      </div>
-      <Breadcrumb
+      </div> */}
+      {/* <Breadcrumb
         pageName={active ? "Tasdiqlangan Balans" : "Bekor Qilingan Balans"}
-      />
+      /> */}
       <ConfirmBalansBox />
     </DefaultLayout>
   );
