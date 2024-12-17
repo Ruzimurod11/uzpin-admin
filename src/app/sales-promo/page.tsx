@@ -12,7 +12,7 @@ const GamesPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Sotilgan Promokodlar" />
+        {/* <Breadcrumb pageName="Sotilgan Promokodlar" /> */}
         <SalesPromoBox />
       </div>
     </DefaultLayout>
