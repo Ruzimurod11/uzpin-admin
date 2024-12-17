@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 const SearchForm = () => {
   const [showSearch, setShowSearch] = useState(true);
   let pathname = usePathname();
-  console.log(pathname, "pathname");
   useEffect(() => {
     if (pathname == "/partners/tg-general") {
       setShowSearch(false);

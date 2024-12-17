@@ -122,7 +122,7 @@ const DataStatsOne: React.FC<dataStats> = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axiosInstance.get("/root/analytics/general"); // API endpoint
+        const response = await axiosInstance.get("/root/analytics/general");
         const {
           total_users,
           total_promocodes,
