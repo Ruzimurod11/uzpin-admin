@@ -87,9 +87,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [router]);
 
-  if (!Cookies.get("access_token")) {
-    return null;
-  }
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
