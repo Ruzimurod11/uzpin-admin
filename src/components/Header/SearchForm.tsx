@@ -6,8 +6,16 @@ const SearchForm = () => {
   const [showSearch, setShowSearch] = useState(true);
   let pathname = usePathname();
   useEffect(() => {
-    if (pathname == "/partners/tg-general") {
+    const hiddenPaths = [
+      "/partners/tg-general",
+      "/partnor-create",
+      "/partners/partner",
+      // "/users/confirm-balans",
+    ];
+    if (hiddenPaths.includes(pathname)) {
       setShowSearch(false);
+    } else {
+      setShowSearch(true);
     }
   }, [pathname]);
   return (

@@ -12,7 +12,7 @@ const CalendarPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Statistika" />
+        {/* <Breadcrumb pageName="Statistika" /> */}
 
         <CalendarBox />
       </div>

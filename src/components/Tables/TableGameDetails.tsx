@@ -4,6 +4,8 @@ import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import { useState } from "react";
+import {useRouter} from 'next/navigation'
+import {FaArrowLeft} from 'react-icons/fa'
 
 const productData = [
   {
@@ -17,11 +19,16 @@ const productData = [
 
 const TableGameDetails = () => {
   const [modal, setModal] = useState(false);
+  const router = useRouter()
+  const goBack = () => {
+    router.back()
+  }
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5">
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium">Promokod nomi</p>
+        <div onClick={goBack} className="col-span-2 flex cursor-pointer gap-4 items-center">
+          <FaArrowLeft/>
+          <p className="font-medium">Pubg</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Sotilmagan</p>
@@ -35,8 +42,14 @@ const TableGameDetails = () => {
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Narx USD</p>
         </div>
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium"></p>
+        <div className="col-span-2 flex items-center justify-end">
+          <Link
+            href="promo-create"
+            className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
+          >
+            +
+          </Link>
+          {/* <p className="font-medium"></p> */}
         </div>
       </div>
 
@@ -47,42 +60,42 @@ const TableGameDetails = () => {
         >
           <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-bold text-black underline dark:text-dark-8">
+              <p className="text-body-sm font-bold text-black dark:text-dark-8">
                 {key + 1}. {product.name}
               </p>
             </div>
           </Link>
 
-          <div className="col-span-2 flex items-center">
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.sold}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
+          </Link>
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.nosold}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
+          </Link>
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.priceUZS}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
+          </Link>
+          <Link href={`${key}/${key}`} className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.priceUSD}
               </p>
             </div>
-          </div>
+          </Link>
 
-          <div className="col-span-2 flex cursor-pointer items-center gap-2">
+          <div className="col-span-2 flex cursor-pointer items-center justify-end gap-2">
             <Link href="promo-create">
               <div className="rounded bg-[orange] px-3 py-1 text-white">
                 <FiEdit2 />

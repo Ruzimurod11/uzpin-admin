@@ -1,9 +1,11 @@
+'use client'
 import Image from "next/image";
 import { Product } from "../../../types/product";
 import { FaEye, FaFileArrowUp } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa";
+import {useRouter} from 'next/navigation'
 
 const productData = [
   {
@@ -21,10 +23,16 @@ const productData = [
 ];
 
 const TableAllPromo = () => {
+  const router = useRouter()
+
+  const goBack = () => {
+    router.back()
+  }
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
-        <div className="col-span-2 flex items-center">
+        <div onClick={goBack} className="col-span-2 flex gap-4 cursor-pointer items-center">
+          <FaArrowLeft/>
           <p className="font-medium">60 UC</p>
         </div>
         <div className="col-span-4 flex items-center">

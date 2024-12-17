@@ -8,17 +8,18 @@ const GamesCreatePage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Hamkor Qo'shish" />
+        {/* <Breadcrumb pageName="Hamkor Qo'shish" /> */}
         <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
           <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
             <h3 className="font-medium text-dark dark:text-white">
-              Yangi Hamkor Malumotlari
+              Hamkor Qo&apos;shish
+              {/* Yangi Hamkor Malumotlari */}
             </h3>
           </div>
           <div className="grid grid-cols-6 gap-5.5 p-6.5">
             <div className="col-span-3">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                HamkorLar
+                Hamkor
               </label>
               <input
                 type="text"
@@ -65,7 +66,7 @@ const GamesCreatePage = () => {
               />
             </div>
             <div className="col-span-6">
-              <SwitcherThree />
+              {/* <SwitcherThree /> */}
             </div>
             <div className="col-span-6 flex justify-end">
               <button className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white">

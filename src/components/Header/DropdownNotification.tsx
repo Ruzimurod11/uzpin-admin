@@ -27,12 +27,24 @@ const DropdownNotification = () => {
             />
           </svg>
 
-          <span
+          {/* <span
             className={`absolute -top-0.5 right-0 z-1 h-2.5 w-2.5 rounded-full border-2 border-gray-2 bg-red-light dark:border-dark-3 ${
               !notifying ? "hidden" : "inline"
             }`}
           >
+            <p className="text-[10px] text-center">1</p>
             <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-red-light opacity-75"></span>
+          </span> */}
+
+          <span
+            className={`p-0.25 absolute -right-3 -top-4 z-1 rounded-full border-2 border-gray-2 bg-red-light dark:border-dark-3 ${
+              !notifying ? "hidden" : "inline"
+            }`}
+          >
+            <p className="flex h-5 w-5 items-center justify-center text-center text-[8px] text-white">
+              999
+            </p>
+            {/* <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-red-light opacity-75"></span> */}
           </span>
         </span>
       </Link>

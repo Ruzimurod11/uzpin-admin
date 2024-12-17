@@ -1,15 +1,17 @@
 "use client";
 import DefaultSelectOption from "../SelectOption/DefaultSelectOption";
 import SwitcherThree from "../SelectOption/SwitcherThree";
+import RadioButton from "../RadioButton/index";
 
 const AddBalansBox = () => {
   return (
     <>
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
-        <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
+        <div className="flex gap-10 border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
             Foydalanuvchi Balansini To&apos;ldirish
           </h3>
+          <RadioButton/>
         </div>
         <div className="grid grid-cols-6 gap-5.5 p-6.5">
           <div className="col-span-6">
