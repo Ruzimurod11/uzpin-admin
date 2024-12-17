@@ -11,9 +11,9 @@ const CalendarBox = () => {
   return (
     <>
       <div className="flex flex-col">
-        <div className="flex justify-between">
-          <p className="text-2xl">Ma&apos;lumotlar</p>
-          <div className="flex items-center gap-2">
+        <div className="flex justify-end">
+          {/* <p className="text-2xl">Ma&apos;lumotlar</p> */}
+          {/* <div className="flex items-center gap-2">
             Saralash:
             <CustomCalendar2 />
             {["ID", "Vaucher"].map((filter) => (
@@ -29,10 +29,10 @@ const CalendarBox = () => {
                 {filter}
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
 
-        <div className="mb-2 mt-4 flex gap-2 overflow-x-auto">
+        {/* <div className="mb-2 mt-4 flex gap-2 overflow-x-auto">
           {["Uzpin Sayt", "UzpinBot", "SardorBot", "TonyBot", "AnotherBot"].map(
             (botName, index) => (
               <button
@@ -48,9 +48,9 @@ const CalendarBox = () => {
               </button>
             ),
           )}
-        </div>
+        </div> */}
         <TableInfos name={"PUBG"} />
-        <TableInfos name={"FREEFIRE"} />
+        {/* <TableInfos name={"FREEFIRE"} /> */}
       </div>
     </>
   );

@@ -11,7 +11,7 @@ const MoneyRecived = () => {
   const [active, setActive] = useState(true);
   return (
     <DefaultLayout>
-      <div className="mb-4 flex w-full gap-4 rounded bg-slate-200 px-4 py-2 dark:bg-slate-800">
+      <div className="mb-4 flex justify-end w-full gap-4 rounded px-4 py-2">
         <button
           className={`rounded border border-slate-400 px-4 py-2 ${
             active ? "bg-primary text-white" : "dark:text-slate-200"
@@ -29,7 +29,7 @@ const MoneyRecived = () => {
           Xarajatlar
         </button>
       </div>
-      <Breadcrumb pageName={active ? "Tushgan Pullar" : "Xarajatlar"} />
+      {/* <Breadcrumb pageName={active ? "Tushgan Pullar" : "Xarajatlar"} /> */}
       <div className="mb-4 flex w-full justify-between gap-5">
         <div className="flex w-full items-center gap-2 rounded bg-white px-3 py-4 dark:bg-slate-900">
           <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
