@@ -6,7 +6,7 @@ const GamesCreatePage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Foydalanuvchi Ma'lumotlari" />
+        {/* <Breadcrumb pageName="Foydalanuvchi Ma'lumotlari" /> */}
         <UserEdit />
       </div>
     </DefaultLayout>

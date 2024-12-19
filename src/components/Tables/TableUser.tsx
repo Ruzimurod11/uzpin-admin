@@ -51,7 +51,7 @@ const TableUser = () => {
         <div className="col-span-2 flex items-center">
           <p className="font-medium">E-Pochta</p>
         </div>
-        <div className="col-span-2 flex items-center gap-2">
+        <div className="col-span-2 flex items-center gap-1">
           <p className="font-medium">Ism</p>
           <p className="font-medium">Familya</p>
         </div>
@@ -85,7 +85,7 @@ const TableUser = () => {
             </div>
           </div>
           <div className="col-span-2 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product.name}
               </p>

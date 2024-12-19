@@ -62,9 +62,9 @@ const UserEdit = () => {
           </div>
 
           <div className="col-span-3">
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            {/* <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Referral silka yaratish?
-            </label>
+            </label> */}
             <SwitcherThree />
           </div>
           <div className="col-span-6 flex justify-end">

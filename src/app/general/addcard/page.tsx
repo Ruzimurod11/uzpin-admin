@@ -13,7 +13,7 @@ const AddCardPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="Karta Qo'shish" />
+        {/* <Breadcrumb pageName="Karta Qo'shish" /> */}
         <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
           <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
             <h3 className="font-medium text-dark dark:text-white">
@@ -69,9 +69,9 @@ const AddCardPage = () => {
               />
             </div>
 
-            <div className="col-span-6">
+            {/* <div className="col-span-6">
               <SwitcherThree />
-            </div>
+            </div> */}
             <div className="col-span-6 flex justify-end">
               <button className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white">
                 SAQLASH

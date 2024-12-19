@@ -49,7 +49,7 @@ const CustomCalendar = () => {
       </button>
 
       {isCalendarOpen && (
-        <div className="absolute left-[-185px] z-50 mt-2 flex rounded bg-white shadow-lg">
+        <div className="absolute left-[-300px] z-50 mt-2 flex rounded bg-white shadow-lg">
           <div className="absolute  mt-4 w-[40%]">
             {predefinedRanges.map((range, index) => (
               <button

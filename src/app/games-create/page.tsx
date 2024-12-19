@@ -12,7 +12,7 @@ const GamesCreatePage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        <Breadcrumb pageName="O'yin Yaratish" />
+        {/* <Breadcrumb pageName="O'yin Yaratish" /> */}
         <GamesBoxCreate />
       </div>
     </DefaultLayout>

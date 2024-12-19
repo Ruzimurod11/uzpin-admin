@@ -143,7 +143,7 @@ const GamesBoxCreate = () => {
             ></textarea>
           </div>
           <div className="col-span-6">
-            <SwitcherThree />
+            {/* <SwitcherThree /> */}
           </div>
           <div className="col-span-6 flex justify-end">
             <button className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white">
