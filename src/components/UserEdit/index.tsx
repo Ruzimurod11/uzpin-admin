@@ -65,7 +65,7 @@ const UserEdit = () => {
             {/* <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Referral silka yaratish?
             </label> */}
-            <SwitcherThree />
+            {/* <SwitcherThree /> */}
           </div>
           <div className="col-span-6 flex justify-end">
             <button className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white">
