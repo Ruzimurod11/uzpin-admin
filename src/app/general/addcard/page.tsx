@@ -121,84 +121,88 @@ const AddCardPage = () => {
           onSubmit={handleSubmit}
           className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card"
         >
-        {/* <Breadcrumb pageName="Karta Qo'shish" /> */}
-        <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
-          <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
-            <h3 className="font-medium text-dark dark:text-white">
-              Yangi Karta Ma&apos;lumotlari
-            </h3>
-          </div>
-          <div className="grid grid-cols-6 gap-5.5 p-6.5">
-            <div className="col-span-6">
-              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Karta Rasmi
-              </label>
-              <UploadComponent
-                onUploadSuccess={(url) => handleUploadSuccess("photo", url)}
-              />
+          {/* <Breadcrumb pageName="Karta Qo'shish" /> */}
+          <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
+            <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
+              <h3 className="font-medium text-dark dark:text-white">
+                Yangi Karta Ma&apos;lumotlari
+              </h3>
             </div>
-            <div className="col-span-3">
-              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Karta nomi
-              </label>
-              <input
-                type="text"
-                name="card_name"
-                value={formData.card_name}
-                onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
-              />
-            </div>
-            <div className="col-span-3">
-              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Karta raqami
-              </label>
-              <input
-                type="text"
-                name="card_number"
-                value={formData.card_number}
-                onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
-              />
-            </div>
-            <div className="col-span-3">
-              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Karta egasi
-              </label>
-              <input
-                type="text"
-                name="card_holder"
-                value={formData.card_holder}
-                onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
-              />
-            </div>
-            <div className="col-span-3">
-              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Valyuta turi
-              </label>
-              <SelectGroupOne
-                options={gameOptions}
-                selectedOption={selectedGame}
-                onChange={handleSelectChange}
-              />
-            </div>
-            <div className="col-span-6">
-              <SwitcherThree
-                isActive={formData.is_active}
-                onChange={(value: boolean) =>
-                  setFormData((prevData) => ({ ...prevData, is_active: value }))
-                }
-              />
-            </div>
-            <div className="col-span-6 flex justify-end">
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white"
-              >
-                {loading ? "Saqlanmoqda..." : "SAQLASH"}
-              </button>
+            <div className="grid grid-cols-6 gap-5.5 p-6.5">
+              <div className="col-span-6">
+                <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                  Karta Rasmi
+                </label>
+                <UploadComponent
+                  onUploadSuccess={(url) => handleUploadSuccess("photo", url)}
+                />
+              </div>
+              <div className="col-span-3">
+                <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                  Karta nomi
+                </label>
+                <input
+                  type="text"
+                  name="card_name"
+                  value={formData.card_name}
+                  onChange={handleChange}
+                  className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                />
+              </div>
+              <div className="col-span-3">
+                <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                  Karta raqami
+                </label>
+                <input
+                  type="text"
+                  name="card_number"
+                  value={formData.card_number}
+                  onChange={handleChange}
+                  className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                />
+              </div>
+              <div className="col-span-3">
+                <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                  Karta egasi
+                </label>
+                <input
+                  type="text"
+                  name="card_holder"
+                  value={formData.card_holder}
+                  onChange={handleChange}
+                  className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                />
+              </div>
+              <div className="col-span-3">
+                <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                  Valyuta turi
+                </label>
+                <SelectGroupOne
+                  options={gameOptions}
+                  selectedOption={selectedGame}
+                  onChange={handleSelectChange}
+                />
+              </div>
+              <div className="col-span-6">
+                <SwitcherThree
+                  isActive={formData.is_active}
+                  onChange={(value: boolean) =>
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      is_active: value,
+                    }))
+                  }
+                />
+              </div>
+              <div className="col-span-6 flex justify-end">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white"
+                >
+                  {loading ? "Saqlanmoqda..." : "SAQLASH"}
+                </button>
+              </div>
             </div>
           </div>
         </form>
