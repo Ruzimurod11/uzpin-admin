@@ -12,6 +12,12 @@ const nextConfig = {
         hostname: "api.amaliymoliya.uz",
         pathname: "/media/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.shutterstock.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

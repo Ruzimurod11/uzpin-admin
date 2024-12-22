@@ -6,6 +6,7 @@ import axiosInstance from "@/libs/axios";
 import UploadComponent from "@/components/UploadComponent";
 import SelectGroupOne from "@/components/SelectGame/SelectGroupOne";
 import { useRouter, useSearchParams } from "next/navigation";
+import InputMask from "react-input-mask";
 export default function AddCardBox() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -100,12 +101,12 @@ export default function AddCardBox() {
         });
       }
 
-      alert("Karta muvaffaqiyatli yangilandi!");
+      console.log("Karta muvaffaqiyatli yangilandi!");
 
       router.push("/general/add-card");
     } catch (error) {
       console.error("Karta yangilashda xatolik:", error);
-      alert("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+      console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
     } finally {
       setLoading(false);
     }
@@ -149,7 +150,9 @@ export default function AddCardBox() {
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Karta raqami
               </label>
-              <input
+              <InputMask
+                mask="9999 9999 9999 9999"
+                placeholder="0000 0000 0000 0000"
                 type="text"
                 name="card_number"
                 value={formData.card_number}

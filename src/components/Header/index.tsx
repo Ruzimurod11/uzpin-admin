@@ -54,12 +54,6 @@ const Header = (props: {
           </button>
 
           <Link className="block flex-shrink-0 lg:hidden" href="/">
-            {/* <Image
-              width={32}
-              height={32}
-              src={"/images/logo/logo-icon.svg"}
-              alt="Logo"
-            /> */}
             UZPIN
           </Link>
         </div>

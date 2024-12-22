@@ -51,6 +51,32 @@ const TableGameDetails = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
+
+  const [promocodetext, setPromocode] = useState("");
+
+  const PromoCreateValue = async (productId: any) => {
+    // console.log(productId, promocode);
+    const payload = {
+      text: promocodetext,
+      promocode: productId,
+    };
+    try {
+      const response = await axiosInstance.post(
+        "/root/game/promocodevalues/create",
+        payload,
+      );
+      console.log("Promokod muvaffaqiyatli qo'shildi:", response.data);
+      setModal(false);
+    } catch (error) {
+      console.error("Promokodni yuborishda xatolik:", error);
+    }
+  };
+  const [activeId, setActiveId] = useState();
+  const ModalOpen = (productId: any) => {
+    setModal(true);
+    setActiveId(productId);
+  };
+
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
@@ -162,7 +188,7 @@ const TableGameDetails = () => {
                 </div>
               </Link>
               <div
-                onClick={() => setModal(true)}
+                onClick={() => ModalOpen(product.id)}
                 className="rounded bg-[green] px-3 py-1 text-white"
               >
                 <FaFileArrowUp />
@@ -176,7 +202,6 @@ const TableGameDetails = () => {
             </div>
           </div>
         ))}
-
       {modal && (
         <div className="z-5000 absolute left-[50%] top-[50%] flex h-[500px] w-[800px] translate-x-[-50%] translate-y-[-50%] flex-col rounded-lg bg-white px-4 py-4 shadow-2xl dark:bg-gray-dark dark:shadow-card">
           <div className="mb-3 flex items-center justify-between">
@@ -187,9 +212,16 @@ const TableGameDetails = () => {
               ❌
             </button>
           </div>
-          <textarea className="w-full flex-grow resize-none rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white" />
+          <textarea
+            className="w-full flex-grow resize-none rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
+            value={promocodetext}
+            onChange={(e) => setPromocode(e.target.value)}
+          />
           <div className="mt-4 flex justify-end">
-            <button className="rounded bg-green-900 px-4 py-2 text-white">
+            <button
+              className="rounded bg-green-900 px-4 py-2 text-white"
+              onClick={() => PromoCreateValue(activeId)}
+            >
               Qo&apos;shish
             </button>
           </div>

@@ -5,22 +5,45 @@ import { CiDollar } from "react-icons/ci";
 import { FaEye, FaMoneyBillTransfer } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchForm from "../Header/SearchForm";
+import axiosInstance from "@/libs/axios";
 
-const productData = [
-  {
-    email: "jamshidqayimov0399@gmail.com",
-    name: "Jamshid",
-    surname: "Qayimov",
-    number: "+998997699900",
-    addTime: "04.04.2023 06:09",
-    profit: "19,048,002 so'm",
-  },
-];
+interface User {
+  id: string;
+  fullname: string;
+  email: string;
+  phone: string;
+  account_uzs: number;
+  account_rub: number;
+  account_usd: number;
+  login_type: string;
+  is_seller: string;
+  created: string;
+}
 
 const TableUser = () => {
   const [active, setActive] = useState(true);
+  const [users, setUser] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/root/customer/list?is_seller=${!active}`,
+        );
+        setUser(response.data.results || []);
+      } catch (error) {
+        console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchStats();
+  }, [active]);
+  function convertTime(timeStr: string) {
+    const date = new Date(timeStr);
+    return date.toISOString().slice(0, 19).replace("T", " ");
+  }
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -47,17 +70,14 @@ const TableUser = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5">
+      <div className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center">
           <p className="font-medium">E-Pochta</p>
         </div>
-        <div className="col-span-2 flex items-center gap-1">
+        <div className="col-span-1 flex items-center gap-1">
           <p className="font-medium">Ism</p>
-          <p className="font-medium">Familya</p>
         </div>
-        {/* <div className="col-span-1 flex items-center">
-          <p className="font-medium">Familya</p>
-        </div> */}
+
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Telefon Raqam</p>
         </div>
@@ -72,59 +92,55 @@ const TableUser = () => {
         </div>
       </div>
 
-      {productData.map((product, key) => (
+      {users.map((user, key) => (
         <div
-          className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
-          key={key}
+          className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5"
+          key={user.id}
         >
           <div className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}. {product.email}
+                {key + 1}. {user.email}
               </p>
             </div>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.name}
-              </p>
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.surname}
-              </p>
-            </div>
-          </div>
-          {/* <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.surname}
-              </p>
-            </div>
-          </div> */}
-          <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.number}
+                {user.fullname}
               </p>
             </div>
           </div>
           <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.addTime}
+                {user.phone}
+              </p>
+            </div>
+          </div>
+          <div className="col-span-1 flex items-center">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <p className="text-body-xs font-medium text-dark dark:text-dark-6">
+                {convertTime(user.created)}
               </p>
             </div>
           </div>
           <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.profit}
+                {user.account_uzs > 0 && user.account_uzs + "sum"}
+                {user.account_rub > 0 && user.account_rub + "rubl"}
+                {user.account_usd > 0 && user.account_usd + "usd"}
+                {user.account_rub == 0 &&
+                  user.account_usd == 0 &&
+                  user.account_uzs == 0 &&
+                  "0"}
               </p>
             </div>
           </div>
           <div className="col-span-1 flex cursor-pointer items-center gap-2">
             <Link
-              href={"user-edit"}
+              href={`user-edit?${user.id}`}
               className="rounded bg-[orange] px-3 py-1 text-white"
             >
               <FiEdit2 />
@@ -136,7 +152,7 @@ const TableUser = () => {
               <FaMoneyBillTransfer />
             </Link>
             <Link
-              href={"add-balans"}
+              href={`add-balans?${user.id}`}
               className="rounded bg-[green] px-3 py-1 text-white"
             >
               <CiDollar />

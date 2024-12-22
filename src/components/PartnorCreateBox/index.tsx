@@ -25,7 +25,7 @@ export default function PartnorCreateBox() {
       if (extractedValue) {
         try {
           const response = await axiosInstance.get(
-            `/root/bot/${extractedValue}/update`,
+            `/root/bot/${extractedValue}/detail`,
           );
           const { token, partner_name, banner_uz, banner_ru, banner_en } =
             response.data;
@@ -65,16 +65,20 @@ export default function PartnorCreateBox() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-
-    try {
-      await axiosInstance.post("/root/bot/create", formData);
-      alert("Hamkor muvaffaqiyatli qo'shildi!");
-      router.push("/partners/partner");
-    } catch (error) {
-      console.error("Hamkor qo'shishda xatolik:", error);
-      alert("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
-    } finally {
-      setLoading(false);
+    if (extractedValue) {
+      await axiosInstance.put(`/root/bot/${extractedValue}/detail`, formData);
+      router.push(`/partners/partner`);
+    } else {
+      try {
+        await axiosInstance.post("/root/bot/create", formData);
+        console.log("Hamkor muvaffaqiyatli qo'shildi!");
+        router.push("/partners/partner");
+      } catch (error) {
+        console.error("Hamkor qo'shishda xatolik:", error);
+        console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

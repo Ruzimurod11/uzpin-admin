@@ -5,7 +5,6 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Hamkor Qo'shish",
-  description: " ",
 };
 const GamesCreatePage = () => {
   return (

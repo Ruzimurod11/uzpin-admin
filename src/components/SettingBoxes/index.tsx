@@ -61,7 +61,7 @@ const SettingBoxes = () => {
 
     if (password && newPassword) {
       if (newPassword !== confirmPassword) {
-        alert("Yangi parollar mos kelmadi!");
+        console.log("Yangi parollar mos kelmadi!");
         setLoading(false);
         return;
       }
@@ -72,10 +72,10 @@ const SettingBoxes = () => {
 
     try {
       await axiosInstance.put("/root/profile", updatedData);
-      alert("Ma'lumotlar muvaffaqiyatli saqlandi!");
+      console.log("Ma'lumotlar muvaffaqiyatli saqlandi!");
     } catch (error) {
       console.error("Ma'lumotlarni saqlashda xatolik:", error);
-      alert("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+      console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
     } finally {
       setLoading(false);
     }

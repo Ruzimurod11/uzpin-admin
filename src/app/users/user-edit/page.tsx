@@ -1,14 +1,19 @@
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import UserEdit from "@/components/UserEdit";
+import { Metadata } from "next";
+import { Suspense } from "react";
 
+export const metadata: Metadata = {
+  title: "Foydalanuvchi Ma'lumotlari",
+};
 const GamesCreatePage = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto max-w-7xl">
-        {/* <Breadcrumb pageName="Foydalanuvchi Ma'lumotlari" /> */}
-        <UserEdit />
-      </div>
+      <Suspense fallback={<p>Yuklanmoqda...</p>}>
+        <div className="mx-auto max-w-7xl">
+          <UserEdit />
+        </div>
+      </Suspense>
     </DefaultLayout>
   );
 };

@@ -1,48 +1,80 @@
-'use client'
-import Image from "next/image";
-import { Product } from "../../../types/product";
-import { FaEye, FaFileArrowUp } from "react-icons/fa6";
-import { FiEdit2 } from "react-icons/fi";
+"use client";
+
+import { useEffect, useState } from "react";
+import axiosInstance from "@/libs/axios";
+import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { FaArrowLeft } from "react-icons/fa";
-import {useRouter} from 'next/navigation'
 
-const productData = [
-  {
-    name: "60 UC",
-    code: "U0hqUUVXQUMydTIzTjk2c0xz",
-    create_at: "09.03.2023 04:35",
-    active: "Sotilgan",
-  },
-  {
-    name: "60 UC",
-    code: "U0hqUUVXQUMydTIzTjk2c0xz",
-    create_at: "09.03.2023 04:35",
-    active: "Sotilgan",
-  },
-];
-
+interface Promo {
+  id: string;
+  code: string;
+  promocode: string;
+  is_sold: boolean;
+  created: string;
+}
 const TableAllPromo = () => {
-  const router = useRouter()
+  const [productData, setProductData] = useState<Promo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  const getIdFromPathname = () => {
+    if (typeof window !== "undefined") {
+      const pathParts = window.location.pathname.split("/");
+      return pathParts[pathParts.length - 1];
+    }
+    return null;
+  };
+
+  const id = getIdFromPathname();
+
+  useEffect(() => {
+    const fetchPromocodes = async () => {
+      if (!id) {
+        console.error("ID aniqlanmadi!");
+        return;
+      }
+
+      try {
+        const response = await axiosInstance.get(
+          `/root/game/promocodevalues/${id}`,
+        );
+        setProductData(response.data.results || []);
+      } catch (error) {
+        console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPromocodes();
+  }, [id]);
+
+  if (loading) {
+    return <div>Yuklanmoqda...</div>;
+  }
 
   const goBack = () => {
-    router.back()
-  }
+    router.back();
+  };
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
-        <div onClick={goBack} className="col-span-2 flex gap-4 cursor-pointer items-center">
-          <FaArrowLeft/>
-          <p className="font-medium">60 UC</p>
-        </div>
-        <div className="col-span-4 flex items-center">
+        <div
+          onClick={goBack}
+          className="col-span-2 flex cursor-pointer items-center gap-4"
+        >
+          <FaArrowLeft />
           <p className="font-medium">Promokod</p>
         </div>
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium">Yaratilgan sana</p>
+        <div className="col-span-4 flex items-center">
+          <p className="font-medium">Kod</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Holati</p>
+        </div>
+        <div className="col-span-2 flex items-center">
+          <p className="font-medium">Yaratilgan sana</p>
         </div>
         <div className="col-span-1 flex items-center justify-end">
           <div className="rounded bg-[red] px-3 py-1 text-white">
@@ -51,56 +83,36 @@ const TableAllPromo = () => {
         </div>
       </div>
 
-      {productData.map((product, key) => (
-        <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
-          key={key}
-        >
-          <div className="col-span-2 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      {productData.length > 0 &&
+        productData.map((product, key) => (
+          <div
+            className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
+            key={product?.id}
+          >
+            <div className="col-span-2 flex items-center gap-4">
               <input type="checkbox" />
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}. {product.name}
+                {product?.promocode}
               </p>
             </div>
-          </div>
-
-          <div className="col-span-4 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="col-span-4 flex items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.code}
+                {product?.code}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="col-span-2 flex items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.create_at}
+                {product?.is_sold ? "Sotilgan" : "Sotilmagan"}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="col-span-2 flex items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.active}
+                {new Date(product?.created).toLocaleDateString("uz-UZ")}
               </p>
             </div>
+            <div className="col-span-1 flex cursor-pointer items-center gap-2"></div>
           </div>
-          <div className="col-span-1 flex cursor-pointer items-center gap-2">
-            {/* <div className="rounded bg-blue-600 px-3 py-1 text-white">
-              <FaEye />
-            </div>
-            <Link href="promo-create">
-              <div className="rounded bg-[orange] px-3 py-1 text-white">
-                <FiEdit2 />
-              </div>
-            </Link> */}
-            {/* <div className="rounded bg-[red] px-3 py-1 text-white">
-              <MdOutlineDeleteOutline />
-            </div> */}
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

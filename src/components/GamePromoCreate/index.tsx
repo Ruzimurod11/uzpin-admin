@@ -105,7 +105,7 @@ const GamesPromoCreate = () => {
         router.push(`/games/${gameId}`);
       }
     } catch (error) {
-      alert("Promokod yaratishda xatolik bo'ldi!");
+      console.log("Promokod yaratishda xatolik bo'ldi!");
       console.error(error);
     }
   };

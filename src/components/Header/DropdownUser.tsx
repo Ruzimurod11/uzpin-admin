@@ -13,7 +13,9 @@ const DropdownUser = () => {
     photo: "",
   });
   useEffect(() => {
-    const profileData = JSON.parse(localStorage.getItem("profile") || "");
+    const profileData =
+      localStorage.getItem("profile") &&
+      JSON.parse(localStorage.getItem("profile") || "");
 
     if (!profileData) {
       const fetchProfileData = async () => {
