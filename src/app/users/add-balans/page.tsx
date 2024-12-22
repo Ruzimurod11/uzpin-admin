@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const AddBalans = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Hisobni To'ldirish" />
+      {/* <Breadcrumb pageName="Hisobni To'ldirish" /> */}
       <AddBalansBox />
     </DefaultLayout>
   );

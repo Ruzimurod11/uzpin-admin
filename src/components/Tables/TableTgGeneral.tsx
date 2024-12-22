@@ -28,7 +28,7 @@ const TableTgGeneral = () => {
         <div className="col-span-1 flex items-center justify-end">
           <Link
             href="/general-info-create"
-            className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
+            className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
           >
             +
           </Link>

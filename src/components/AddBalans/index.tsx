@@ -7,7 +7,7 @@ const AddBalansBox = () => {
   return (
     <>
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
-        <div className="flex gap-10 border-b border-stroke px-6.5 py-4 dark:border-dark-3">
+        <div className="flex items-center gap-10 border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
             Foydalanuvchi Balansini To&apos;ldirish
           </h3>
@@ -34,9 +34,9 @@ const AddBalansBox = () => {
             />
           </div>
 
-          <div className="col-span-6">
+          {/* <div className="col-span-6">
             <SwitcherThree />
-          </div>
+          </div> */}
           <div className="col-span-6 flex justify-end">
             <button className="flex w-40 justify-center rounded bg-green-400 px-5 py-2 text-white">
               SAQLASH
