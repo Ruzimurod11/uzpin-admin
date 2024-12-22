@@ -12,24 +12,32 @@ const DropdownUser = () => {
     email: "",
     photo: "",
   });
-  const [loading, setLoading] = useState(false);
-
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await axiosInstance.get("/root/profile");
-        const data = response.data;
-        setFormData({
-          fullname: data.fullname || "",
-          email: data.email || "",
-          photo: data.photo || "",
-        });
-      } catch (error) {
-        console.error("Ma'lumotlarni yuklashda xatolik:", error);
-      }
-    };
+    const profileData = JSON.parse(localStorage.getItem("profile") || "");
 
-    fetchProfileData();
+    if (!profileData) {
+      const fetchProfileData = async () => {
+        try {
+          const response = await axiosInstance.get("/root/profile");
+          const data = response.data;
+          setFormData({
+            fullname: data.fullname || "",
+            email: data.email || "",
+            photo: data.photo || "",
+          });
+          localStorage.setItem("profile", JSON.stringify(data));
+        } catch (error) {
+          console.error("Ma'lumotlarni yuklashda xatolik:", error);
+        }
+      };
+      fetchProfileData();
+    } else {
+      setFormData({
+        fullname: profileData.fullname || "",
+        email: profileData.email || "",
+        photo: profileData.photo || "",
+      });
+    }
   }, []);
 
   return (
@@ -41,14 +49,10 @@ const DropdownUser = () => {
       >
         <span className="h-12 w-12 rounded-full">
           {formData.photo ? (
-            <Image
-              src={formData.photo || "/avatar.png"}
-              width={50}
-              height={50}
-              alt="User"
-            />
+            <Image src={formData.photo} width={50} height={50} alt="User" />
           ) : (
-            <FaUserCircle className="text-5xl" />
+            // <FaUserCircle className="text-5xl" />
+            ""
           )}
         </span>
 
