@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const DropdownNotification = () => {
   const [notifying, setNotifying] = useState(true);
-  const [count, setCount] = useState(localStorage.getItem("NotifCount") || 0);
+  const [count, setCount] = useState<number>(0);
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem("NotifCount");
+    if (storedCount) {
+      setCount(parseInt(storedCount, 10));
+    }
+  }, []);
+
   return (
     <li>
       <Link
