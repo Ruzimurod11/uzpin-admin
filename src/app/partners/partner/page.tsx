@@ -3,6 +3,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Link from "next/link";
 import TablePartner from "@/components/Tables/TablePartner";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Hamkorlar",
@@ -11,18 +12,11 @@ export const metadata: Metadata = {
 const PartnorPage = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto max-w-7xl">
-        {/* <Breadcrumb pageName="Hamkorlar" /> */}
-        <TablePartner />
-        {/* <div className="flex w-full justify-end">
-          <Link
-            href="/partnor-create"
-            className="my-4 flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
-          >
-            +
-          </Link>
-        </div> */}
-      </div>
+      <Suspense fallback={<div>Yuklanmoqda...</div>}>
+        <div className="mx-auto max-w-7xl">
+          <TablePartner />
+        </div>
+      </Suspense>
     </DefaultLayout>
   );
 };
