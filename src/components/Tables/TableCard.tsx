@@ -1,27 +1,53 @@
+"use client";
 import Image from "next/image";
-import { Product } from "../../../types/product";
-import { FaEye } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/libs/axios";
 
-const productData = [
-  {
-    image: "/images/cardhumo.jpg",
-    name: "HUMO",
-    number: 9860170112522017,
-    name2: "Sherzodjon Akramov",
-    type: "SUM",
-    active: "faol",
-  },
-];
+// Kartalar uchun interfeys
+interface Card {
+  id: string;
+  photo: string;
+  card_name: string;
+  card_number: string;
+  card_holder: string;
+  currency: string;
+  is_active: boolean;
+}
 
 const TableCard = () => {
+  const [cards, setCards] = useState<Card[]>([]);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await axiosInstance.get("/root/card/list");
+        setCards(response.data.results || []);
+        console.log(response.data.results);
+      } catch (error) {
+        console.error("Kartalarni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
+  const DeleteGame = async (gameId: string) => {
+    try {
+      await axiosInstance.delete(`/root/card/${gameId}/detail`);
+      setCards((prevData) => prevData.filter((game) => game.id !== gameId));
+    } catch (error) {
+      console.error("O'yinni o'chirishda xatolik:", error);
+    }
+  };
+
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-          Karta Malumotlari
+          Karta Ma&apos;lumotlari
         </h4>
         <Link
           href="addcard"
@@ -35,7 +61,7 @@ const TableCard = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Karta rasmi</p>
         </div>
-        <div className="col-span-1flex items-center">
+        <div className="col-span-1 flex items-center">
           <p className="font-medium">Karta nomi</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -45,7 +71,7 @@ const TableCard = () => {
           <p className="font-medium">Karta egasi</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Karta turi</p>
+          <p className="font-medium">Valyuta</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Holati</p>
@@ -55,69 +81,52 @@ const TableCard = () => {
         </div>
       </div>
 
-      {productData.map((product, key) => (
+      {cards.map((card, index) => (
         <div
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5"
-          key={key}
+          key={index}
         >
           <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}.{" "}
-              </p>
-              <div className="h-12.5 w-15 flex items-center rounded-md">
-                <Image
-                  src={product.image}
-                  width={60}
-                  height={50}
-                  alt="Product"
-                />
-              </div>
+            <div className="flex h-12.5 w-15 items-center rounded-md">
+              <Image src={card.photo} width={60} height={50} alt="Card Image" />
             </div>
           </div>
           <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.name}
-              </p>
-            </div>
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {card.card_name}
+            </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.number}
-              </p>
-            </div>
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {card.card_number}
+            </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.name2}
-              </p>
-            </div>
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {card.card_holder}
+            </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.type}
-              </p>
-            </div>
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {card.currency}
+            </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.active}
-              </p>
-            </div>
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {card.is_active ? "Faol" : "Faol emas"}
+            </p>
           </div>
           <div className="col-span-1 flex cursor-pointer items-center justify-center gap-2">
-            {/* <div className="rounded bg-blue-600 px-3 py-1 text-white">
-              <FaEye />
-            </div> */}
-            <div className="rounded bg-[orange] px-3 py-1 text-white">
+            <Link
+              href={`addcard?${card.id}`}
+              className="rounded bg-[orange] px-3 py-1 text-white"
+            >
               <FiEdit2 />
-            </div>
-            <div className="rounded bg-[red] px-3 py-1 text-white">
+            </Link>
+            <div
+              onClick={() => DeleteGame(card.id)}
+              className="rounded bg-[red] px-3 py-1 text-white"
+            >
               <MdOutlineDeleteOutline />
             </div>
           </div>

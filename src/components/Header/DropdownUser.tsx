@@ -1,11 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
 import { FaUserCircle } from "react-icons/fa";
+import axiosInstance from "@/libs/axios";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    photo: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axiosInstance.get("/root/profile");
+        const data = response.data;
+        setFormData({
+          fullname: data.fullname || "",
+          email: data.email || "",
+          photo: data.photo || "",
+        });
+      } catch (error) {
+        console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -15,7 +40,16 @@ const DropdownUser = () => {
         href="#"
       >
         <span className="h-12 w-12 rounded-full">
-          <FaUserCircle className="text-5xl" />
+          {formData.photo ? (
+            <Image
+              src={formData.photo || "/avatar.png"}
+              width={50}
+              height={50}
+              alt="User"
+            />
+          ) : (
+            <FaUserCircle className="text-5xl" />
+          )}
         </span>
 
         <span className="flex items-center gap-2 font-medium text-dark dark:text-dark-6">
@@ -44,10 +78,10 @@ const DropdownUser = () => {
           <div className="flex items-center gap-2.5 px-5 pb-5.5 pt-3.5">
             <span className="block">
               <span className="block font-medium text-dark dark:text-white">
-                Jamshid Qayimov
+                {formData.fullname}
               </span>
               <span className="block font-medium text-dark-5 dark:text-dark-6">
-                test@nextadmin.com
+                {formData.email}
               </span>
             </span>
           </div>

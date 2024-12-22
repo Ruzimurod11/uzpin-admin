@@ -1,43 +1,39 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
-const SelectGroupOne: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
-  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
+interface SelectGroupOneProps {
+  options: { value: string; label: string }[];
+  selectedOption: string;
+  onChange: (value: string) => void;
+}
 
-  const changeTextColor = () => {
-    setIsOptionSelected(true);
-  };
-
+const SelectGroupOne: React.FC<SelectGroupOneProps> = ({
+  options,
+  selectedOption,
+  onChange,
+}) => {
   return (
     <div className="mb-4.5">
-      <label className="mb-3 block text-body-sm text-dark dark:text-white">
-        O&apos;yin turini tanlang
-      </label>
-
       <div className="relative z-20 bg-transparent dark:bg-dark-2">
         <select
           value={selectedOption}
-          onChange={(e) => {
-            setSelectedOption(e.target.value);
-            changeTextColor();
-          }}
+          onChange={(e) => onChange(e.target.value)}
           className={`relative z-20 w-full appearance-none rounded-[7px] border border-stroke bg-transparent px-5.5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary ${
-            isOptionSelected ? "text-dark dark:text-white" : ""
+            selectedOption ? "text-dark dark:text-white" : ""
           }`}
         >
           <option value="" disabled className="text-dark-6">
-            O&apos;yinlar
+            Tanlash
           </option>
-          <option value="USA" className="text-dark-6">
-            Game1
-          </option>
-          <option value="UK" className="text-dark-6">
-            Game2
-          </option>
-          <option value="Canada" className="text-dark-6">
-            Game3
-          </option>
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
+              className="text-dark-6"
+            >
+              {option.label}
+            </option>
+          ))}
         </select>
 
         <span className="absolute right-4 top-1/2 z-30 -translate-y-1/2">
