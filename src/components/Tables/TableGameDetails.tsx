@@ -59,7 +59,7 @@ const TableGameDetails = () => {
           className="col-span-2 flex cursor-pointer items-center gap-4"
         >
           <FaArrowLeft />
-          <p className="font-medium">Pubg</p>
+          <p className="font-medium">O&apos;yin Nomi</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Sotilmagan</p>
