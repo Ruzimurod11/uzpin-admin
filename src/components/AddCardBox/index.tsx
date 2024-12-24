@@ -70,7 +70,7 @@ export default function AddCardBox() {
   };
 
   const gameOptions = [
-    { value: "UZS", label: "SUMM" },
+    { value: "UZS", label: "SUM" },
     { value: "RUB", label: "RUBLE" },
     { value: "USD", label: "DOLLOR" },
   ];

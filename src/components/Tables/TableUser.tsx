@@ -101,11 +101,22 @@ const TableUser = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Yaratilgan vaqt</p>
         </div>
-        <div className="col-span-2 flex items-center px-4">
+        <div className="col-span-1 flex items-center px-4">
           <p className="font-medium">Joriy hisob</p>
         </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium"></p>
+        <div className="col-span-2 flex items-end justify-end gap-2">
+          <p className="flex items-center border-b-2 border-[green] text-body-xs font-bold text-green dark:text-dark-6">
+            100 000
+            <IoLogoUsd />
+          </p>
+
+          <p className="flex  items-center border-b-2 border-[green] text-body-xs font-bold text-green dark:text-dark-6">
+            100 000 000 S
+          </p>
+          <p className="flex items-center border-b-2 border-[green] text-body-xs font-bold text-green dark:text-dark-6">
+            10 000 000
+            <BiRuble />
+          </p>
         </div>
       </div>
 
@@ -162,13 +173,6 @@ const TableUser = () => {
                   <BiRuble />
                 </p>
               )}
-
-              {/* <p className="text-body-xs font-medium text-dark dark:text-dark-6">
-                {user.account_rub == 0 &&
-                  user.account_usd == 0 &&
-                  user.account_uzs == 0 &&
-                  "0"}
-              </p> */}
             </div>
           </div>
           <div className="col-span-1 flex cursor-pointer items-center gap-2">
