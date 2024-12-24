@@ -8,7 +8,7 @@ const ECommerce: React.FC = () => {
   return (
     <>
       <DataStatsOne />
-      {/* <ChartOne /> */}
+      <ChartOne />
       <ChartThree />
     </>
   );

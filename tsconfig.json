@@ -26,7 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Charts/ChartOne.jsx"
+    "src/components/Charts/ChartOne.tsx"
   ],
   "exclude": ["node_modules"]
 }

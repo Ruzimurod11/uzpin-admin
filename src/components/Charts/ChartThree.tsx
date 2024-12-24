@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
-import axios from "axios";
 import axiosInstance from "@/libs/axios";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
