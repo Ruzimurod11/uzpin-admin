@@ -21,7 +21,7 @@ export default function MoneyReceived() {
           }`}
           onClick={() => setActive(true)}
         >
-          Tushgan Pullar
+          Tushum
         </button>
         <button
           className={`rounded border border-slate-400 px-4 py-2 ${
@@ -34,27 +34,28 @@ export default function MoneyReceived() {
       </div>
       <div className="mb-4 flex w-full justify-between gap-5">
         <div className="flex w-full items-center gap-2 rounded bg-white px-3 py-4 dark:bg-slate-900">
-          <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
-            <MdOutlineAttachMoney />
+          <div className="rounded bg-[darkgreen] px-4 py-1 text-sm capitalize text-white">
+            Dollor
           </div>
           <p className="dark:text-slate-200">
-            Hozirgi hisob so&apos;mda: <b>123 313</b>
+            <b>1.13</b>
           </p>
         </div>
         <div className="flex w-full items-center gap-2 rounded bg-white px-3 py-4 dark:bg-slate-900">
-          <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
-            <MdOutlineAttachMoney />
+          <div className="rounded bg-[darkgreen] px-4 py-1 text-sm capitalize text-white">
+            Sum
           </div>
           <p className="dark:text-slate-200">
-            Hozirgi hisob dollorda: <b>1.13</b>
+            <b>123 313</b>
           </p>
         </div>
+
         <div className="flex w-full items-center gap-2 rounded bg-white px-3 py-4 dark:bg-slate-900">
-          <div className="rounded bg-[darkgreen] px-4 py-1 text-lg text-white">
-            <MdOutlineAttachMoney />
+          <div className="rounded bg-[darkgreen] px-4 py-1 text-sm capitalize text-white">
+            Ruble
           </div>
           <p className="dark:text-slate-200">
-            Hozirgi hisob rublda: <b>1.13</b>
+            <b>1.13</b>
           </p>
         </div>
       </div>

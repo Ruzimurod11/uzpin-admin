@@ -88,19 +88,19 @@ const TableGameDetails = () => {
           <p className="font-medium">O&apos;yin Nomi</p>
         </div>
         <div className="col-span-2 flex items-center">
-          <p className="font-medium">Sotilmagan</p>
+          <p className="font-medium">Qolgan</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Sotilgan</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Narx UZS</p>
+          <p className="font-medium">UZS</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Narx USD</p>
+          <p className="font-medium">USD</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Narx RUBLE</p>
+          <p className="font-medium">RUBLE</p>
         </div>
         <div className="col-span-2 flex items-center justify-end">
           <Link

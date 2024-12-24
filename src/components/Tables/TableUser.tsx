@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BiTransfer } from "react-icons/bi";
+import { BiRuble, BiTransfer } from "react-icons/bi";
 import { CiDollar } from "react-icons/ci";
 import { FaEye, FaMoneyBillTransfer } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
 import Pagination from "../Pagination";
+import { IoLogoUsd } from "react-icons/io5";
 
 interface User {
   id: string;
@@ -86,7 +87,7 @@ const TableUser = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
+      <div className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center">
           <p className="font-medium">E-Pochta</p>
         </div>
@@ -100,7 +101,7 @@ const TableUser = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Yaratilgan vaqt</p>
         </div>
-        <div className="col-span-1 flex items-center">
+        <div className="col-span-2 flex items-center px-4">
           <p className="font-medium">Joriy hisob</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -110,7 +111,7 @@ const TableUser = () => {
 
       {users.map((user, key) => (
         <div
-          className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
           key={user.id}
         >
           <div className="col-span-2 flex items-center">
@@ -141,17 +142,33 @@ const TableUser = () => {
               </p>
             </div>
           </div>
-          <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {user.account_uzs > 0 && user.account_uzs + "sum"}
-                {user.account_rub > 0 && user.account_rub + "rubl"}
-                {user.account_usd > 0 && user.account_usd + "usd"}
+          <div className="col-span-2 flex items-center px-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              {user.account_usd > -1 && (
+                <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                  {user.account_usd}
+                  <IoLogoUsd />
+                </p>
+              )}
+
+              {user.account_uzs > -1 && (
+                <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+                  {user.account_uzs} S
+                </p>
+              )}
+              {user.account_rub > -1 && (
+                <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                  {user.account_rub}
+                  <BiRuble />
+                </p>
+              )}
+
+              {/* <p className="text-body-xs font-medium text-dark dark:text-dark-6">
                 {user.account_rub == 0 &&
                   user.account_usd == 0 &&
                   user.account_uzs == 0 &&
                   "0"}
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="col-span-1 flex cursor-pointer items-center gap-2">
