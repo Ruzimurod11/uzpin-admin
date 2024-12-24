@@ -8,8 +8,8 @@ const ECommerce: React.FC = () => {
   return (
     <>
       <DataStatsOne />
-      {/* <ChartOne />
-      <ChartThree /> */}
+      {/* <ChartOne /> */}
+      <ChartThree />
     </>
   );
 };

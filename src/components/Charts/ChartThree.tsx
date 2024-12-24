@@ -1,34 +1,65 @@
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
-import React from "react";
-import ReactApexChart from "react-apexcharts";
+import axios from "axios";
+import axiosInstance from "@/libs/axios";
+
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const ChartThree: React.FC = () => {
-  const [state, setState] = React.useState<{
+  const [chartData, setChartData] = useState<{
     series: number[];
     options: ApexOptions;
-  }>({
-    series: [65, 34, 12, 56],
-    options: {
-      chart: {
-        width: 380,
-        type: "pie",
-      },
-      labels: ["60UC", "120UC", "180UC", "1200UC"],
-      responsive: [
-        {
-          breakpoint: 480,
+  } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/root/analytics/top");
+        const data = response.data;
+
+        // Convert fetched data to chart format
+        const labels = data.map(
+          (item: { promocode: string }) => item.promocode,
+        );
+        const series = data.map((item: { count: number }) => item.count);
+
+        setChartData({
+          series,
           options: {
             chart: {
-              width: 200,
+              type: "pie",
+              width: 380,
             },
-            legend: {
-              position: "bottom",
-            },
+            labels,
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200,
+                  },
+                  legend: {
+                    position: "bottom",
+                  },
+                },
+              },
+            ],
           },
-        },
-      ],
-    },
-  });
+        });
+      } catch (error) {
+        setError("Ma'lumotlarni yuklashda xatolik yuz berdi.");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!chartData) return <p>Yuklanmoqda...</p>;
 
   return (
     <div className="col-span-12 rounded-[10px] bg-white px-7.5 pb-7 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card xl:col-span-5">
@@ -39,12 +70,11 @@ const ChartThree: React.FC = () => {
           </h4>
         </div>
       </div>
-
       <div className="mb-8">
         <div className="mx-auto flex justify-center">
           <ReactApexChart
-            options={state.options}
-            series={state.series}
+            options={chartData.options}
+            series={chartData.series}
             type="pie"
             width={380}
           />

@@ -3,7 +3,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import CustomCalendar from "./CustomCalendar";
 
-const ChartOne: React.FC = () => {
+const ChartOne = () => {
   const series = [
     {
       name: "Received Amount",
@@ -11,7 +11,7 @@ const ChartOne: React.FC = () => {
     },
   ];
 
-  const options: ApexOptions = {
+  const options = {
     legend: {
       show: false,
       position: "top",
