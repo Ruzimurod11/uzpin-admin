@@ -19,7 +19,10 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= count; i++) {
+    const startPage = Math.max(1, page - 1);
+    const endPage = Math.min(count, page + 1);
+
+    for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <button
           key={i}

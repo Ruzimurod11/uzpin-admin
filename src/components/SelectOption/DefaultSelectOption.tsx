@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ClickOutside from "@/components/ClickOutside";
+import { IoIosArrowDown } from "react-icons/io";
 
 const DefaultSelectOption = ({ options }: any) => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
@@ -21,21 +22,7 @@ const DefaultSelectOption = ({ options }: any) => {
           <span
             className={`absolute right-2.5 top-1/2 z-10 -translate-y-1/2 ${isOpen && "rotate-180"}`}
           >
-            <svg
-              className="fill-current"
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M3.32293 6.38394C3.5251 6.14807 3.88021 6.12075 4.11608 6.32293L9.00001 10.5092L13.8839 6.32293C14.1198 6.12075 14.4749 6.14807 14.6771 6.38394C14.8793 6.61981 14.8519 6.97492 14.6161 7.17709L9.36608 11.6771C9.15543 11.8576 8.84459 11.8576 8.63394 11.6771L3.38394 7.17709C3.14807 6.97492 3.12075 6.61981 3.32293 6.38394Z"
-                fill=""
-              />
-            </svg>
+            <IoIosArrowDown />
           </span>
         </div>
         {isOpen && (

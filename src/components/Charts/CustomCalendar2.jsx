@@ -42,7 +42,7 @@ const CustomCalendar = () => {
   return (
     <div className="relative">
       <button
-        className="rounded-md border p-2 font-medium uppercase text-dark dark:text-dark-6"
+        className="rounded-md border p-2 text-sm font-medium uppercase text-dark dark:text-dark-6"
         onClick={toggleCalendar}
       >
         {`${dateRange[0].startDate.toLocaleDateString()} - ${dateRange[0].endDate.toLocaleDateString()}`}

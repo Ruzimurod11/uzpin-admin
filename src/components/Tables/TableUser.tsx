@@ -8,6 +8,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
 import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
+import Pagination from "../Pagination";
 
 interface User {
   id: string;
@@ -25,21 +26,36 @@ interface User {
 const TableUser = () => {
   const [active, setActive] = useState(true);
   const [users, setUser] = useState<User[]>([]);
+  const [next, setNext] = useState();
+  const [prev, setPrev] = useState();
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
 
+  const fetchStats = async (
+    url = `/root/customer/list?is_seller=${!active}`,
+  ) => {
+    try {
+      const response = await axiosInstance.get(url);
+      setUser(response.data.results || []);
+      setNext(response.data.next);
+      setPrev(response.data.previous);
+      setCount(Math.ceil(response.data.count / response.data.page_size));
+    } catch (error) {
+      console.error("Ma'lumotlarni yuklashda xatolik:", error);
+    }
+  };
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/root/customer/list?is_seller=${!active}`,
-        );
-        setUser(response.data.results || []);
-      } catch (error) {
-        console.error("Ma'lumotlarni yuklashda xatolik:", error);
-      }
-    };
-
     fetchStats();
   }, [active]);
+
+  const handlePageChange = (newPage: any) => {
+    if (newPage > page && next) {
+      fetchStats(next);
+    } else if (newPage < page && prev) {
+      fetchStats(prev);
+    }
+    setPage(newPage);
+  };
   function convertTime(timeStr: string) {
     const date = new Date(timeStr);
     return date.toISOString().slice(0, 19).replace("T", " ");
@@ -160,6 +176,7 @@ const TableUser = () => {
           </div>
         </div>
       ))}
+      <Pagination count={count} page={page} onPageChange={handlePageChange} />
     </div>
   );
 };
