@@ -17,29 +17,11 @@ const DropdownUser = () => {
       localStorage.getItem("profile") &&
       JSON.parse(localStorage.getItem("profile") || "");
 
-    if (!profileData) {
-      const fetchProfileData = async () => {
-        try {
-          const response = await axiosInstance.get("/root/profile");
-          const data = response.data;
-          setFormData({
-            fullname: data.fullname || "",
-            email: data.email || "",
-            photo: data.photo || "",
-          });
-          localStorage.setItem("profile", JSON.stringify(data));
-        } catch (error) {
-          console.error("Ma'lumotlarni yuklashda xatolik:", error);
-        }
-      };
-      fetchProfileData();
-    } else {
-      setFormData({
-        fullname: profileData.fullname || "",
-        email: profileData.email || "",
-        photo: profileData.photo || "",
-      });
-    }
+    setFormData({
+      fullname: profileData.fullname || "",
+      email: profileData.email || "",
+      photo: profileData.photo || "",
+    });
   }, []);
 
   return (

@@ -146,7 +146,7 @@ const TableUser = () => {
               <FiEdit2 />
             </Link>
             <Link
-              href={"money-received"}
+              href={`money-received?${user.id}`}
               className="rounded bg-[darkblue] px-3 py-1 text-white"
             >
               <FaMoneyBillTransfer />

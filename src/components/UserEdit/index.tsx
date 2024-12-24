@@ -79,7 +79,7 @@ const UserEdit = () => {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px]"
               options={["Oddiy Mijoz", "Sotuvchi"]}
               onChange={(e: any) =>
-                handleOptionChange("is_seller", e === "Sotuvchi")
+                handleOptionChange("is_seller", e === "Sotuvchi" ? true : false)
               }
             />
           </div>
@@ -91,7 +91,7 @@ const UserEdit = () => {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px]"
               options={["Faol", "Faol Emas"]}
               onChange={(e: any) =>
-                handleOptionChange("is_active", e === "Faol")
+                handleOptionChange("is_active", e === "Faol" ? true : false)
               }
             />
           </div>

@@ -1,13 +1,34 @@
-const productData = [
-  {
-    price: "50,000,000",
-    valyuta: "SUMM",
-    addDate: "26.11.2024 09:15",
-    active: "Tasdiqlandi",
-  },
-];
+import axiosInstance from "@/libs/axios";
+import { useEffect, useState } from "react";
 
-const TableMoneyRecived = () => {
+interface Info {
+  status: string;
+  currency: string;
+  amount: number;
+  chek: string;
+  created: string;
+}
+
+const TableMoneyRecived = ({ id }: any) => {
+  const [data, setData] = useState<Info[]>([]);
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/root/customer/${id}/transactions`,
+        );
+        setData(response.data.results || []);
+      } catch (error) {
+        console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchStats();
+  }, [id]);
+  function convertTime(timeStr: string) {
+    const date = new Date(timeStr);
+    return date.toISOString().slice(0, 19).replace("T", " ");
+  }
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-4 md:px-6 2xl:px-7.5">
@@ -25,7 +46,7 @@ const TableMoneyRecived = () => {
         </div>
       </div>
 
-      {productData.map((product, key) => (
+      {data.map((product, key) => (
         <div
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-4 md:px-6 2xl:px-7.5"
           key={key}
@@ -33,23 +54,23 @@ const TableMoneyRecived = () => {
           <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}. {product.price}
+                {key + 1}. {product.amount}
               </p>
             </div>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.valyuta}
+              {product.currency}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.addDate}
+              {convertTime(product.created)}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.active}
+              {product.chek ? "Tasdiqlangan" : "Bekor qilingan"}
             </p>
           </div>
         </div>

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 
-// Kartalar uchun interfeys
 interface Card {
   id: string;
   photo: string;
@@ -25,7 +24,6 @@ const TableCard = () => {
       try {
         const response = await axiosInstance.get("/root/card/list");
         setCards(response.data.results || []);
-        console.log(response.data.results);
       } catch (error) {
         console.error("Kartalarni yuklashda xatolik:", error);
       }

@@ -6,6 +6,8 @@ import { FaRegUser } from "react-icons/fa6";
 import { LuPhone } from "react-icons/lu";
 import { CiMail } from "react-icons/ci";
 import axiosInstance from "@/libs/axios";
+import { useRouter } from "next/navigation";
+import InputMask from "react-input-mask";
 
 const SettingBoxes = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ const SettingBoxes = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -30,6 +33,7 @@ const SettingBoxes = () => {
           phone: data.phone || "",
           photo: data.photo || "",
         });
+        localStorage.setItem("profile", JSON.stringify(data));
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
       }
@@ -72,10 +76,10 @@ const SettingBoxes = () => {
 
     try {
       await axiosInstance.put("/root/profile", updatedData);
-      console.log("Ma'lumotlar muvaffaqiyatli saqlandi!");
+      localStorage.setItem("profile", JSON.stringify(updatedData));
+      // location.reload();
     } catch (error) {
       console.error("Ma'lumotlarni saqlashda xatolik:", error);
-      console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
     } finally {
       setLoading(false);
     }
@@ -127,7 +131,8 @@ const SettingBoxes = () => {
                     <span className="absolute left-4.5 top-1/2 -translate-y-1/2">
                       <LuPhone />
                     </span>
-                    <input
+                    <InputMask
+                      mask="+999 (99)-999-99-99"
                       className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 pl-12.5 pr-4.5 text-dark focus:border-primary focus-visible:outline-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
                       type="text"
                       name="phone"

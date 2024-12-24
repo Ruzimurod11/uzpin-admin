@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Product } from "../../../types/product";
 import { FaEye } from "react-icons/fa6";
@@ -5,38 +6,50 @@ import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import SearchForm from "../Header/SearchForm";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/libs/axios";
 
-const productData = [
-  {
-    name: "💵 325 UC",
-    userName: "santauc@gmail.com",
-    amout: 10,
-    price: 3.9,
-    allPrice: 39,
-    valyuta: "USD",
-    salesType: "Uzpinidbot",
-    create_at: "07.12.2024 07:57",
-  },
-  {
-    name: "💵 25 UC",
-    userName: "santauc@gmail.com",
-    amout: 10,
-    price: 3.9,
-    allPrice: 39,
-    valyuta: "USD",
-    salesType: "Uzpinidbot",
-    create_at: "07.12.2024 07:57",
-  },
-];
+interface Info {
+  id: string;
+  email: string;
+  phone: string;
+  fullname: string;
+  game: string;
+  promocode: string;
+  count: number;
+  price: number;
+  amount: number;
+  currency: string;
+  sold_type: string;
+  created: string;
+}
 
 const TableSalesPromoBox = () => {
+  const [data, setData] = useState<Info[]>([]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axiosInstance.get(`/root/sold/list`);
+        setData(response.data.results || []);
+      } catch (error) {
+        console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+  function convertTime(timeStr: string) {
+    const date = new Date(timeStr);
+    return date.toISOString().slice(0, 19).replace("T", " ");
+  }
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
           Sotilgan promokodlar
         </h4>
-        <SearchForm/>
+        <SearchForm />
       </div>
 
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5">
@@ -66,7 +79,7 @@ const TableSalesPromoBox = () => {
         </div>
       </div>
 
-      {productData.map((product, key) => (
+      {data.map((product, key) => (
         <div
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5"
           key={key}
@@ -74,18 +87,18 @@ const TableSalesPromoBox = () => {
           <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}. {product.name}
+                {key + 1}. 💵 {product.promocode}
               </p>
             </div>
           </div>
           <div className="col-span-2 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.userName}
+              {product.fullname}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.amout}
+              {product.count}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
@@ -95,37 +108,24 @@ const TableSalesPromoBox = () => {
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.allPrice}
+              {product.amount}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.valyuta}
+              {product.currency}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.salesType}
+              {product.sold_type}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.create_at}
+            <p className="text-body-xs font-medium text-dark dark:text-dark-6">
+              {convertTime(product.created)}
             </p>
           </div>
-          {/* <div className="col-span-1 flex cursor-pointer items-center gap-2">
-            <div className="rounded bg-blue-600 px-3 py-1 text-white">
-              <FaEye />
-            </div>
-            <Link href="games-create">
-              <div className="rounded bg-[orange] px-3 py-1 text-white">
-                <FiEdit2 />
-              </div>
-            </Link>
-            <div className="rounded bg-[red] px-3 py-1 text-white">
-              <MdOutlineDeleteOutline />
-            </div>
-          </div> */}
         </div>
       ))}
     </div>

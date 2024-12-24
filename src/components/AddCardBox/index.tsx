@@ -1,7 +1,7 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import SwitcherThree from "@/components/SelectOption/SwitcherThree";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from "@/libs/axios";
 import UploadComponent from "@/components/UploadComponent";
 import SelectGroupOne from "@/components/SelectGame/SelectGroupOne";
