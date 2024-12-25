@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import User from "@/components/User";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
 const UserPage = () => {
   return (
     <DefaultLayout>
-      <User />
+      <Suspense fallback={<p>Yuklanmoqda...</p>}>
+        <User />
+      </Suspense>
     </DefaultLayout>
   );
 };

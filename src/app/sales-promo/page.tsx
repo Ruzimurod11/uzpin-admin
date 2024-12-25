@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import SalesPromoBox from "@/components/SalesPromo";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Sotilgan Promokodlar",
@@ -11,10 +12,11 @@ export const metadata: Metadata = {
 const GamesPage = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto max-w-7xl">
-        {/* <Breadcrumb pageName="Sotilgan Promokodlar" /> */}
-        <SalesPromoBox />
-      </div>
+      <Suspense fallback={<p>Yuklanmoqda...</p>}>
+        <div className="mx-auto max-w-7xl">
+          <SalesPromoBox />
+        </div>
+      </Suspense>
     </DefaultLayout>
   );
 };
