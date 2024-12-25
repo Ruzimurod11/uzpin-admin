@@ -7,6 +7,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Pagination from "../Pagination";
 import Loader from "../common/Loader";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
 
 interface Promo {
   id: string;
@@ -15,13 +16,15 @@ interface Promo {
   is_sold: boolean;
   created: string;
 }
+
 const TableAllPromo = () => {
   const [productData, setProductData] = useState<Promo[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const router = useRouter();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const getIdFromPathname = () => {
     if (typeof window !== "undefined") {
       const pathParts = window.location.pathname.split("/");
@@ -50,19 +53,52 @@ const TableAllPromo = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchPromocodes(currentPage);
   }, [currentPage, id]);
 
-  function convertTime(timeStr: string) {
+  const convertTime = (timeStr: string) => {
     const date = new Date(timeStr);
     return date.toISOString().slice(0, 19).replace("T", " ");
-  }
+  };
+
   const goBack = () => {
     router.back();
   };
 
+  const handleCheckboxChange = (promoId: string, isChecked: boolean) => {
+    setSelectedIds((prevSelected) =>
+      isChecked
+        ? [...prevSelected, promoId]
+        : prevSelected.filter((id) => id !== promoId),
+    );
+  };
+
+  const deleteSelectedPromos = async () => {
+    if (selectedIds.length === 0) {
+      return false;
+    }
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.post("/root/game/promocodevalues/delete", {
+        ids: selectedIds,
+      });
+      setProductData((prevData) =>
+        prevData.filter((promo) => !selectedIds.includes(promo.id)),
+      );
+      setSelectedIds([]);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Elementlarni o'chirishda xatolik:", error);
+    }
+  };
+
   if (loading) return <Loader />;
+
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
@@ -71,7 +107,7 @@ const TableAllPromo = () => {
           className="col-span-2 flex cursor-pointer items-center gap-4"
         >
           <FaArrowLeft />
-          <p className="font-medium">Promokoda</p>
+          <p className="font-medium">Promokod</p>
         </div>
         <div className="col-span-4 flex items-center">
           <p className="font-medium">Kod</p>
@@ -83,20 +119,29 @@ const TableAllPromo = () => {
           <p className="font-medium">Yaratilgan sana</p>
         </div>
         <div className="col-span-1 flex items-center justify-end">
-          <div className="rounded bg-[red] px-3 py-1 text-white">
+          <button
+            className="rounded bg-red-500 px-3 py-1 text-white"
+            onClick={deleteSelectedPromos}
+          >
             <MdOutlineDeleteOutline />
-          </div>
+          </button>
         </div>
       </div>
 
       {productData.length > 0 &&
-        productData.map((product, key) => (
+        productData.map((product) => (
           <div
             className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
             key={product?.id}
           >
             <div className="col-span-2 flex items-center gap-4">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={(e) =>
+                  handleCheckboxChange(product.id, e.target.checked)
+                }
+                checked={selectedIds.includes(product.id)}
+              />
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                 {product?.promocode}
               </p>
@@ -119,6 +164,7 @@ const TableAllPromo = () => {
             <div className="col-span-1 flex cursor-pointer items-center gap-2"></div>
           </div>
         ))}
+
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
@@ -126,6 +172,13 @@ const TableAllPromo = () => {
           onPageChange={(page) => setCurrentPage(page)}
         />
       )}
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={() => handleDelete()}
+        title="Siz ushbu malumotni o'chirmoqchimisiz?"
+        description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
     </div>
   );
 };

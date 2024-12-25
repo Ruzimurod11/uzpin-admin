@@ -184,7 +184,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
             </p>
           </div>
           <div className="col-span-3 flex items-center justify-center">
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
                 {product.total_amount.USD}
                 <IoLogoUsd />
@@ -200,7 +200,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
             </div>
           </div>
           <div className="col-span-3 flex items-center justify-center">
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
                 {product.benefit.USD}
                 <IoLogoUsd />

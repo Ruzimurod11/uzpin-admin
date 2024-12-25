@@ -8,6 +8,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
 
 interface Game {
   id: string;
@@ -25,6 +26,7 @@ const TableGameDetails = () => {
 
   const [data, setData] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState("");
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -48,7 +50,11 @@ const TableGameDetails = () => {
     router.back();
   };
 
-  const DeleteGame = async (gameId: string) => {
+  const DeleteGame = (id: any) => {
+    setIsModalOpen(id);
+  };
+
+  const handleDelete = async (gameId: string) => {
     try {
       await axiosInstance.delete(`/root/game/promocodes/${gameId}/detail`);
       setData((prevData) => prevData.filter((game) => game.id !== gameId));
@@ -71,6 +77,7 @@ const TableGameDetails = () => {
       );
       console.log("Promokod muvaffaqiyatli qo'shildi:", response.data);
       setModal(false);
+      router.push(`/games/0/${productId}`);
     } catch (error) {
       console.error("Promokodni yuborishda xatolik:", error);
     }
@@ -113,7 +120,6 @@ const TableGameDetails = () => {
           >
             +
           </Link>
-          {/* <p className="font-medium"></p> */}
         </div>
       </div>
 
@@ -231,6 +237,13 @@ const TableGameDetails = () => {
           </div>
         </div>
       )}
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        onConfirm={() => handleDelete(isModalOpen)}
+        title="Siz ushbu malumotni o'chirmoqchimisiz?"
+        description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
     </div>
   );
 };

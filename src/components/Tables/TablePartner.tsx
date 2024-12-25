@@ -8,6 +8,7 @@ import axiosInstance from "@/libs/axios";
 import { log } from "console";
 import { useSearchParams } from "next/navigation";
 import Loader from "../common/Loader";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
 
 interface Partner {
   id: string;
@@ -16,7 +17,7 @@ interface Partner {
   banner_uz: string;
   banner_ru: string;
   banner_en: string;
-  icon?: string;
+  logo?: string;
 }
 
 const TablePartner = () => {
@@ -27,13 +28,15 @@ const TablePartner = () => {
   const fullQuery = searchParams?.toString();
   const extractedValue = fullQuery?.split("=")[0];
 
+  const [isModalOpen, setIsModalOpen] = useState("");
+
   useEffect(() => {
     const fetchPartners = async () => {
       setLoading(true);
       try {
         const response = await axiosInstance.get("/root/bot/list");
         setPartners(response.data.results || []);
-        console.log(response.data.results, "test");
+        console.log(response.data.results);
       } catch (error) {
         console.error("Hamkorlarni yuklashda xatolik:", error);
       } finally {
@@ -44,10 +47,14 @@ const TablePartner = () => {
     fetchPartners();
   }, []);
 
-  const DeleteGame = async (gameId: string) => {
+  const DeleteGame = (id: any) => {
+    setIsModalOpen(id);
+  };
+  const handleDelete = async (gameId: string) => {
     try {
       await axiosInstance.delete(`/root/bot/${gameId}/delete`);
       setPartners((prevData) => prevData.filter((game) => game.id !== gameId));
+      setIsModalOpen("");
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
@@ -84,7 +91,7 @@ const TablePartner = () => {
           <p className="font-medium">Banner En</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Hamkor Icon</p>
+          <p className="font-medium">Hamkor Logo</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium"></p>
@@ -140,9 +147,9 @@ const TablePartner = () => {
           </div>
           <div className="col-span-1 flex items-center">
             <div className="h-12.5 w-15 rounded-md">
-              {partner.icon && (
+              {partner.logo && (
                 <Image
-                  src={partner.icon}
+                  src={partner.logo}
                   width={60}
                   height={50}
                   alt="En Banner"
@@ -167,6 +174,13 @@ const TablePartner = () => {
           </div>
         </div>
       ))}
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        onConfirm={() => handleDelete(isModalOpen)}
+        title="Siz ushbu hamkorni o'chirmoqchimisiz?"
+        description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
     </div>
   );
 };

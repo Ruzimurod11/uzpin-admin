@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
 
 interface Card {
   id: string;
@@ -20,6 +21,7 @@ interface Card {
 const TableCard = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState("");
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -37,10 +39,15 @@ const TableCard = () => {
     fetchCards();
   }, []);
 
-  const DeleteGame = async (gameId: string) => {
+  const DeleteGame = (id: any) => {
+    setIsModalOpen(id);
+  };
+
+  const handleDelete = async (gameId: string) => {
     try {
       await axiosInstance.delete(`/root/card/${gameId}/detail`);
       setCards((prevData) => prevData.filter((game) => game.id !== gameId));
+      setIsModalOpen("");
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
@@ -135,6 +142,13 @@ const TableCard = () => {
           </div>
         </div>
       ))}
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen("")}
+        onConfirm={() => handleDelete(isModalOpen)}
+        title="Siz ushbu malumotni o'chirmoqchimisiz?"
+        description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
     </div>
   );
 };
