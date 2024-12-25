@@ -54,6 +54,10 @@ const TableAllPromo = () => {
     return <div>Yuklanmoqda...</div>;
   }
 
+  function convertTime(timeStr: string) {
+    const date = new Date(timeStr);
+    return date.toISOString().slice(0, 19).replace("T", " ");
+  }
   const goBack = () => {
     router.back();
   };
@@ -107,7 +111,7 @@ const TableAllPromo = () => {
             </div>
             <div className="col-span-2 flex items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {new Date(product?.created).toLocaleDateString("uz-UZ")}
+                {convertTime(product?.created)}
               </p>
             </div>
             <div className="col-span-1 flex cursor-pointer items-center gap-2"></div>

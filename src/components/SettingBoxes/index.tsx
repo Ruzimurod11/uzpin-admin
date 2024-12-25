@@ -33,7 +33,6 @@ const SettingBoxes = () => {
           phone: data.phone || "",
           photo: data.photo || "",
         });
-        localStorage.setItem("profile", JSON.stringify(data));
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
       }

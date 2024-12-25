@@ -24,8 +24,10 @@ export default function Signin() {
       });
 
       const accessToken = response.data.access;
+      console.log(response.data, "login");
 
       Cookies.set("access_token", accessToken, { expires: 7, path: "" });
+      localStorage.setItem("profile", JSON.stringify(response.data));
       router.push("/");
     } catch (error: any) {
       console.error(

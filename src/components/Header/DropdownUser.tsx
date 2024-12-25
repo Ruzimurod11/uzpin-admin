@@ -35,8 +35,7 @@ const DropdownUser = () => {
           {formData.photo ? (
             <Image src={formData.photo} width={50} height={50} alt="User" />
           ) : (
-            // <FaUserCircle className="text-5xl" />
-            ""
+            <FaUserCircle className="text-5xl" />
           )}
         </span>
 
