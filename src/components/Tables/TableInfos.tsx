@@ -4,6 +4,7 @@ import CustomCalendar2 from "../Charts/CustomCalendar2";
 import { BiRuble } from "react-icons/bi";
 import { IoLogoUsd } from "react-icons/io5";
 import Loader from "../common/Loader";
+import CustomCalendar from "../Charts/CustomCalendar";
 
 interface Card {
   promocode: string;
@@ -24,12 +25,24 @@ const TableInfos = ({ name }: TableInfosProps) => {
   const [selectedGame, setSelectedGame] = useState<string>("");
   const [loadings, setLoadings] = useState(false);
 
+  const [time, setTime] = useState("");
+  const handleDateChange = (startDate: string, endDate: string) => {
+    const newTime = new URLSearchParams({
+      start_date: startDate,
+      end_date: endDate,
+    }).toString();
+
+    setTime(newTime);
+    console.log(newTime, "queryParams");
+  };
+
   const fetchCards = async (bot = "", game = "") => {
     setLoadings(true);
     try {
       const queryParams: string[] = [];
       if (bot) queryParams.push(`bot=${bot}`);
       if (game) queryParams.push(`game=${game}`);
+      if (time) queryParams.push(`${time}`);
       const queryString =
         queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
 
@@ -70,8 +83,11 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
   useEffect(() => {
     fetchCards();
-    fetchBots();
+  }, [time]);
+
+  useEffect(() => {
     fetchGames();
+    fetchBots();
   }, []);
 
   const handleBotChange = (selected: string) => {
@@ -133,7 +149,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         </div>
         <div className="col-span-2 flex items-center justify-center gap-2"></div>
         <div className="col-span-2 flex items-center justify-center gap-2">
-          Saralash: <CustomCalendar2 />
+          Saralash: <CustomCalendar onDateChange={handleDateChange} />
         </div>
       </div>
 

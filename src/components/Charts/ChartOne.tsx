@@ -4,6 +4,7 @@ import CustomCalendar from "./CustomCalendar";
 import { ApexOptions } from "apexcharts";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
+import { useRouter } from "next/navigation";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -16,16 +17,29 @@ const ChartOne = () => {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const [time, setTime] = useState("");
+
+  const handleDateChange = (startDate: string, endDate: string) => {
+    const queryParams = new URLSearchParams({
+      start_date: startDate,
+      end_date: endDate,
+    }).toString();
+
+    setTime(queryParams);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("/root/analytics/line");
+        const response = await axiosInstance.get(
+          `/root/analytics/line?${time}`,
+        );
         const data = response.data;
+        console.log(response.data, "test");
 
-        // Transform data to fit chart format
         const categories = data.map((item: { date: string }) => {
-          const [month, year] = item.date.split("-");
-          return `22/${month}`;
+          const [month, day] = item.date.split("-");
+          return `${day}/${month}`;
         });
         const seriesData = data.map(
           (item: { total_sales: number }) => item.total_sales,
@@ -140,7 +154,9 @@ const ChartOne = () => {
     };
 
     fetchData();
-  }, []);
+  }, [time]);
+
+  const router = useRouter();
 
   if (error) return <p className="text-red-500">{error}</p>;
   if (!chartData) return <Loader />;
@@ -153,7 +169,7 @@ const ChartOne = () => {
             Oxirgi Bir Oyda Sotilgan Kodlar
           </h4>
         </div>
-        <CustomCalendar />
+        <CustomCalendar onDateChange={handleDateChange} />
       </div>
       <div>
         <div className="-ml-4 -mr-5">

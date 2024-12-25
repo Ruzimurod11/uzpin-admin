@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // Kalendar uslubi
-import "react-date-range/dist/theme/default.css"; // Tema uslubi
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
-const CustomCalendar = () => {
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false); // Kalendarni ko'rsatish/nodon holati
+const CustomCalendar = ({ onDateChange }) => {
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateRange, setDateRange] = useState([
     {
-      startDate: new Date(new Date().setDate(new Date().getDate() - 30)), // 30 kun oldingi sana
+      startDate: new Date(new Date().setDate(new Date().getDate() - 30)),
       endDate: new Date(),
       key: "selection",
     },
@@ -15,6 +15,13 @@ const CustomCalendar = () => {
 
   const toggleCalendar = () => {
     setIsCalendarOpen(!isCalendarOpen);
+  };
+
+  const applyDateRange = () => {
+    const startDate = dateRange[0].startDate.toISOString().split("T")[0];
+    const endDate = dateRange[0].endDate.toISOString().split("T")[0];
+    onDateChange(startDate, endDate);
+    toggleCalendar();
   };
 
   return (
@@ -36,7 +43,7 @@ const CustomCalendar = () => {
           />
           <button
             className="mx-auto mt-2 w-full rounded bg-blue-500 px-4 py-2 text-white"
-            onClick={toggleCalendar}
+            onClick={applyDateRange}
           >
             Apply
           </button>
