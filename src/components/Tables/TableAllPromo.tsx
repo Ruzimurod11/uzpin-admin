@@ -5,6 +5,8 @@ import axiosInstance from "@/libs/axios";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import Pagination from "../Pagination";
+import Loader from "../common/Loader";
 
 interface Promo {
   id: string;
@@ -16,6 +18,8 @@ interface Promo {
 const TableAllPromo = () => {
   const [productData, setProductData] = useState<Promo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
 
   const getIdFromPathname = () => {
@@ -28,31 +32,27 @@ const TableAllPromo = () => {
 
   const id = getIdFromPathname();
 
+  const fetchPromocodes = async (page: number) => {
+    if (!id) {
+      console.error("ID aniqlanmadi!");
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(
+        `/root/game/promocodevalues/${id}?page=${page}`,
+      );
+      setProductData(response.data.results || []);
+      setTotalPages(Math.ceil(response.data.count / 10));
+    } catch (error) {
+      console.error("Ma'lumotlarni yuklashda xatolik:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchPromocodes = async () => {
-      if (!id) {
-        console.error("ID aniqlanmadi!");
-        return;
-      }
-
-      try {
-        const response = await axiosInstance.get(
-          `/root/game/promocodevalues/${id}`,
-        );
-        setProductData(response.data.results || []);
-      } catch (error) {
-        console.error("Ma'lumotlarni yuklashda xatolik:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPromocodes();
-  }, [id]);
-
-  if (loading) {
-    return <div>Yuklanmoqda...</div>;
-  }
+    fetchPromocodes(currentPage);
+  }, [currentPage, id]);
 
   function convertTime(timeStr: string) {
     const date = new Date(timeStr);
@@ -61,6 +61,8 @@ const TableAllPromo = () => {
   const goBack = () => {
     router.back();
   };
+
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
@@ -69,7 +71,7 @@ const TableAllPromo = () => {
           className="col-span-2 flex cursor-pointer items-center gap-4"
         >
           <FaArrowLeft />
-          <p className="font-medium">Promokod</p>
+          <p className="font-medium">Promokoda</p>
         </div>
         <div className="col-span-4 flex items-center">
           <p className="font-medium">Kod</p>
@@ -117,6 +119,13 @@ const TableAllPromo = () => {
             <div className="col-span-1 flex cursor-pointer items-center gap-2"></div>
           </div>
         ))}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import axiosInstance from "@/libs/axios";
 import { useEffect, useState } from "react";
+import Pagination from "../Pagination";
+import Loader from "../common/Loader";
 
 interface Info {
   game: string;
@@ -14,25 +16,33 @@ interface Info {
 
 const TableExpenses = ({ id }: any) => {
   const [data, setData] = useState<Info[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchStats = async (page: number) => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get(
-          `/root/customer/${id}/expenses`,
+          `/root/customer/${id}/expenses?page=${page}`,
         );
         setData(response.data.results || []);
+        setTotalPages(Math.ceil(response.data.count / 10));
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchStats();
-  }, [id]);
+    fetchStats(currentPage);
+  }, [id, currentPage]);
   function convertTime(timeStr: string) {
     const date = new Date(timeStr);
     return date.toISOString().slice(0, 19).replace("T", " ");
   }
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
@@ -100,6 +110,13 @@ const TableExpenses = ({ id }: any) => {
         <div className=" border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
           <p></p>
         </div>
+      )}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       )}
     </div>
   );

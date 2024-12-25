@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import { log } from "console";
 import { useSearchParams } from "next/navigation";
+import Loader from "../common/Loader";
 
 interface Partner {
   id: string;
@@ -15,25 +16,28 @@ interface Partner {
   banner_uz: string;
   banner_ru: string;
   banner_en: string;
+  icon?: string;
 }
 
 const TablePartner = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
 
   const fullQuery = searchParams?.toString();
   const extractedValue = fullQuery?.split("=")[0];
 
-  console.log("Extracted Value:", extractedValue);
-
   useEffect(() => {
     const fetchPartners = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get("/root/bot/list");
         setPartners(response.data.results || []);
         console.log(response.data.results, "test");
       } catch (error) {
         console.error("Hamkorlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -48,7 +52,7 @@ const TablePartner = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
-
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
@@ -63,9 +67,9 @@ const TablePartner = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-6 md:px-6 2xl:px-7.5">
+      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Nomi</p>
+          <p className="font-medium">Hamkor Nomi</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Bot Nomi</p>
@@ -80,25 +84,28 @@ const TablePartner = () => {
           <p className="font-medium">Banner En</p>
         </div>
         <div className="col-span-1 flex items-center">
+          <p className="font-medium">Hamkor Icon</p>
+        </div>
+        <div className="col-span-1 flex items-center">
           <p className="font-medium"></p>
         </div>
       </div>
 
       {partners.map((partner, index) => (
         <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-6 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5"
           key={partner.id}
         >
           <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {index + 1}. {partner.firstname}
+                {index + 1}. {partner.partner_name}
               </p>
             </div>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {partner.partner_name}
+              {partner.firstname}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
@@ -129,6 +136,18 @@ const TablePartner = () => {
                 height={50}
                 alt="En Banner"
               />
+            </div>
+          </div>
+          <div className="col-span-1 flex items-center">
+            <div className="h-12.5 w-15 rounded-md">
+              {partner.icon && (
+                <Image
+                  src={partner.icon}
+                  width={60}
+                  height={50}
+                  alt="En Banner"
+                />
+              )}
             </div>
           </div>
 

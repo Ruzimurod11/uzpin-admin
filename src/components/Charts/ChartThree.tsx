@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import axiosInstance from "@/libs/axios";
+import Loader from "../common/Loader";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -58,7 +59,7 @@ const ChartThree: React.FC = () => {
   }, []);
 
   if (error) return <p className="text-red-500">{error}</p>;
-  if (!chartData) return <p>Yuklanmoqda...</p>;
+  if (!chartData) return <Loader />;
 
   return (
     <div className="col-span-12 rounded-[10px] bg-white px-7.5 pb-7 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card xl:col-span-5">

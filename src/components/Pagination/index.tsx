@@ -1,68 +1,61 @@
 import React from "react";
 
 interface PaginationProps {
-  count: number;
-  page: number;
+  currentPage: number;
+  totalPages: number;
   onPageChange: (page: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
-  count,
-  page,
+  currentPage,
+  totalPages,
   onPageChange,
 }) => {
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= count) {
-      onPageChange(newPage);
+  const getDisplayedPages = () => {
+    const pages: (number | string)[] = [];
+
+    if (totalPages <= 3) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage > 2) pages.push(1, "...");
+      if (currentPage === 1) {
+        pages.push(currentPage, currentPage + 1);
+      } else if (currentPage === totalPages) {
+        pages.push(currentPage - 1, currentPage);
+      } else {
+        pages.push(currentPage - 1, currentPage, currentPage + 1);
+      }
+      if (currentPage < totalPages - 1) pages.push("...", totalPages);
     }
+
+    return pages;
   };
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const startPage = Math.max(1, page - 1);
-    const endPage = Math.min(count, page + 1);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          onClick={() => handlePageChange(i)}
-          className={`mx-1 rounded border px-3 py-1 ${
-            i === page ? "bg-blue-500 text-white" : "bg-white text-black"
-          }`}
-        >
-          {i}
-        </button>,
-      );
-    }
-    return pageNumbers;
-  };
+  const displayedPages = getDisplayedPages();
 
   return (
-    <div className="mt-4 flex items-center justify-center">
-      <button
-        onClick={() => handlePageChange(page - 1)}
-        disabled={page === 1}
-        className={`mx-1 rounded border px-3 py-1 ${
-          page === 1 ? "cursor-not-allowed bg-gray-300" : "bg-white text-black"
-        }`}
-      >
-        Prev
-      </button>
-
-      {renderPageNumbers()}
-
-      <button
-        onClick={() => handlePageChange(page + 1)}
-        disabled={page === count}
-        className={`mx-1 rounded border px-3 py-1 ${
-          page === count
-            ? "cursor-not-allowed bg-gray-300"
-            : "bg-white text-black"
-        }`}
-      >
-        Next
-      </button>
+    <div className="my-4 flex items-center justify-end gap-2 pb-4 pr-4">
+      {displayedPages.map((page, index) =>
+        typeof page === "number" ? (
+          <button
+            key={index}
+            onClick={() => onPageChange(page)}
+            className={`rounded px-3 py-1 ${
+              page === currentPage
+                ? "bg-primary text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {page}
+          </button>
+        ) : (
+          <span key={index} className="px-3 py-1 text-gray-700">
+            ...
+          </span>
+        ),
+      )}
     </div>
   );
 };

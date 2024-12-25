@@ -11,6 +11,7 @@ export default function PartnorCreateBox() {
     banner_uz: "",
     banner_ru: "",
     banner_en: "",
+    icon: "",
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function PartnorCreateBox() {
           const response = await axiosInstance.get(
             `/root/bot/${extractedValue}/detail`,
           );
-          const { token, partner_name, banner_uz, banner_ru, banner_en } =
+          const { token, partner_name, banner_uz, banner_ru, banner_en, icon } =
             response.data;
 
           setFormData({
@@ -36,6 +37,7 @@ export default function PartnorCreateBox() {
             banner_uz: banner_uz || "",
             banner_ru: banner_ru || "",
             banner_en: banner_en || "",
+            icon: icon || "",
           });
           console.log(response.data);
         } catch (error) {
@@ -118,7 +120,7 @@ export default function PartnorCreateBox() {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Banner UZ
             </label>
@@ -126,7 +128,7 @@ export default function PartnorCreateBox() {
               onUploadSuccess={(url) => handleUploadSuccess("banner_uz", url)}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Banner RU
             </label>
@@ -134,12 +136,20 @@ export default function PartnorCreateBox() {
               onUploadSuccess={(url) => handleUploadSuccess("banner_ru", url)}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Banner EN
             </label>
             <UploadComponent
               onUploadSuccess={(url) => handleUploadSuccess("banner_en", url)}
+            />
+          </div>
+          <div className="col-span-3">
+            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+              Hamkor Icon
+            </label>
+            <UploadComponent
+              onUploadSuccess={(url) => handleUploadSuccess("icon", url)}
             />
           </div>
           <div className="col-span-6 flex justify-end">

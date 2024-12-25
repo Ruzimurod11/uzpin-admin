@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
+import Loader from "../common/Loader";
 
 interface Game {
   id: string;
@@ -23,15 +24,19 @@ const TableGameDetails = () => {
   let id = pathname ? pathname.split("/").pop()?.replace("%7D", "") : "";
 
   const [data, setData] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get(`/root/game/promocodes/${id}`);
         setData(response.data.results || []);
         console.log(response.data.results);
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,7 +60,6 @@ const TableGameDetails = () => {
   const [promocodetext, setPromocode] = useState("");
 
   const PromoCreateValue = async (productId: any) => {
-    // console.log(productId, promocode);
     const payload = {
       text: promocodetext,
       promocode: productId,
@@ -76,7 +80,7 @@ const TableGameDetails = () => {
     setModal(true);
     setActiveId(productId);
   };
-
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">

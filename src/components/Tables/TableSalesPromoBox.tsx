@@ -1,14 +1,9 @@
 "use client";
-import Image from "next/image";
-import { Product } from "../../../types/product";
-import { FaEye } from "react-icons/fa6";
-import { FiEdit2 } from "react-icons/fi";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import Link from "next/link";
 import SearchForm from "../Header/SearchForm";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
-
+import { useSearchParams } from "next/navigation";
+import Loader from "../common/Loader";
 interface Info {
   id: string;
   email: string;
@@ -26,23 +21,32 @@ interface Info {
 
 const TableSalesPromoBox = () => {
   const [data, setData] = useState<Info[]>([]);
+  const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
 
   useEffect(() => {
     const fetchStats = async () => {
+      setLoading(true);
       try {
-        const response = await axiosInstance.get(`/root/sold/list`);
+        const response = await axiosInstance.get(
+          `/root/sold/list?search=${searchQuery}`,
+        );
         setData(response.data.results || []);
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchStats();
-  }, []);
+  }, [searchQuery]);
   function convertTime(timeStr: string) {
     const date = new Date(timeStr);
     return date.toISOString().slice(0, 19).replace("T", " ");
   }
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">

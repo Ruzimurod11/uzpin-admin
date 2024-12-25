@@ -5,6 +5,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
+import Loader from "../common/Loader";
 
 interface Card {
   id: string;
@@ -18,14 +19,18 @@ interface Card {
 
 const TableCard = () => {
   const [cards, setCards] = useState<Card[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCards = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get("/root/card/list");
         setCards(response.data.results || []);
       } catch (error) {
         console.error("Kartalarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -40,7 +45,7 @@ const TableCard = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
-
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">

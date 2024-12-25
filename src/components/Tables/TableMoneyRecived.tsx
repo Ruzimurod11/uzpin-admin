@@ -1,5 +1,6 @@
 import axiosInstance from "@/libs/axios";
 import { useEffect, useState } from "react";
+import Loader from "../common/Loader";
 
 interface Info {
   status: string;
@@ -11,8 +12,10 @@ interface Info {
 
 const TableMoneyRecived = ({ id }: any) => {
   const [data, setData] = useState<Info[]>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchStats = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get(
           `/root/customer/${id}/transactions`,
@@ -20,6 +23,8 @@ const TableMoneyRecived = ({ id }: any) => {
         setData(response.data.results || []);
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -29,6 +34,7 @@ const TableMoneyRecived = ({ id }: any) => {
     const date = new Date(timeStr);
     return date.toISOString().slice(0, 19).replace("T", " ");
   }
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-4 md:px-6 2xl:px-7.5">

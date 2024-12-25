@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import CustomCalendar2 from "../Charts/CustomCalendar2";
+import { BiRuble } from "react-icons/bi";
+import { IoLogoUsd } from "react-icons/io5";
+import Loader from "../common/Loader";
 
 interface Card {
   promocode: string;
   total_count: number;
-  total_amount: { USD: number };
-  benefit: { USD: number };
+  total_amount: { USD: number; UZS: number; RUB: number };
+  benefit: { USD: number; UZS: number; RUB: number };
 }
 
 interface TableInfosProps {
@@ -81,15 +84,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     fetchCards(selectedBot, selected);
   };
 
-  if (loadings) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  if (loadings) return <Loader />;
 
   const DefaultSelectOption = ({
     options,
@@ -142,24 +137,24 @@ const TableInfos = ({ name }: TableInfosProps) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5">
+      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center justify-center">
           <p className="font-medium">{name}</p>
         </div>
         <div className="col-span-2 flex items-center justify-center">
           <p className="font-medium">Sotilganlar soni</p>
         </div>
-        <div className="col-span-2 flex items-center justify-center">
+        <div className="col-span-3 flex items-center justify-center">
           <p className="font-medium">Umumiy Narxi</p>
         </div>
-        <div className="col-span-2 flex items-center justify-center">
+        <div className="col-span-3 flex items-center justify-center">
           <p className="font-medium">Foyda</p>
         </div>
       </div>
 
       {cards.map((product, key) => (
         <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5"
           key={key}
         >
           <div className="col-span-2 flex items-center justify-center">
@@ -172,15 +167,37 @@ const TableInfos = ({ name }: TableInfosProps) => {
               {product.total_count}
             </p>
           </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.total_amount?.USD} USD
-            </p>
+          <div className="col-span-3 flex items-center justify-center">
+            <div className="flex gap-2">
+              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                {product.total_amount.USD}
+                <IoLogoUsd />
+              </p>
+
+              <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+                {product.total_amount.UZS} S
+              </p>
+              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                {product.total_amount.RUB}
+                <BiRuble />
+              </p>
+            </div>
           </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.benefit?.USD} USD
-            </p>
+          <div className="col-span-3 flex items-center justify-center">
+            <div className="flex gap-2">
+              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                {product.benefit.USD}
+                <IoLogoUsd />
+              </p>
+
+              <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+                {product.benefit.UZS} S
+              </p>
+              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                {product.benefit.RUB}
+                <BiRuble />
+              </p>
+            </div>
           </div>
         </div>
       ))}

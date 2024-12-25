@@ -10,6 +10,9 @@ import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
 import Pagination from "../Pagination";
 import { IoLogoUsd } from "react-icons/io5";
+import { useSearchParams } from "next/navigation";
+import SwitcherThree from "../SelectOption/SwitcherThree";
+import Loader from "../common/Loader";
 
 interface User {
   id: string;
@@ -20,48 +23,79 @@ interface User {
   account_rub: number;
   account_usd: number;
   login_type: string;
-  is_seller: string;
+  is_seller: boolean;
   created: string;
+}
+
+interface TOTALAMOUNT {
+  UZS: number;
+  RUB: number;
+  USD: number;
 }
 
 const TableUser = () => {
   const [active, setActive] = useState(true);
   const [users, setUser] = useState<User[]>([]);
-  const [next, setNext] = useState();
-  const [prev, setPrev] = useState();
-  const [count, setCount] = useState(0);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+  const [formData, setFormData] = useState({
+    is_seller: false,
+    id: "",
+  });
+  const [loading, setLoading] = useState(false);
 
-  const fetchStats = async (
-    url = `/root/customer/list?is_seller=${!active}`,
-  ) => {
+  const [totalAmount, setTotalAmount] = useState<TOTALAMOUNT | null>(null);
+
+  useEffect(() => {
+    const fetchCardAmount = async () => {
+      try {
+        const response = await axiosInstance.get(`/root/customer/total/amount`);
+        setTotalAmount(response.data);
+      } catch (error) {
+        console.error("Failed to fetch card details:", error);
+      }
+    };
+
+    fetchCardAmount();
+  }, []);
+
+  const fetchStats = async (page: number) => {
+    setLoading(true);
+    let url = `/root/customer/list?is_seller=${!active}&page=${page}`;
+    if (searchQuery)
+      url = `/root/customer/list?is_seller=${!active}&search=${searchQuery}&page=${page}`;
     try {
       const response = await axiosInstance.get(url);
       setUser(response.data.results || []);
-      setNext(response.data.next);
-      setPrev(response.data.previous);
-      setCount(Math.ceil(response.data.count / response.data.page_size));
+      setTotalPages(Math.ceil(response.data.count / 10));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
-    fetchStats();
-  }, [active]);
+    fetchStats(currentPage);
+  }, [active, currentPage, searchQuery]);
 
-  const handlePageChange = (newPage: any) => {
-    if (newPage > page && next) {
-      fetchStats(next);
-    } else if (newPage < page && prev) {
-      fetchStats(prev);
+  const handleSubmit = async () => {
+    if (!formData.id) return;
+    try {
+      await axiosInstance.put(`/root/customer/${formData.id}/detail`, {
+        is_seller: formData.is_seller,
+      });
+      console.log("Karta muvaffaqiyatli yangilandi!");
+    } catch (error) {
+      console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
     }
-    setPage(newPage);
   };
-  function convertTime(timeStr: string) {
-    const date = new Date(timeStr);
-    return date.toISOString().slice(0, 19).replace("T", " ");
-  }
 
+  useEffect(() => {
+    handleSubmit();
+  }, [formData]);
+  if (loading) return <Loader />;
   return (
     <>
       <div className="mb-4 flex w-full justify-between gap-5">
@@ -70,7 +104,7 @@ const TableUser = () => {
             Dollor
           </div>
           <p className="dark:text-slate-200">
-            <b>1.13</b>
+            <b>{totalAmount?.USD ?? "0"}</b>
           </p>
           <IoLogoUsd />
         </div>
@@ -79,7 +113,7 @@ const TableUser = () => {
             Sum
           </div>
           <p className="dark:text-slate-200">
-            <b>123 313</b>
+            <b>{totalAmount?.UZS ?? "0"}</b>
           </p>
           S
         </div>
@@ -89,7 +123,7 @@ const TableUser = () => {
             Ruble
           </div>
           <p className="dark:text-slate-200">
-            <b>1.13</b>
+            <b>{totalAmount?.RUB ?? "0"}</b>
           </p>
           <BiRuble />
         </div>
@@ -129,26 +163,16 @@ const TableUser = () => {
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Telefon Raqam</p>
           </div>
-          <div className="col-span-2 flex items-center px-4">
+          <div className="col-span-1 flex items-center px-4">
             <p className="font-medium">Joriy hisob</p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Yaratilgan vaqt</p>
           </div>
-          <div className="col-span-1 flex items-end justify-end gap-2">
-            {/* <p className="flex items-center border-b-2 border-[green] text-body-xs font-bold text-green dark:text-dark-6">
-            100 000
-            <IoLogoUsd />
-          </p>
-
-          <p className="flex  items-center border-b-2 border-[green] text-body-xs font-bold text-green dark:text-dark-6">
-            100 000 000 S
-          </p>
-          <p className="flex items-center border-b-2 border-[green] text-body-xs font-bold text-green dark:text-dark-6">
-            10 000 000
-            <BiRuble />
-          </p> */}
+          <div className="col-span-1 flex items-end justify-center gap-2">
+            Sotuvchi
           </div>
+          <div className="col-span-1 flex items-end justify-end gap-2"></div>
         </div>
 
         {users.map((user, key) => (
@@ -159,7 +183,7 @@ const TableUser = () => {
             <div className="col-span-2 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {key + 1}. {user.email}
+                  {(currentPage - 1) * 10 + key + 1}. {user.email}
                 </p>
               </div>
             </div>
@@ -177,7 +201,7 @@ const TableUser = () => {
                 </p>
               </div>
             </div>
-            <div className="col-span-2 flex items-center px-4">
+            <div className="col-span-1 flex items-center px-4">
               <div className="flex flex-col">
                 <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
                   {user.account_usd}
@@ -200,14 +224,28 @@ const TableUser = () => {
                 </p>
               </div>
             </div>
+            <div className="col-span-1 flex items-center justify-center">
+              <SwitcherThree
+                isActive={user.is_seller}
+                onChange={(value: boolean) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    is_seller: value,
+                    id: user.id,
+                  }))
+                }
+                text="&nbsp;"
+              />
+            </div>
 
-            <div className="col-span-1 flex cursor-pointer items-center gap-2">
-              <Link
+            <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
+              {/* <Link
                 href={`user-edit?${user.id}`}
                 className="rounded bg-[orange] px-3 py-1 text-white"
               >
                 <FiEdit2 />
-              </Link>
+              </Link> */}
+
               <Link
                 href={`money-received?${user.id}`}
                 className="rounded bg-[darkblue] px-3 py-1 text-white"
@@ -223,7 +261,11 @@ const TableUser = () => {
             </div>
           </div>
         ))}
-        <Pagination count={count} page={page} onPageChange={handlePageChange} />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </>
   );

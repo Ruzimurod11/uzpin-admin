@@ -5,6 +5,7 @@ import { FaCheck, FaEye } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
 import Image from "next/image";
+import Loader from "../common/Loader";
 
 interface Notif {
   id: string;
@@ -60,9 +61,7 @@ const TableNavigation = () => {
     }
   };
 
-  if (loading) {
-    return <div>Yuklanmoqda...</div>;
-  }
+  if (loading) return <Loader />;
 
   return (
     <>

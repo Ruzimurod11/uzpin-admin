@@ -5,6 +5,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
+import Loader from "../common/Loader";
 
 interface Game {
   id: string;
@@ -16,14 +17,18 @@ interface Game {
 
 const TableGame = () => {
   const [data, setData] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get("/root/game/games");
         setData(response.data.results || []);
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -38,6 +43,7 @@ const TableGame = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
+  if (loading) return <Loader />;
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">

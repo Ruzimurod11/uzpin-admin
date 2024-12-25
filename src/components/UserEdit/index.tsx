@@ -1,42 +1,46 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import DefaultSelectOption from "../SelectOption/DefaultSelectOption";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/libs/axios";
+import SwitcherThree from "../SelectOption/SwitcherThree";
 
 const UserEdit = () => {
   const searchParams = useSearchParams();
-  const [formData, setFormData] = useState({
-    is_active: false,
-    is_seller: false,
+  const router = useRouter();
+
+  // Switcher uchun alohida holatlarni saqlash
+  const [switcherState, setSwitcherState] = useState({
+    is_seller: false, // Foydalanuvchi turi
+    is_active: false, // Holati
   });
 
   const fullQuery = searchParams?.toString();
-  const extractedValue = fullQuery?.split("=")[0];
-  const router = useRouter();
+  const extractedValue = fullQuery?.split("=")[0]; // Foydalanuvchi id
 
-  const handleOptionChange = (field: any, value: any) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+  // Ma'lumotni yuborish
+  const handleSubmit = async () => {
+    if (!extractedValue) return;
+    try {
+      await axiosInstance.put(`/root/customer/${extractedValue}/detail`, {
+        is_seller: switcherState.is_seller,
+        is_active: switcherState.is_active,
+      });
+    } catch (error) {
+      console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+    }
   };
 
-  const handleSubmit = async () => {
-    console.log("as", extractedValue);
-    console.log(formData);
+  // `useEffect` har bir qiymat o'zgarganida yuborishni ta'minlaydi
+  useEffect(() => {
+    handleSubmit();
+  }, [switcherState]);
 
-    // if (extractedValue) {
-    //   try {
-    //     await axiosInstance.put(
-    //       `/root/customer/${extractedValue}/update`,
-    //       formData,
-    //     );
-    //     router.push(`/users/user`);
-    //   } catch (error) {
-    //     console.error("Error while updating user:", error);
-    //   }
-    // }
+  // Switcher holatini yangilash funksiyasi
+  const handleSwitcherChange = (key: string, value: boolean) => {
+    setSwitcherState((prevState) => ({
+      ...prevState,
+      [key]: value, // Tegishli keyga asoslangan yangilanish
+    }));
   };
 
   return (
@@ -50,49 +54,30 @@ const UserEdit = () => {
         <div className="grid grid-cols-6 gap-5.5 p-6.5">
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Ism
-            </label>
-            <input
-              type="text"
-              className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
-              value="Jamshid"
-              disabled
-            />
-          </div>
-          <div className="col-span-3">
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Email
-            </label>
-            <input
-              type="text"
-              className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
-              value="jamshidqayimov0399@jmail.com"
-              disabled
-            />
-          </div>
-
-          <div className="col-span-3">
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Foydalanuvchi turi
             </label>
-            <DefaultSelectOption
-              className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px]"
-              options={["Oddiy Mijoz", "Sotuvchi"]}
-              onChange={(e: any) =>
-                handleOptionChange("is_seller", e === "Sotuvchi" ? true : false)
-              }
-            />
+            <div className="col-span-1 flex items-center justify-center">
+              <SwitcherThree
+                id={`toggle-1`}
+                isActive={switcherState.is_seller} // Foydalanuvchi turi holati
+                onChange={(value: boolean) =>
+                  handleSwitcherChange("is_seller", value)
+                } // `is_seller` o'zgarganda yangilanish
+                text="&nbsp;"
+              />
+            </div>
           </div>
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Holati
             </label>
-            <DefaultSelectOption
-              className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px]"
-              options={["Faol", "Faol Emas"]}
-              onChange={(e: any) =>
-                handleOptionChange("is_active", e === "Faol" ? true : false)
-              }
+            <SwitcherThree
+              id={`toggle-2`}
+              isActive={switcherState.is_active} // Holat holati
+              onChange={(value: boolean) =>
+                handleSwitcherChange("is_active", value)
+              } // `is_active` o'zgarganda yangilanish
+              text="&nbsp;"
             />
           </div>
 

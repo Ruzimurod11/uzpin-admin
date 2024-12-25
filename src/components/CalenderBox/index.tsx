@@ -13,7 +13,7 @@ const CalendarBox = () => {
       <div className="flex flex-col">
         <div className="flex justify-end"></div>
 
-        <TableInfos name={"PUBG"} />
+        <TableInfos name={"Promokod Nomi"} />
       </div>
     </>
   );

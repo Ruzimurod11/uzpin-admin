@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
+import { useSearchParams } from "next/navigation";
+import Loader from "../common/Loader";
 
 interface Notif {
   id: string;
@@ -18,13 +20,14 @@ const TableBalans = () => {
   const [active, setActive] = useState(true);
   const [productData, setProductData] = useState<Notif[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
   useEffect(() => {
     const fetchTransactions = async () => {
+      let url = `root/customer/transaction/list?status=${active ? "ACCEPTED" : "REJECTED"}`;
+      if (searchQuery) url += `&search=${searchQuery}`;
       try {
-        const response = await axiosInstance.get(
-          `root/customer/transaction/list?status=${active ? "ACCEPTED" : "REJECTED"}`,
-        );
+        const response = await axiosInstance.get(url);
         setProductData(response.data.results || []);
         console.log(response.data);
       } catch (error) {
@@ -35,15 +38,13 @@ const TableBalans = () => {
     };
 
     fetchTransactions();
-  }, [active]);
+  }, [active, searchQuery]);
 
-  if (loading) {
-    return <div>Yuklanmoqda...</div>;
-  }
   function convertTime(timeStr: string) {
     const date = new Date(timeStr);
     return date.toISOString().slice(0, 19).replace("T", " ");
   }
+  if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">

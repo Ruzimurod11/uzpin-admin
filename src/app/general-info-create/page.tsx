@@ -1,8 +1,5 @@
 "use client";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import GamesBoxCreate from "@/components/GameBoxCreate";
-import SwitcherThree from "@/components/SelectOption/SwitcherThree";
 import DefaultSelectOption from "@/components/SelectOption/DefaultSelectOption";
 
 const GeneralInfoCreatePage = () => {
