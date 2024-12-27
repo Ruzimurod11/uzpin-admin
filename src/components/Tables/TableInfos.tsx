@@ -27,13 +27,13 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
   const [time, setTime] = useState("");
   const handleDateChange = (startDate: string, endDate: string) => {
-    const newTime = new URLSearchParams({
+    const queryParams = new URLSearchParams({
       start_date: startDate,
       end_date: endDate,
     }).toString();
 
-    setTime(newTime);
-    console.log(newTime, "queryParams");
+    setTime(queryParams);
+    console.log(queryParams, "queryParams");
   };
 
   const fetchCards = async (bot = "", game = "") => {
@@ -42,12 +42,11 @@ const TableInfos = ({ name }: TableInfosProps) => {
       const queryParams: string[] = [];
       if (bot) queryParams.push(`bot=${bot}`);
       if (game) queryParams.push(`game=${game}`);
-      if (time) queryParams.push(`${time}`);
       const queryString =
-        queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+        queryParams.length > 0 ? `&${queryParams.join("&")}` : "";
 
       const response = await axiosInstance.get(
-        `/root/analytics/bot${queryString}`,
+        `/root/analytics/bot?${time}${queryString}`,
       );
       setCards(response.data || []);
     } catch (error) {
@@ -116,7 +115,11 @@ const TableInfos = ({ name }: TableInfosProps) => {
     };
 
     return (
-      <select value={value} onChange={handleChange} className="select-class">
+      <select
+        value={value}
+        onChange={handleChange}
+        className="select-class rounded border p-2 text-lg capitalize outline-none"
+      >
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -128,8 +131,8 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-6 md:px-6 2xl:px-7.5">
-        <div className="col-span-1 flex items-center justify-center">
+      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
+        <div className="col-span-2 flex items-center justify-center">
           {bots.length > 0 && (
             <DefaultSelectOption
               options={bots}
@@ -138,7 +141,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
             />
           )}
         </div>
-        <div className="col-span-1 flex items-center justify-center">
+        <div className="col-span-2 flex items-center justify-center">
           {games.length > 0 && (
             <DefaultSelectOption
               options={games}
@@ -147,8 +150,8 @@ const TableInfos = ({ name }: TableInfosProps) => {
             />
           )}
         </div>
-        <div className="col-span-2 flex items-center justify-center gap-2"></div>
-        <div className="col-span-2 flex items-center justify-center gap-2">
+        <div className="col-span-3 flex items-center justify-center gap-2"></div>
+        <div className="col-span-3 flex items-center justify-center gap-2">
           Saralash: <CustomCalendar onDateChange={handleDateChange} />
         </div>
       </div>

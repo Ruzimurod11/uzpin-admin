@@ -126,7 +126,7 @@ const TableSalesPromoBox = () => {
             </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="text-body-xs font-medium text-dark dark:text-dark-6">
+            <p className="text-nowrap text-body-xs font-medium text-dark dark:text-dark-6">
               {convertTime(product.created)}
             </p>
           </div>

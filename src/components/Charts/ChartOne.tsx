@@ -5,11 +5,17 @@ import { ApexOptions } from "apexcharts";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import { useRouter } from "next/navigation";
+import { IoLogoUsd } from "react-icons/io5";
+import { BiRuble } from "react-icons/bi";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
-
+interface Amount {
+  USD: number;
+  UZS: number;
+  RUB: number;
+}
 const ChartOne = () => {
   const [chartData, setChartData] = useState<{
     series: { name: string; data: number[] }[];
@@ -18,6 +24,8 @@ const ChartOne = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [time, setTime] = useState("");
+
+  const [amount, setAmount] = useState<Amount | null>(null);
 
   const handleDateChange = (startDate: string, endDate: string) => {
     const queryParams = new URLSearchParams({
@@ -34,8 +42,8 @@ const ChartOne = () => {
         const response = await axiosInstance.get(
           `/root/analytics/line?${time}`,
         );
-        const data = response.data;
-        console.log(response.data, "test");
+        const data = response.data.sales;
+        setAmount(response.data.total_amount);
 
         const categories = data.map((item: { date: string }) => {
           const [month, day] = item.date.split("-");
@@ -185,7 +193,15 @@ const ChartOne = () => {
       <div className="flex flex-col gap-2 text-center xsm:flex-row xsm:gap-0">
         <div className="flex items-center justify-center gap-4 border-stroke dark:border-dark-3 xsm:w-full xsm:border-r">
           <p className="font-medium">30 Kunlik Sotuv</p>
-          <h4 className="text-xl font-bold text-dark dark:text-white">$00</h4>
+          <h4 className="flex items-center text-xl font-bold text-dark dark:text-white">
+            {amount?.USD ?? "0"} <IoLogoUsd />
+          </h4>
+          <h4 className="flex items-center text-xl font-bold text-dark dark:text-white">
+            {amount?.UZS ?? "0"} S
+          </h4>
+          <h4 className="flex items-center text-xl font-bold text-dark dark:text-white">
+            {amount?.RUB ?? "0"} <BiRuble />
+          </h4>
         </div>
       </div>
     </div>

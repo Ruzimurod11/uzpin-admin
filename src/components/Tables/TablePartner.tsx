@@ -5,10 +5,10 @@ import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
-import { log } from "console";
-import { useSearchParams } from "next/navigation";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import { FaTelegramPlane } from "react-icons/fa";
+import PartnorModalMsg from "../PartnorMsgModal";
 
 interface Partner {
   id: string;
@@ -18,15 +18,19 @@ interface Partner {
   banner_ru: string;
   banner_en: string;
   logo?: string;
+  chat_id?: number;
+}
+interface PartnerBot {
+  id: string;
+  partner_name: string;
+  firstname: string;
 }
 
 const TablePartner = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
-  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
-
-  const fullQuery = searchParams?.toString();
-  const extractedValue = fullQuery?.split("=")[0];
+  const [isModalOpenMsg, setModalOpenMsg] = useState<boolean>(false);
+  const [partnerbots, setPartnerBots] = useState<PartnerBot[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState("");
 
@@ -59,6 +63,22 @@ const TablePartner = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const response = await axiosInstance.get<Partner[]>(
+          "/root/bot/select/list",
+        );
+        setPartnerBots(response.data);
+      } catch (error) {
+        console.error("Error fetching partners:", error);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -66,12 +86,20 @@ const TablePartner = () => {
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
           Barcha Hamkorlar
         </h4>
-        <Link
-          href="/partnor-create"
-          className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
-        >
-          +
-        </Link>
+        <div className="flex gap-4">
+          <div
+            onClick={() => setModalOpenMsg(true)}
+            className="flex w-20 cursor-pointer items-center justify-center rounded bg-[#19d5ff] px-5 text-white"
+          >
+            <FaTelegramPlane />
+          </div>
+          <Link
+            href="/partnor-create"
+            className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
+          >
+            +
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
@@ -117,32 +145,38 @@ const TablePartner = () => {
           </div>
           <div className="col-span-1 flex items-center">
             <div className="h-12.5 w-15 rounded-md">
-              <Image
-                src={partner.banner_uz}
-                width={60}
-                height={50}
-                alt="Uz Banner"
-              />
+              {partner.banner_uz && (
+                <Image
+                  src={partner.banner_uz}
+                  width={60}
+                  height={50}
+                  alt="Uz Banner"
+                />
+              )}
             </div>
           </div>
           <div className="col-span-1 flex items-center">
             <div className="h-12.5 w-15 rounded-md">
-              <Image
-                src={partner.banner_ru}
-                width={60}
-                height={50}
-                alt="Ru Banner"
-              />
+              {partner.banner_ru && (
+                <Image
+                  src={partner.banner_ru}
+                  width={60}
+                  height={50}
+                  alt="Ru Banner"
+                />
+              )}
             </div>
           </div>
           <div className="col-span-1 flex items-center">
             <div className="h-12.5 w-15 rounded-md">
-              <Image
-                src={partner.banner_en}
-                width={60}
-                height={50}
-                alt="En Banner"
-              />
+              {partner.banner_en && (
+                <Image
+                  src={partner.banner_en}
+                  width={60}
+                  height={50}
+                  alt="Ru Banner"
+                />
+              )}
             </div>
           </div>
           <div className="col-span-1 flex items-center">
@@ -174,6 +208,12 @@ const TablePartner = () => {
           </div>
         </div>
       ))}
+      {isModalOpenMsg && (
+        <PartnorModalMsg
+          partners={partnerbots}
+          onClose={() => setModalOpenMsg(false)}
+        />
+      )}
       <ConfirmDeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}

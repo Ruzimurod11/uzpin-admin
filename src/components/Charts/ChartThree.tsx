@@ -21,7 +21,6 @@ const ChartThree: React.FC = () => {
         const response = await axiosInstance.get("/root/analytics/top");
         const data = response.data;
 
-        // Convert fetched data to chart format
         const labels = data.map(
           (item: { promocode: string }) => item.promocode,
         );
