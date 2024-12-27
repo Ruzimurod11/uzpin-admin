@@ -1,16 +1,28 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import axiosInstance from "@/libs/axios";
+import { usePathname } from "next/navigation";
 
 const DropdownNotification = () => {
   const [notifying, setNotifying] = useState(true);
   const [count, setCount] = useState<number>(0);
 
+  const pathname = usePathname();
+
   useEffect(() => {
-    const storedCount = localStorage.getItem("NotifCount");
-    if (storedCount) {
-      setCount(parseInt(storedCount, 10));
-    }
-  }, []);
+    const fetchTransactions = async () => {
+      try {
+        const response = await axiosInstance.get(
+          "/root/customer/transaction/waiting",
+        );
+        setCount(parseInt(response.data.count, 10));
+      } catch (error) {
+        console.error("API dan ma'lumotni yuklashda xatolik:", error);
+      }
+    };
+
+    fetchTransactions();
+  }, [pathname]);
 
   return (
     <li>

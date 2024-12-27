@@ -31,7 +31,6 @@ const TableNavigation = () => {
         );
         setProductData(response.data.results || []);
         console.log(response.data);
-        localStorage.setItem("NotifCount", response.data.count);
       } catch (error) {
         console.error("API dan ma'lumotni yuklashda xatolik:", error);
       } finally {
@@ -52,12 +51,6 @@ const TableNavigation = () => {
       );
     } catch (error) {
       console.error("Harakatni amalga oshirishda xatolik:", error);
-    } finally {
-      const currentCount = parseInt(
-        localStorage.getItem("NotifCount") || "0",
-        10,
-      );
-      localStorage.setItem("NotifCount", `${currentCount - 1}`);
     }
   };
 
@@ -158,19 +151,20 @@ const TableNavigation = () => {
           ))}
 
           {selectedImage && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-50">
               <div className="relative rounded bg-white p-4 shadow-lg">
                 <button
-                  className="absolute right-2 top-2 text-gray-500 hover:text-gray-800"
+                  className="absolute right-4 top-4 h-10 w-10 bg-[black] text-3xl text-primary"
                   onClick={() => setSelectedImage(null)}
                 >
-                  x
+                  &times;
                 </button>
                 <Image
                   src={selectedImage}
                   alt="chek"
                   height={300}
                   width={600}
+                  className="h-[700px]"
                 />
               </div>
             </div>

@@ -19,6 +19,7 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+    domains: ["encrypted-tbn0.gstatic.com"],
   },
 };
 

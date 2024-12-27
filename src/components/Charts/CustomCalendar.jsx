@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { DateRange } from "react-date-range";
+import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
@@ -24,13 +27,16 @@ const CustomCalendar = ({ onDateChange }) => {
     toggleCalendar();
   };
 
+  const formattedStartDate = format(dateRange[0].startDate, "dd.MM.yyyy");
+  const formattedEndDate = format(dateRange[0].endDate, "dd.MM.yyyy");
+
   return (
     <div className="relative">
       <button
         className="rounded-md border p-2 font-medium uppercase text-dark dark:text-dark-6"
         onClick={toggleCalendar}
       >
-        {`${dateRange[0].startDate.toLocaleDateString()} - ${dateRange[0].endDate.toLocaleDateString()}`}
+        {`${formattedStartDate} - ${formattedEndDate}`}
       </button>
 
       {isCalendarOpen && (

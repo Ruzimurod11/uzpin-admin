@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import CustomCalendar2 from "../Charts/CustomCalendar2";
@@ -26,6 +27,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
   const [loadings, setLoadings] = useState(false);
 
   const [time, setTime] = useState("");
+
   const handleDateChange = (startDate: string, endDate: string) => {
     const queryParams = new URLSearchParams({
       start_date: startDate,
