@@ -20,17 +20,10 @@ interface Partner {
   logo?: string;
   chat_id?: number;
 }
-interface PartnerBot {
-  id: string;
-  partner_name: string;
-  firstname: string;
-}
 
 const TablePartner = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(false);
-  const [isModalOpenMsg, setModalOpenMsg] = useState<boolean>(false);
-  const [partnerbots, setPartnerBots] = useState<PartnerBot[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState("");
 
@@ -64,21 +57,6 @@ const TablePartner = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchPartners = async () => {
-      try {
-        const response = await axiosInstance.get<Partner[]>(
-          "/root/bot/select/list",
-        );
-        setPartnerBots(response.data);
-      } catch (error) {
-        console.error("Error fetching partners:", error);
-      }
-    };
-
-    fetchPartners();
-  }, []);
-
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -87,12 +65,6 @@ const TablePartner = () => {
           Barcha Hamkorlar
         </h4>
         <div className="flex gap-4">
-          <div
-            onClick={() => setModalOpenMsg(true)}
-            className="flex w-20 cursor-pointer items-center justify-center rounded bg-[#19d5ff] px-5 text-white"
-          >
-            <FaTelegramPlane />
-          </div>
           <Link
             href="/partnor-create"
             className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
@@ -208,12 +180,7 @@ const TablePartner = () => {
           </div>
         </div>
       ))}
-      {isModalOpenMsg && (
-        <PartnorModalMsg
-          partners={partnerbots}
-          onClose={() => setModalOpenMsg(false)}
-        />
-      )}
+
       <ConfirmDeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}

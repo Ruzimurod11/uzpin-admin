@@ -8,6 +8,7 @@ import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import { TbPlayerPlay } from "react-icons/tb";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import VideoModal from "../VideoModal/VideoModal";
 
 interface Info {
   id: string;
@@ -19,6 +20,9 @@ const TableTgGeneral = () => {
   const [info, setInfo] = useState<Info[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState("");
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState("");
+
   useEffect(() => {
     const fetchPartners = async () => {
       setLoading(true);
@@ -34,9 +38,11 @@ const TableTgGeneral = () => {
 
     fetchPartners();
   }, []);
+
   const DeleteGame = (id: any) => {
     setIsModalOpen(id);
   };
+
   const handleDelete = async (gameId: string) => {
     try {
       await axiosInstance.delete(`/root/general-info/${gameId}/`);
@@ -47,6 +53,12 @@ const TableTgGeneral = () => {
       setIsModalOpen("");
     }
   };
+
+  const handleVideoPlay = (videoUrl: string) => {
+    setCurrentVideo(videoUrl);
+    setVideoModalOpen(true);
+  };
+
   if (loading) return <Loader />;
 
   return (
@@ -84,7 +96,10 @@ const TableTgGeneral = () => {
             </div>
           </div>
           <div className="col-span-1 flex items-center">
-            <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full border-2 border-primary ">
+            <div
+              className="flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full border-2 border-primary"
+              onClick={() => handleVideoPlay(product.video)}
+            >
               <TbPlayerPlay className="text-[25px] text-primary" />
             </div>
           </div>
@@ -107,10 +122,16 @@ const TableTgGeneral = () => {
       ))}
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen("")} 
-        onConfirm={() => handleDelete(isModalOpen)} 
+        onClose={() => setIsModalOpen("")}
+        onConfirm={() => handleDelete(isModalOpen)}
         title="Siz ushbu malumotni o'chirmoqchimisiz?"
         description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
+
+      <VideoModal
+        isOpen={videoModalOpen}
+        onClose={() => setVideoModalOpen(false)}
+        videoUrl={currentVideo}
       />
     </div>
   );

@@ -8,6 +8,8 @@ import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import { TbPlayerPlay } from "react-icons/tb";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import { FaTelegramPlane } from "react-icons/fa";
+import PartnorModalMsg from "../PartnorMsgModal";
 
 interface Info {
   id: string;
@@ -18,11 +20,29 @@ interface Info {
   created: string;
   total_users: 1;
 }
+interface PartnerBot {
+  id: string;
+  partner_name: string;
+  firstname: string;
+}
+interface Partner {
+  id: string;
+  firstname: string;
+  partner_name: string;
+  banner_uz: string;
+  banner_ru: string;
+  banner_en: string;
+  logo?: string;
+  chat_id?: number;
+}
 
 const TableMessage = () => {
   const [info, setInfo] = useState<Info[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState("");
+  const [partnerbots, setPartnerBots] = useState<PartnerBot[]>([]);
+  const [isModalOpenMsg, setModalOpenMsg] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchPartners = async () => {
       setLoading(true);
@@ -34,6 +54,20 @@ const TableMessage = () => {
         console.error("Hamkorlarni yuklashda xatolik:", error);
       } finally {
         setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const response = await axiosInstance.get<Partner[]>(
+          "/root/bot/select/list",
+        );
+        setPartnerBots(response.data);
+      } catch (error) {
+        console.error("Error fetching partners:", error);
       }
     };
 
@@ -60,6 +94,19 @@ const TableMessage = () => {
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
+      <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
+        <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
+          Barcha Xabarlar
+        </h4>
+        <div className="flex gap-4">
+          <div
+            onClick={() => setModalOpenMsg(true)}
+            className="flex w-20 cursor-pointer items-center justify-center rounded bg-[#19d5ff] px-5 py-3 text-white"
+          >
+            <FaTelegramPlane />
+          </div>
+        </div>
+      </div>
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center">
           <p className="text-center text-sm font-medium">Nomi</p>
@@ -139,6 +186,14 @@ const TableMessage = () => {
           </div>
         </div>
       ))}
+
+      {isModalOpenMsg && (
+        <PartnorModalMsg
+          partners={partnerbots}
+          onClose={() => setModalOpenMsg(false)}
+        />
+      )}
+
       <ConfirmDeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}
