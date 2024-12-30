@@ -10,6 +10,21 @@ interface Game {
   name_uz: string;
 }
 
+interface Payload {
+  name: string;
+  customer_price_usd: number | "";
+  customer_price_uzs: number | "";
+  customer_price_rub: number | "";
+  partner_price_usd: number | "";
+  partner_price_uzs: number | "";
+  partner_price_rub: number | "";
+  body_price_usd: number | "";
+  body_price_uzs: number | "";
+  body_price_rub: number | "";
+  game: string;
+  photo?: string;
+}
+
 const GamesPromoCreate = () => {
   const [photo, setPhoto] = useState("");
   const [games, setGames] = useState<Game[]>([]);
@@ -78,7 +93,7 @@ const GamesPromoCreate = () => {
   };
 
   const handleSubmit = async () => {
-    const payload = {
+    const payload: Payload = {
       name: promoName,
       customer_price_usd: customerPriceUSD,
       customer_price_uzs: customerPriceUZS,
@@ -90,8 +105,11 @@ const GamesPromoCreate = () => {
       body_price_uzs: bodyPriceUZS,
       body_price_rub: bodyPriceRUB,
       game: gameId,
-      photo,
     };
+
+    if (photo) {
+      payload.photo = photo;
+    }
 
     try {
       if (extractedValue) {
