@@ -103,12 +103,12 @@ const TableNavigation = () => {
                   {key + 1}. {product.user}
                 </p>
               </div>
-              <div className="col-span-1 flex items-center">
+              <div className="col-span-1 flex items-center justify-center px-4 font-semibold">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {product.amount}
                 </p>
               </div>
-              <div className="col-span-1 flex items-center">
+              <div className="col-span-1 flex items-center font-semibold">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {product.currency}
                 </p>
