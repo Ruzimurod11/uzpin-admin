@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
 import Image from "next/image";
 import Loader from "../common/Loader";
+import Pagination from "../Pagination";
 
 interface Notif {
   id: string;
@@ -20,26 +21,28 @@ interface Notif {
 
 const TableNavigation = () => {
   const [productData, setProductData] = useState<Notif[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  const fetchTransactions = async (page: number) => {
+    try {
+      const response = await axiosInstance.get(
+        `/root/customer/transaction/waiting?page=${page}`,
+      );
+      setProductData(response.data.results || []);
+      setTotalPages(Math.ceil(response.data.count / 10));
+      console.log(response.data);
+    } catch (error) {
+      console.error("API dan ma'lumotni yuklashda xatolik:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await axiosInstance.get(
-          "/root/customer/transaction/waiting",
-        );
-        setProductData(response.data.results || []);
-        console.log(response.data);
-      } catch (error) {
-        console.error("API dan ma'lumotni yuklashda xatolik:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTransactions();
-  }, []);
+    fetchTransactions(currentPage);
+  }, [currentPage]);
 
   const handleAction = async (id: string, status: "ACCEPTED" | "REJECTED") => {
     try {
@@ -100,7 +103,7 @@ const TableNavigation = () => {
             >
               <div className="col-span-2 flex items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {key + 1}. {product.user}
+                  {(currentPage - 1) * 10 + key + 1}. {product.user}
                 </p>
               </div>
               <div className="col-span-1 flex items-center justify-center px-4 font-semibold">
@@ -150,6 +153,12 @@ const TableNavigation = () => {
             </div>
           ))}
 
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+
           {selectedImage && (
             <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-50">
               <div className="relative rounded bg-white p-4 shadow-lg">
@@ -164,7 +173,7 @@ const TableNavigation = () => {
                   alt="chek"
                   height={300}
                   width={600}
-                  className="h-[700px]"
+                  className="h-[500px] object-contain "
                 />
               </div>
             </div>

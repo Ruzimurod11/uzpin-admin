@@ -18,6 +18,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "onlinecheckwriter.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
     domains: ["encrypted-tbn0.gstatic.com"],
   },
