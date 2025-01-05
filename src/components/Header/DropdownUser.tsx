@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
 import { FaUserCircle } from "react-icons/fa";
-import axiosInstance from "@/libs/axios";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,9 +17,9 @@ const DropdownUser = () => {
       JSON.parse(localStorage.getItem("profile") || "");
 
     setFormData({
-      fullname: profileData.fullname || "",
-      email: profileData.email || "",
-      photo: profileData.photo || "",
+      fullname: profileData?.fullname || "",
+      email: profileData?.email || "",
+      photo: profileData?.photo || "",
     });
   }, []);
 

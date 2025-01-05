@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axiosInstance from "@/libs/axios";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const DropdownNotification = () => {
   const [notifying, setNotifying] = useState(true);
   const [count, setCount] = useState<number>(0);
-
+  const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -17,6 +17,7 @@ const DropdownNotification = () => {
         );
         setCount(parseInt(response.data.count, 10));
       } catch (error) {
+        router.push("/login");
         console.error("API dan ma'lumotni yuklashda xatolik:", error);
       }
     };

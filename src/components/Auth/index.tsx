@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosInstance from "../../libs/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,13 @@ export default function Signin() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get("access_token");
+    if (token) {
+      router.push("/");
+    }
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
