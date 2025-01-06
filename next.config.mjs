@@ -14,6 +14,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "api.uzpin.games",
+        pathname: "/media/uploads/**",
+      },
+      {
+        protocol: "https",
         hostname: "www.shutterstock.com",
         port: "",
         pathname: "/**",
