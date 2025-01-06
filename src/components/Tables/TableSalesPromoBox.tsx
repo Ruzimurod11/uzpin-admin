@@ -73,7 +73,7 @@ const TableSalesPromoBox = () => {
           <p className="font-medium">Narxi</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Ummumiy Narxi</p>
+          <p className="font-medium">Ummumiy</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Pul birligi</p>
