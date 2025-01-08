@@ -58,10 +58,12 @@ const TableAllPromo = () => {
     fetchPromocodes(currentPage);
   }, [currentPage, id]);
 
-  const convertTime = (timeStr: string) => {
-    const date = new Date(timeStr);
-    return date.toISOString().slice(0, 19).replace("T", " ");
-  };
+  function convertTime(timeStr: string) {
+    const localDate = new Date(timeStr);
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
+    const adjustedDate = new Date(localDate.getTime() - offsetInMs);
+    return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
+  }
 
   const goBack = () => {
     router.back();

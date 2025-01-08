@@ -143,7 +143,7 @@ export default function AddCardBox() {
                 name="card_name"
                 value={formData.card_name}
                 onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="col-span-3">
@@ -157,7 +157,7 @@ export default function AddCardBox() {
                 name="card_number"
                 value={formData.card_number}
                 onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="col-span-3">
@@ -169,7 +169,7 @@ export default function AddCardBox() {
                 name="card_holder"
                 value={formData.card_holder}
                 onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="col-span-3">

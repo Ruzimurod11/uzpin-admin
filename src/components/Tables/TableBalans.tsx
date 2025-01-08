@@ -41,9 +41,12 @@ const TableBalans = () => {
   }, [active, searchQuery]);
 
   function convertTime(timeStr: string) {
-    const date = new Date(timeStr);
-    return date.toISOString().slice(0, 19).replace("T", " ");
+    const localDate = new Date(timeStr);
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const adjustedDate = new Date(localDate.getTime() - offsetInMs);
+    return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
+  
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
