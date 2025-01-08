@@ -4,6 +4,7 @@ import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
 import { useSearchParams } from "next/navigation";
 import Loader from "../common/Loader";
+import Pagination from "../Pagination";
 
 interface Notif {
   id: string;
@@ -20,16 +21,18 @@ const TableBalans = () => {
   const [active, setActive] = useState(true);
   const [productData, setProductData] = useState<Notif[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   useEffect(() => {
-    const fetchTransactions = async () => {
-      let url = `root/customer/transaction/list?status=${active ? "ACCEPTED" : "REJECTED"}`;
+    const fetchTransactions = async (page: number) => {
+      let url = `root/customer/transaction/list?status=${active ? "ACCEPTED" : "REJECTED"}&page=${page}`;
       if (searchQuery) url += `&search=${searchQuery}`;
       try {
         const response = await axiosInstance.get(url);
         setProductData(response.data.results || []);
-        console.log(response.data);
+        setTotalPages(Math.ceil(response.data.count / 10));
       } catch (error) {
         console.error("API dan ma'lumotni yuklashda xatolik:", error);
       } finally {
@@ -37,16 +40,16 @@ const TableBalans = () => {
       }
     };
 
-    fetchTransactions();
-  }, [active, searchQuery]);
+    fetchTransactions(currentPage);
+  }, [active, searchQuery, currentPage]);
 
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
-    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
     const adjustedDate = new Date(localDate.getTime() - offsetInMs);
     return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
-  
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -97,7 +100,7 @@ const TableBalans = () => {
           <div className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}. {product.user}
+                {(currentPage - 1) * 10 + key + 1}. {product.user}
               </p>
             </div>
           </div>
@@ -133,6 +136,11 @@ const TableBalans = () => {
           </div>
         </div>
       ))}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 };
