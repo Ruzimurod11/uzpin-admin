@@ -5,6 +5,7 @@ import axiosInstance from "@/libs/axios";
 import { useSearchParams } from "next/navigation";
 import Loader from "../common/Loader";
 import Pagination from "../Pagination";
+
 interface Info {
   id: string;
   email: string;
@@ -46,9 +47,12 @@ const TableSalesPromoBox = () => {
     fetchStats(currentPage);
   }, [searchQuery, currentPage]);
   function convertTime(timeStr: string) {
-    const date = new Date(timeStr);
-    return date.toISOString().slice(0, 19).replace("T", " ");
+    const localDate = new Date(timeStr);
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const adjustedDate = new Date(localDate.getTime() - offsetInMs);
+    return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
+  
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -73,7 +77,7 @@ const TableSalesPromoBox = () => {
           <p className="font-medium">Narxi</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Ummumiy Narxi</p>
+          <p className="font-medium">Ummumiy</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Pul birligi</p>

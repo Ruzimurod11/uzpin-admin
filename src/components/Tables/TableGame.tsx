@@ -104,8 +104,14 @@ const TableGame = () => {
               href={`games/${game.id}`}
               className="col-span-2 flex items-center"
             >
-              <div className="h-12.5 w-15 rounded-md">
-                <Image src={game?.cover} width={60} height={50} alt="game" />
+              <div className="flex h-12.5 w-15 items-center justify-center rounded-md">
+                <Image
+                  className="max-h-[50px] max-w-[60px]"
+                  src={game?.cover}
+                  width={60}
+                  height={50}
+                  alt="game"
+                />
               </div>
             </Link>
             <Link
@@ -113,7 +119,13 @@ const TableGame = () => {
               className="col-span-2 flex items-center"
             >
               <div className="h-12.5 w-15 rounded-md">
-                <Image src={game?.photo} width={60} height={50} alt="game" />
+                <Image
+                  className="flex max-h-[50px] max-w-[60px] items-center justify-center"
+                  src={game?.photo}
+                  width={60}
+                  height={50}
+                  alt="game"
+                />
               </div>
             </Link>
             <Link
