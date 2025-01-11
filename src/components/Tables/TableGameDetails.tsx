@@ -9,6 +9,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import { toast } from "react-toastify";
 
 interface Game {
   id: string;
@@ -58,12 +59,28 @@ const TableGameDetails = () => {
     try {
       await axiosInstance.delete(`/root/game/promocodes/${gameId}/detail`);
       setData((prevData) => prevData.filter((game) => game.id !== gameId));
+      setIsModalOpen("");
+      toast.warn("Muvaffaqiyatli O'chirildi");
     } catch (error) {
-      console.error("O'yinni o'chirishda xatolik:", error);
+      toast.error("O'yinni o'chirishda xatolik");
     }
   };
 
   const [promocodetext, setPromocode] = useState("");
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const inputText = e.target.value;
+
+    const lines = inputText.split("\n");
+    const cleanedText = lines.reduce((acc: string[], line, index) => {
+      if (line.trim() === "" && acc[acc.length - 1]?.trim() === "") {
+        return acc;
+      }
+      return [...acc, line];
+    }, []);
+
+    setPromocode(cleanedText.join("\n"));
+  };
 
   const PromoCreateValue = async (productId: any) => {
     const payload = {
@@ -75,11 +92,11 @@ const TableGameDetails = () => {
         "/root/game/promocodevalues/create",
         payload,
       );
-      console.log("Promokod muvaffaqiyatli qo'shildi:", response.data);
       setModal(false);
+      toast.success("Promokod muvaffaqiyatli qo'shildi");
       router.push(`/games/0/${productId}`);
     } catch (error) {
-      console.error("Promokodni yuborishda xatolik:", error);
+      toast.error("Promokodni yuborishda xatolik");
     }
   };
   const [activeId, setActiveId] = useState();
@@ -96,7 +113,7 @@ const TableGameDetails = () => {
           className="col-span-2 flex cursor-pointer items-center gap-4"
         >
           <FaArrowLeft />
-          <p className="font-medium">O&apos;yin Nomi</p>
+          <p className="font-medium">Promokod Nomi</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Qolgan</p>
@@ -225,7 +242,8 @@ const TableGameDetails = () => {
           <textarea
             className="w-full flex-grow resize-none rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             value={promocodetext}
-            onChange={(e) => setPromocode(e.target.value)}
+            // onChange={(e) => setPromocode(e.target.value)}
+            onChange={handleTextChange}
           />
           <div className="mt-4 flex justify-end">
             <button

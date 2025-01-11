@@ -4,6 +4,7 @@ import axiosInstance from "@/libs/axios";
 import UploadComponent from "@/components/UploadComponent";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loader from "../common/Loader";
+import { toast } from "react-toastify";
 
 export default function GeneralInfoCreateBox() {
   const [formData, setFormData] = useState({
@@ -64,13 +65,15 @@ export default function GeneralInfoCreateBox() {
         `/root/general-info/${extractedValue}/`,
         formData,
       );
+      toast.success("Ma'lumot muvaffaqiyatli yangilandi!");
       router.push(`/partners/tg-general`);
     } else {
       try {
         await axiosInstance.post("/root/general-info/", formData);
         router.push("/partners/tg-general");
+        toast.success("Ma'lumot muvaffaqiyatli qo'shildi!");
       } catch (error) {
-        console.error("Hamkor qo'shishda xatolik:", error);
+        toast.error("Ma'lumot qo'shishda xatolik");
       } finally {
         setLoading(false);
       }
@@ -84,7 +87,7 @@ export default function GeneralInfoCreateBox() {
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
         <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
-            Yangi Video Malumotlari
+            Yangi Video Malumotlaria
           </h3>
         </div>
         <form

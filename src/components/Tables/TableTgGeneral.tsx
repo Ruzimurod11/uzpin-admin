@@ -9,6 +9,7 @@ import Loader from "../common/Loader";
 import { TbPlayerPlay } from "react-icons/tb";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import VideoModal from "../VideoModal/VideoModal";
+import { toast } from "react-toastify";
 
 interface Info {
   id: string;
@@ -48,8 +49,9 @@ const TableTgGeneral = () => {
       await axiosInstance.delete(`/root/general-info/${gameId}/`);
       setInfo((prevData) => prevData.filter((game) => game.id !== gameId));
       setIsModalOpen("");
+      toast.warn("Muvaffaqiyatli O'chirildi");
     } catch (error) {
-      console.error("O'yinni o'chirishda xatolik:", error);
+      toast.error("O'chirishda xatolik");
       setIsModalOpen("");
     }
   };

@@ -8,6 +8,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import Pagination from "../Pagination";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import { toast } from "react-toastify";
 
 interface Promo {
   id: string;
@@ -94,6 +95,7 @@ const TableAllPromo = () => {
       );
       setSelectedIds([]);
       setIsModalOpen(false);
+      toast.warn("Muvaffaqiyatli O'chirildi");
     } catch (error) {
       console.error("Elementlarni o'chirishda xatolik:", error);
     }

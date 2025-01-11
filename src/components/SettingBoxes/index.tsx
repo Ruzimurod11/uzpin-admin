@@ -8,6 +8,7 @@ import { CiMail } from "react-icons/ci";
 import axiosInstance from "@/libs/axios";
 import { useRouter } from "next/navigation";
 import InputMask from "react-input-mask";
+import { toast } from "react-toastify";
 
 const SettingBoxes = () => {
   const [formData, setFormData] = useState({
@@ -66,7 +67,7 @@ const SettingBoxes = () => {
       if (newPassword !== confirmPassword) {
         console.log("Yangi parollar mos kelmadi!");
         setLoading(false);
-        return;
+        return toast.error("Parollar mos kelmadi");
       }
       updatedData.old_password = password;
       updatedData.new_password = newPassword;
@@ -76,6 +77,7 @@ const SettingBoxes = () => {
     try {
       await axiosInstance.put("/root/profile", updatedData);
       localStorage.setItem("profile", JSON.stringify(updatedData));
+      toast.success("Ma'lumotlar o'zgartirildi");
       // location.reload();
     } catch (error) {
       console.error("Ma'lumotlarni saqlashda xatolik:", error);

@@ -4,6 +4,7 @@ import axiosInstance from "@/libs/axios";
 import SelectGroupOne from "../SelectGame/SelectGroupOne";
 import UploadComponent from "../UploadComponent";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface Game {
   id: string;
@@ -118,13 +119,14 @@ const GamesPromoCreate = () => {
           payload,
         );
         router.push(`/games/${gameId}`);
+        toast.success("Promokod muvaffaqiyatli yangilandi.");
       } else {
         await axiosInstance.post(`/root/game/promocodes/${gameId}`, payload);
         router.push(`/games/${gameId}`);
+        toast.success("Promokod muvaffaqiyatli qo'shildi.");
       }
     } catch (error) {
-      console.log("Promokod yaratishda xatolik bo'ldi!");
-      console.error(error);
+      toast.error("Promokod yaratishda xatolik bo'ldi.");
     }
   };
 

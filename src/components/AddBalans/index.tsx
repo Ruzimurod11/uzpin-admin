@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axiosInstance from "@/libs/axios";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface DefaultSelectOptionProps {
   options: string[];
@@ -78,11 +79,11 @@ const AddBalansBox = () => {
 
   const handleSubmit = async () => {
     if (!formData.amount || Number(formData.amount) <= 0) {
-      console.log("Iltimos, pul miqdorini to'g'ri kiriting.");
+      toast.warn("Iltimos, pul miqdorini to'g'ri kiriting.");
       return;
     }
     if (!["PLUS", "MINUS"].includes(formData.type)) {
-      console.log("Iltimos, 'PLUS' yoki 'MINUS' turini tanlang.");
+      toast.warn("Iltimos, 'PLUS' yoki 'MINUS' turini tanlang.");
       return;
     }
 
@@ -92,9 +93,9 @@ const AddBalansBox = () => {
         formData,
       );
       router.push("/users/user");
-      console.log("Balans muvaffaqiyatli yangilandi!");
+      toast.success("Balans muvaffaqiyatli yangilandi!");
     } catch (error) {
-      console.log("errorMessage", error);
+      toast.error("Balans o'zgarmadi");
     }
   };
 

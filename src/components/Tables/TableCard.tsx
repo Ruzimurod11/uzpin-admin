@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import { toast } from "react-toastify";
 
 interface Card {
   id: string;
@@ -48,6 +49,7 @@ const TableCard = () => {
       await axiosInstance.delete(`/root/card/${gameId}/detail`);
       setCards((prevData) => prevData.filter((game) => game.id !== gameId));
       setIsModalOpen("");
+      toast.warn("Muvaffaqiyatli O'chirildi");
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
     }

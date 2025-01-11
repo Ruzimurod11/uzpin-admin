@@ -10,6 +10,7 @@ import { TbPlayerPlay } from "react-icons/tb";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import { FaTelegramPlane } from "react-icons/fa";
 import PartnorModalMsg from "../PartnorMsgModal";
+import { toast } from "react-toastify";
 
 interface Info {
   id: string;
@@ -81,6 +82,7 @@ const TableMessage = () => {
       await axiosInstance.delete(`/root/mailing/${gameId}/delete`);
       setInfo((prevData) => prevData.filter((game) => game.id !== gameId));
       setIsModalOpen("");
+      toast.warn("Xabar o'chirildi.");
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
       setIsModalOpen("");
@@ -88,11 +90,11 @@ const TableMessage = () => {
   };
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
-    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
     const adjustedDate = new Date(localDate.getTime() - offsetInMs);
     return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
-  
+
   if (loading) return <Loader />;
 
   return (
@@ -151,18 +153,22 @@ const TableMessage = () => {
             </div>
           </div>
           <div className="col-span-1 flex items-center">
-            {product.file_type == "photo" ? (
-              <Image
-                alt="img"
-                src={product.file}
-                width={48}
-                height={48}
-                className="h-12"
-              />
+            {product.file ? (
+              product.file_type == "photo" ? (
+                <Image
+                  alt=""
+                  src={product.file}
+                  width={48}
+                  height={48}
+                  className="h-12"
+                />
+              ) : (
+                <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full border-2 border-primary ">
+                  <TbPlayerPlay className="text-[25px] text-primary" />
+                </div>
+              )
             ) : (
-              <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full border-2 border-primary ">
-                <TbPlayerPlay className="text-[25px] text-primary" />
-              </div>
+              <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full  "></div>
             )}
           </div>
           <div className="col-span-2 flex items-center">
