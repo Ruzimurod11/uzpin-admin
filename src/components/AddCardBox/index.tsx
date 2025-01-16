@@ -7,6 +7,7 @@ import UploadComponent from "@/components/UploadComponent";
 import SelectGroupOne from "@/components/SelectGame/SelectGroupOne";
 import { useRouter, useSearchParams } from "next/navigation";
 import InputMask from "react-input-mask";
+import { toast } from "react-toastify";
 export default function AddCardBox() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -94,14 +95,14 @@ export default function AddCardBox() {
           ...formData,
           currency: selectedGame,
         });
+        toast.success("Karta muvaffaqiyatli yangilandi.");
       } else {
         await axiosInstance.post(`/root/card/list`, {
           ...formData,
           currency: selectedGame,
         });
+        toast.success("Karta muvaffaqiyatli qo'shildi.");
       }
-
-      console.log("Karta muvaffaqiyatli yangilandi!");
 
       router.push("/general/add-card");
     } catch (error) {
@@ -113,7 +114,6 @@ export default function AddCardBox() {
   };
   return (
     <div className="mx-auto max-w-7xl">
-      <Breadcrumb pageName="Karta Qo'shish" />
       <form
         onSubmit={handleSubmit}
         className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card"

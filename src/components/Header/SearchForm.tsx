@@ -11,6 +11,12 @@ const SearchForm = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+
+  useEffect(() => {
+    setSearchValue(searchQuery);
+    console.log("test", searchQuery);
+  }, []);
 
   useEffect(() => {
     const hiddenPaths = [

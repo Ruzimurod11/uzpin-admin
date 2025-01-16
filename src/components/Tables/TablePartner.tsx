@@ -9,6 +9,7 @@ import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import { FaTelegramPlane } from "react-icons/fa";
 import PartnorModalMsg from "../PartnorMsgModal";
+import { toast } from "react-toastify";
 
 interface Partner {
   id: string;
@@ -52,6 +53,7 @@ const TablePartner = () => {
       await axiosInstance.delete(`/root/bot/${gameId}/delete`);
       setPartners((prevData) => prevData.filter((game) => game.id !== gameId));
       setIsModalOpen("");
+      toast.warn("Muvaffaqiyatli O'chirildi");
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
@@ -123,6 +125,7 @@ const TablePartner = () => {
                   width={60}
                   height={50}
                   alt="Uz Banner"
+                  className="mx-auto max-h-12.5 w-auto"
                 />
               )}
             </div>
@@ -135,6 +138,7 @@ const TablePartner = () => {
                   width={60}
                   height={50}
                   alt="Ru Banner"
+                  className="mx-auto max-h-12.5 w-auto"
                 />
               )}
             </div>
@@ -147,6 +151,7 @@ const TablePartner = () => {
                   width={60}
                   height={50}
                   alt="Ru Banner"
+                  className="mx-auto max-h-12.5 w-auto"
                 />
               )}
             </div>
@@ -159,6 +164,7 @@ const TablePartner = () => {
                   width={60}
                   height={50}
                   alt="En Banner"
+                  className="mx-auto max-h-12.5 w-auto"
                 />
               )}
             </div>

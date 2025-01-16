@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import UploadComponent from "@/components/UploadComponent";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function PartnorCreateBox() {
   const [formData, setFormData] = useState({
@@ -69,14 +70,14 @@ export default function PartnorCreateBox() {
     if (extractedValue) {
       await axiosInstance.put(`/root/bot/${extractedValue}/detail`, formData);
       router.push(`/partners/partner`);
+      toast.success("Hamkor muvaffaqiyatli yangilandi");
     } else {
       try {
         await axiosInstance.post("/root/bot/create", formData);
-        console.log("Hamkor muvaffaqiyatli qo'shildi!");
+        toast.success("Hamkor muvaffaqiyatli qo'shildi!");
         router.push("/partners/partner");
       } catch (error) {
-        console.error("Hamkor qo'shishda xatolik:", error);
-        console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+        toast.error("Hamkor Qo'shishda Xatolik!");
       } finally {
         setLoading(false);
       }

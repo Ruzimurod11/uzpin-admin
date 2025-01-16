@@ -30,7 +30,8 @@ const TableSalesPromoBox = () => {
   const searchQuery = searchParams.get("search") || "";
 
   const fetchStats = async (page: number) => {
-    setLoading(true);
+    if (!searchQuery) setLoading(true);
+
     try {
       const response = await axiosInstance.get(
         `/root/sold/list?search=${searchQuery}&page=${page}`,
@@ -48,11 +49,11 @@ const TableSalesPromoBox = () => {
   }, [searchQuery, currentPage]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
-    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
     const adjustedDate = new Date(localDate.getTime() - offsetInMs);
     return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
-  
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">

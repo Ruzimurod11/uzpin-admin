@@ -25,14 +25,18 @@ const PartnorModalMsg: React.FC<ModalProps> = ({ partners, onClose }) => {
   };
 
   const handleSend = async () => {
-    if (!selectedBot || !text || !file) {
-      toast.warn("Iltimos, barcha maydonlarni to‘ldiring.");
+    if (!selectedBot) {
+      toast.warn("Iltimos, bot tanlang");
+      return;
+    }
+    if (!file && !text) {
+      toast.warn("Iltimos, Xabar Kiriting");
       return;
     }
 
     const payload = {
       bot: selectedBot,
-      text: text,
+      text: text == "" ? undefined : text,
       file: file,
       file_type: fileType,
     };

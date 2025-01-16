@@ -1,6 +1,7 @@
 import axiosInstance from "@/libs/axios";
 import { useEffect, useState } from "react";
 import Loader from "../common/Loader";
+import Pagination from "../Pagination";
 
 interface Info {
   status: string;
@@ -12,15 +13,18 @@ interface Info {
 
 const TableMoneyRecived = ({ id }: any) => {
   const [data, setData] = useState<Info[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchStats = async (page: number) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get(
-          `/root/customer/${id}/transactions`,
+          `/root/customer/${id}/transactions?page=${page}`,
         );
         setData(response.data.results || []);
+        setTotalPages(Math.ceil(response.data.count / 10));
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
       } finally {
@@ -28,15 +32,15 @@ const TableMoneyRecived = ({ id }: any) => {
       }
     };
 
-    fetchStats();
-  }, [id]);
+    fetchStats(currentPage);
+  }, [id, currentPage]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
-    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
     const adjustedDate = new Date(localDate.getTime() - offsetInMs);
     return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
-  
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -84,6 +88,13 @@ const TableMoneyRecived = ({ id }: any) => {
           </div>
         </div>
       ))}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 };

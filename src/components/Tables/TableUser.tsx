@@ -62,7 +62,7 @@ const TableUser = () => {
   }, []);
 
   const fetchStats = async (page: number) => {
-    setLoading(true);
+    if (!searchQuery) setLoading(true);
     let url = `/root/customer/list?is_seller=${!active}&page=${page}`;
     if (searchQuery)
       url = `/root/customer/list?is_seller=${!active}&search=${searchQuery}&page=${page}`;

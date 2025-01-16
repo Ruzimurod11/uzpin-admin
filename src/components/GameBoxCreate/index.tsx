@@ -5,6 +5,7 @@ import SelectGroupOne from "../SelectGame/SelectGroupOne";
 import UploadComponent from "../UploadComponent";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AlertError, AlertSuccess } from "../Alerts/AlertComponents";
+import { toast } from "react-toastify";
 
 const GamesBoxCreate = () => {
   const router = useRouter();
@@ -26,9 +27,6 @@ const GamesBoxCreate = () => {
 
   const [selectedGame, setSelectedGame] = useState<string>("");
 
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchCardDetails = async () => {
       if (extractedValue) {
@@ -48,10 +46,6 @@ const GamesBoxCreate = () => {
           setDescEn(response.data.desc_en || "");
 
           // is_active: is_active !== undefined ? is_active : true,
-
-          console.log(response.data);
-
-          // setSelectedGame(currency || "");
         } catch (error) {
           console.error("Failed to fetch card details:", error);
         }
@@ -95,22 +89,15 @@ const GamesBoxCreate = () => {
           `/root/game/games/${extractedValue}/detail`,
           payload,
         );
-        setSuccessMessage("O'yin muvaffaqiyatli yangilandi!");
-        setTimeout(() => {
-          setSuccessMessage(null);
-          router.push("/games");
-        }, 2000);
+        router.push("/games");
+        toast.success("O'yin muvaffaqiyatli yangilandi!");
       } else {
         await axiosInstance.post("/root/game/games", payload);
-        setSuccessMessage("O'yin muvaffaqiyatli yaratildi!");
-        setTimeout(() => {
-          setSuccessMessage(null);
-          router.push("/games");
-        }, 2000);
+        router.push("/games");
+        toast.success("O'yin muvaffaqiyatli yaratildi!");
       }
     } catch (error) {
-      setErrorMessage("O'yin yaratishda xatolik bo'ldi!");
-      setTimeout(() => setErrorMessage(null), 3000);
+      toast.error("O'yin yaratishda xatolik bo'ldi!");
     }
   };
 
@@ -121,9 +108,6 @@ const GamesBoxCreate = () => {
           Yangi O&apos;yin Ma&apos;lumotlari
         </h3>
       </div>
-
-      {successMessage && <AlertSuccess message={successMessage} />}
-      {errorMessage && <AlertError message={errorMessage} />}
 
       <div className="grid grid-cols-6 gap-5.5 p-6.5">
         <div className="col-span-6">

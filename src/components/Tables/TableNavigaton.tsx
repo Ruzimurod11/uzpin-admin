@@ -142,13 +142,19 @@ const TableNavigation = () => {
               <div className="col-span-1 flex cursor-pointer items-center gap-2">
                 <div
                   className="rounded bg-blue-600 px-6 py-1 text-white"
-                  onClick={() => handleAction(product.id, "ACCEPTED")}
+                  onClick={() => {
+                    handleAction(product.id, "ACCEPTED");
+                    toast.success("To'lov Qabul Qilindi");
+                  }}
                 >
                   <FaCheck />
                 </div>
                 <div
                   className="rounded bg-[red] px-6 py-1 text-white"
-                  onClick={() => handleAction(product.id, "REJECTED")}
+                  onClick={() => {
+                    handleAction(product.id, "REJECTED");
+                    toast.error("To'lov Rad Qilindi");
+                  }}
                 >
                   <FaTimes />
                 </div>
