@@ -166,6 +166,10 @@ const ChartOne = () => {
 
   const router = useRouter();
 
+  const formatNumber = (num: number) => {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  };
+
   if (error) return <p className="text-red-500">{error}</p>;
   if (!chartData) return <Loader />;
 
@@ -194,13 +198,13 @@ const ChartOne = () => {
         <div className="flex items-center justify-center gap-4 border-stroke dark:border-dark-3 xsm:w-full xsm:border-r">
           <p className="font-medium">30 Kunlik Sotuv</p>
           <h4 className="flex items-center text-xl font-bold text-dark dark:text-white">
-            {amount?.USD ?? "0"} <IoLogoUsd />
+            {amount?.USD ? formatNumber(amount.USD) : "0"} <IoLogoUsd />
           </h4>
           <h4 className="flex items-center text-xl font-bold text-dark dark:text-white">
-            {amount?.UZS ?? "0"} S
+            {amount?.UZS ? formatNumber(amount.UZS) : "0"} S
           </h4>
           <h4 className="flex items-center text-xl font-bold text-dark dark:text-white">
-            {amount?.RUB ?? "0"} <BiRuble />
+            {amount?.RUB ? formatNumber(amount.RUB) : "0"} <BiRuble />
           </h4>
         </div>
       </div>

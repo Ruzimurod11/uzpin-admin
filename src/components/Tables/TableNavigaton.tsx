@@ -53,7 +53,9 @@ const TableNavigation = () => {
       setProductData((prevData) =>
         prevData.filter((product) => product.id !== id),
       );
+      // toast.success("Harakat amalga oshirildi");
     } catch (error) {
+      toast.error("Harakat amalga oshirishda xatolik");
       console.error("Harakatni amalga oshirishda xatolik:", error);
     }
   };
