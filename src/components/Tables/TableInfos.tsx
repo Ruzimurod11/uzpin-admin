@@ -34,11 +34,13 @@ const TableInfos = ({ name }: TableInfosProps) => {
       end_date: endDate,
     }).toString();
 
-    setTime(queryParams);
-    console.log(queryParams, "queryParams");
+    // setTime(queryParams);
+    console.log(queryParams, "test");
+
+    fetchCards(selectedBot, selectedGame, queryParams);
   };
 
-  const fetchCards = async (bot = "", game = "") => {
+  const fetchCards = async (bot = "", game = "", time = "") => {
     setLoadings(true);
     try {
       const queryParams: string[] = [];
@@ -84,9 +86,6 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
   useEffect(() => {
     fetchCards();
-  }, [time]);
-
-  useEffect(() => {
     fetchGames();
     fetchBots();
   }, []);
@@ -154,7 +153,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         </div>
         <div className="col-span-3 flex items-center justify-center gap-2"></div>
         <div className="col-span-3 flex items-center justify-center gap-2">
-          Saralash: <CustomCalendar onDateChange={handleDateChange} />
+          Saralash: <CustomCalendar2 onDateChange={handleDateChange} />
         </div>
       </div>
 
@@ -173,7 +172,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         </div>
       </div>
 
-      {cards.map((product, key) => (
+      {/* {cards.map((product, key) => (
         <div
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5"
           key={key}
@@ -221,7 +220,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
             </div>
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

@@ -21,8 +21,9 @@ const CustomCalendar = ({ onDateChange }) => {
   };
 
   const applyDateRange = () => {
-    const startDate = dateRange[0].startDate.toISOString().split("T")[0];
-    const endDate = dateRange[0].endDate.toISOString().split("T")[0];
+    const startDate = dateRange[0].startDate.toLocaleDateString("en-CA"); // YYYY-MM-DD format
+    const endDate = dateRange[0].endDate.toLocaleDateString("en-CA");
+
     onDateChange(startDate, endDate);
     toggleCalendar();
   };
