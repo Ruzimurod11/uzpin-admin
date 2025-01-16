@@ -7,6 +7,7 @@ import axiosInstance from "@/libs/axios";
 import Image from "next/image";
 import Loader from "../common/Loader";
 import Pagination from "../Pagination";
+import { toast } from "react-toastify";
 
 interface Notif {
   id: string;
@@ -52,7 +53,9 @@ const TableNavigation = () => {
       setProductData((prevData) =>
         prevData.filter((product) => product.id !== id),
       );
+      // toast.success("Harakat amalga oshirildi");
     } catch (error) {
+      toast.error("Harakat amalga oshirishda xatolik");
       console.error("Harakatni amalga oshirishda xatolik:", error);
     }
   };
