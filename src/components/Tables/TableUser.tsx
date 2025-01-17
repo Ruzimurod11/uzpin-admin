@@ -161,7 +161,7 @@ const TableUser = () => {
           </div>
 
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Telefon Raqam</p>
+            <p className="font-medium">Telefon raqam</p>
           </div>
           <div className="col-span-1 flex items-center px-4">
             <p className="font-medium">Joriy hisob</p>
