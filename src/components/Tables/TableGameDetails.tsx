@@ -113,7 +113,7 @@ const TableGameDetails = () => {
           className="col-span-2 flex cursor-pointer items-center gap-4"
         >
           <FaArrowLeft />
-          <p className="font-medium">Promokod Nomi</p>
+          <p className="font-medium">Promokod nomi</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Qolgan</p>
