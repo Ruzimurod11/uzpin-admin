@@ -42,7 +42,7 @@ const menuGroups = [
       },
       {
         icon: <CiCircleCheck className="text-2xl" />,
-        label: "Sotilgan Promokodlar",
+        label: "Sotilgan promokodlar",
         route: "/sales-promo",
       },
 

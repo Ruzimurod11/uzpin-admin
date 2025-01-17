@@ -92,7 +92,7 @@ const SettingBoxes = () => {
         <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
           <div className="border-b border-stroke px-7 py-4 dark:border-dark-3">
             <h3 className="font-medium text-dark dark:text-white">
-              Shaxsiy Ma&apos;lumot
+              Shaxsiy ma&apos;lumot
             </h3>
           </div>
           <div className="p-7">
@@ -186,7 +186,7 @@ const SettingBoxes = () => {
                     className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
                     htmlFor="password"
                   >
-                    Eski Parol
+                    Eski parol
                   </label>
                   <div className="relative">
                     <TbPasswordFingerprint className="absolute left-4.5 top-1/2 -translate-y-1/2" />
@@ -207,7 +207,7 @@ const SettingBoxes = () => {
                     className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
                     htmlFor="newPassword"
                   >
-                    Yangi Parol
+                    Yangi parol
                   </label>
                   <div className="relative">
                     <TbPasswordFingerprint className="absolute left-4.5 top-1/2 -translate-y-1/2" />
