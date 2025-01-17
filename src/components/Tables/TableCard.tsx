@@ -59,7 +59,7 @@ const TableCard = () => {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-          Karta Ma&apos;lumotlari
+          Karta ma&apos;lumotlari
         </h4>
         <Link
           href="addcard"

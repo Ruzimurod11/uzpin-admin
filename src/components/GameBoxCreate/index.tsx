@@ -146,7 +146,7 @@ const GamesBoxCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            O&apos;yin Nomi [UZ]
+            O&apos;yin nomi [UZ]
           </label>
           <input
             type="text"
@@ -158,7 +158,7 @@ const GamesBoxCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            O&apos;yin Nomi [RU]
+            O&apos;yin nomi [RU]
           </label>
           <input
             type="text"
@@ -170,7 +170,7 @@ const GamesBoxCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            O&apos;yin Nomi [EN]
+            O&apos;yin nomi [EN]
           </label>
           <input
             type="text"

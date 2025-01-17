@@ -55,7 +55,7 @@ const TableBalans = () => {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-          Barcha Foydalanuvchilar
+          Barcha foydalanuvchilar
         </h4>
         <SearchForm />
         <div className="flex gap-4">
@@ -63,13 +63,13 @@ const TableBalans = () => {
             className={` rounded border border-slate-400 px-4 py-2  ${active && "bg-primary text-white"}`}
             onClick={() => setActive(true)}
           >
-            Tasqidlangan Balans
+            Tasqidlangan balans
           </button>
           <button
             className={` rounded border border-slate-400 px-4 py-2  ${!active && "bg-primary text-white"}`}
             onClick={() => setActive(false)}
           >
-            Bekor Qilingan Balans
+            Bekor qilingan balans
           </button>
         </div>
       </div>

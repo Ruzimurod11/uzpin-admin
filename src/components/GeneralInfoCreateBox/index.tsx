@@ -87,7 +87,7 @@ export default function GeneralInfoCreateBox() {
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
         <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
-            Yangi Video Malumotlaria
+            Yangi video malumotlari
           </h3>
         </div>
         <form
@@ -104,7 +104,7 @@ export default function GeneralInfoCreateBox() {
           </div>
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Video Turi
+              Video turi
             </label>
             <input
               type="text"
