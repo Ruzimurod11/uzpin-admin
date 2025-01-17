@@ -64,7 +64,7 @@ const TablePartner = () => {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-          Barcha Hamkorlar
+          Barcha hamkorlar
         </h4>
         <div className="flex gap-4">
           <Link
@@ -78,10 +78,10 @@ const TablePartner = () => {
 
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Hamkor Nomi</p>
+          <p className="font-medium">Hamkor nomi</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Bot Nomi</p>
+          <p className="font-medium">Bot nomi</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Banner Uz</p>
@@ -93,7 +93,7 @@ const TablePartner = () => {
           <p className="font-medium">Banner En</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Hamkor Logo</p>
+          <p className="font-medium">Hamkor logo</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium"></p>

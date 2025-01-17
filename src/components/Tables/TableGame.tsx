@@ -73,7 +73,7 @@ const TableGame = () => {
           <p className="font-medium">O&apos;yin nomi</p>
         </div>
         <div className="col-span-2 flex items-center">
-          <p className="font-medium">Asosiy Rasm</p>
+          <p className="font-medium">Asosiy rasm</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Banner rasm</p>

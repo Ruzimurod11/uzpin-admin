@@ -206,7 +206,7 @@ const GamesPromoCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Sotuvchi Uchun Narx (USD)
+            Sotuvchi uchun narx (USD)
           </label>
           <input
             type="number"
@@ -217,7 +217,7 @@ const GamesPromoCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Sotuvchi Uchun Narx (UZS)
+            Sotuvchi uchun narx (UZS)
           </label>
           <input
             type="number"
@@ -228,7 +228,7 @@ const GamesPromoCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Sotuvchi Uchun Narx (RUB)
+            Sotuvchi uchun narx (RUB)
           </label>
           <input
             type="number"
@@ -239,7 +239,7 @@ const GamesPromoCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Tan Narx (USD)
+            Tan narx (USD)
           </label>
           <input
             type="number"
@@ -250,7 +250,7 @@ const GamesPromoCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Tan Narx (UZS)
+            Tan narx (UZS)
           </label>
           <input
             type="number"
@@ -261,7 +261,7 @@ const GamesPromoCreate = () => {
         </div>
         <div className="col-span-2">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Tan Narx (RUB)
+            Tan narx (RUB)
           </label>
           <input
             type="number"

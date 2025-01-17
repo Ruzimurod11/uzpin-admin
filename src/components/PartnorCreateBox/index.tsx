@@ -89,7 +89,7 @@ export default function PartnorCreateBox() {
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
         <div className="border-b border-stroke px-6.5 py-4 dark:border-dark-3">
           <h3 className="font-medium text-dark dark:text-white">
-            Hamkor Qo&apos;shish
+            Hamkor qo&apos;shish
           </h3>
         </div>
         <form
@@ -110,7 +110,7 @@ export default function PartnorCreateBox() {
           </div>
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Bot Token
+              Bot token
             </label>
             <input
               type="text"
@@ -146,7 +146,7 @@ export default function PartnorCreateBox() {
           </div>
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Hamkor Logo
+              Hamkor logo
             </label>
             <UploadComponent
               onUploadSuccess={(url) => handleUploadSuccess("logo", url)}

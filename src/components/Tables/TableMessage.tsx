@@ -101,7 +101,7 @@ const TableMessage = () => {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="flex items-center justify-between px-4 py-6 md:px-6 xl:px-9">
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-          Barcha Xabarlar
+          Barcha xabarlar
         </h4>
         <div className="flex gap-4">
           <div
@@ -117,7 +117,7 @@ const TableMessage = () => {
           <p className="text-center text-sm font-medium">Nomi</p>
         </div>
         <div className="col-span-4 flex items-center">
-          <p className="text-center text-sm font-medium">Xabar Matni</p>
+          <p className="text-center text-sm font-medium">Xabar matni</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="text-center text-sm font-medium">File</p>
@@ -126,7 +126,7 @@ const TableMessage = () => {
           <p className="text-center text-sm font-medium">Foydalanuvchilar</p>
         </div>
         <div className="col-span-2 flex items-center">
-          <p className="text-center text-sm font-medium">Yaratilgan Vaqti</p>
+          <p className="text-center text-sm font-medium">Yaratilgan vaqti</p>
         </div>
         <div className="col-span-1 flex items-center ">
           <p className="text-center text-sm font-medium"></p>

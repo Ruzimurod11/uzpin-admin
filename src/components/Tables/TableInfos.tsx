@@ -165,7 +165,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
           <p className="font-medium">Sotilganlar soni</p>
         </div>
         <div className="col-span-3 flex items-center justify-center">
-          <p className="font-medium">Umumiy Narxi</p>
+          <p className="font-medium">Umumiy narxi</p>
         </div>
         <div className="col-span-3 flex items-center justify-center">
           <p className="font-medium">Foyda</p>
