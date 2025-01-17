@@ -44,8 +44,8 @@ const TableInfos = ({ name }: TableInfosProps) => {
     setLoadings(true);
     try {
       const queryParams: string[] = [];
-      if (bot) queryParams.push(`bot=${bot}`);
-      if (game) queryParams.push(`game=${game}`);
+      if (bot && bot != "barchasi") queryParams.push(`bot=${bot}`);
+      if (game && game != "barchasi") queryParams.push(`game=${game}`);
       const queryString =
         queryParams.length > 0 ? `&${queryParams.join("&")}` : "";
 
@@ -77,6 +77,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     try {
       const response = await axiosInstance.get("/root/sold/types");
       setBots(response.data || []);
+      console.log(response.data);
     } catch (error) {
       console.error("Botlarni yuklashda xatolik:", error);
     } finally {
@@ -136,7 +137,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         <div className="col-span-2 flex items-center justify-center">
           {bots.length > 0 && (
             <DefaultSelectOption
-              options={bots}
+              options={["barchasi", ...bots]}
               onChange={handleBotChange}
               value={selectedBot}
             />
@@ -145,7 +146,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         <div className="col-span-2 flex items-center justify-center">
           {games.length > 0 && (
             <DefaultSelectOption
-              options={games}
+              options={["barchasi", ...games]}
               onChange={handleGameChange}
               value={selectedGame}
             />
