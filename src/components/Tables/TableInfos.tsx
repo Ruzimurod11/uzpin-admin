@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
-import CustomCalendar2 from "../Charts/CustomCalendar2";
 import { BiRuble } from "react-icons/bi";
 import { IoLogoUsd } from "react-icons/io5";
 import Loader from "../common/Loader";
@@ -34,13 +33,10 @@ const TableInfos = ({ name }: TableInfosProps) => {
       end_date: endDate,
     }).toString();
 
-    // setTime(queryParams);
-    console.log(queryParams, "test");
-
-    fetchCards(selectedBot, selectedGame, queryParams);
+    setTime(queryParams);
   };
 
-  const fetchCards = async (bot = "", game = "", time = "") => {
+  const fetchCards = async (bot = "", game = "") => {
     setLoadings(true);
     try {
       const queryParams: string[] = [];
@@ -89,7 +85,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     fetchCards();
     fetchGames();
     fetchBots();
-  }, []);
+  }, [time]);
 
   const handleBotChange = (selected: string) => {
     setSelectedBot(selected);
@@ -101,7 +97,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     fetchCards(selectedBot, selected);
   };
 
-  if (loadings) return <Loader />;
+  // if (loadings) return <Loader />;
 
   const DefaultSelectOption = ({
     options,
@@ -154,7 +150,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         </div>
         <div className="col-span-3 flex items-center justify-center gap-2"></div>
         <div className="col-span-3 flex items-center justify-center gap-2">
-          Saralash: <CustomCalendar2 onDateChange={handleDateChange} />
+          Saralash: <CustomCalendar onDateChange={handleDateChange} />
         </div>
       </div>
 
