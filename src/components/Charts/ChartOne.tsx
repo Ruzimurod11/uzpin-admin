@@ -178,7 +178,7 @@ const ChartOne = () => {
       <div className="mb-3.5 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Oxirgi Bir Oyda Sotilgan Kodlar
+            Oxirgi bir oyda sotilgan kodlar
           </h4>
         </div>
         <CustomCalendar onDateChange={handleDateChange} />

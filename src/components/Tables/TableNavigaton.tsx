@@ -83,15 +83,15 @@ const TableNavigation = () => {
               <p className="font-medium">Valyuta</p>
             </div>
             <div className="col-span-1 flex items-center">
-              <p className="font-medium">ISBOT</p>
+              <p className="font-medium">Isbot</p>
             </div>
-            <div className="col-span-1 flex items-center">
+            <div className="col-span-1 flex justify-center items-center">
               <p className="font-medium">Yaratilgan sana</p>
             </div>
-            <div className="col-span-1 flex items-center">
+            <div className="col-span-1 flex justify-center items-center">
               <p className="font-medium">Holati</p>
             </div>
-            <div className="col-span-1 flex items-center">
+            <div className="col-span-1 flex justify-center items-center">
               <p className="font-medium">Chek</p>
             </div>
             <div className="col-span-1 flex items-center">
@@ -122,17 +122,17 @@ const TableNavigation = () => {
               <div className="col-span-1 flex items-center">
                 {product.from_bot ? "Sayt orqali" : "Bot orqali"}
               </div>
-              <div className="col-span-1 flex items-center">
+              <div className="col-span-1 flex justify-center items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {new Date(product.created).toLocaleDateString("uz-UZ")}
                 </p>
               </div>
-              <div className="col-span-1 flex items-center">
+              <div className="col-span-1 flex justify-center items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {product.status === "WAITING" ? "Kutmoqda" : product.status}
                 </p>
               </div>
-              <div className="col-span-1 flex items-center">
+              <div className="col-span-1 flex justify-center items-center">
                 <FaEye
                   onClick={() => setSelectedImage(product.chek)}
                   className="cursor-pointer"
