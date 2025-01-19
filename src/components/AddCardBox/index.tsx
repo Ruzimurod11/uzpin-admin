@@ -148,18 +148,15 @@ export default function AddCardBox() {
             </div>
             <div className="col-span-3">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Karta raqami
+                Valyuta turi
               </label>
-              <InputMask
-                mask="9999 9999 9999 9999"
-                placeholder="0000 0000 0000 0000"
-                type="text"
-                name="card_number"
-                value={formData.card_number}
-                onChange={handleChange}
-                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+              <SelectGroupOne
+                options={gameOptions}
+                selectedOption={selectedGame}
+                onChange={handleSelectChange}
               />
             </div>
+
             <div className="col-span-3">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 Karta egasi
@@ -174,13 +171,27 @@ export default function AddCardBox() {
             </div>
             <div className="col-span-3">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                Valyuta turi
+                Karta raqami
               </label>
-              <SelectGroupOne
-                options={gameOptions}
-                selectedOption={selectedGame}
-                onChange={handleSelectChange}
-              />
+              {selectedGame == "UZS" ? (
+                <InputMask
+                  mask="9999 9999 9999 9999"
+                  placeholder="0000 0000 0000 0000"
+                  type="text"
+                  name="card_number"
+                  value={formData.card_number}
+                  onChange={handleChange}
+                  className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+                />
+              ) : (
+                <input
+                  type="text"
+                  name="card_number"
+                  value={formData.card_number}
+                  onChange={handleChange}
+                  className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+                />
+              )}
             </div>
             <div className="col-span-6">
               <SwitcherThree
