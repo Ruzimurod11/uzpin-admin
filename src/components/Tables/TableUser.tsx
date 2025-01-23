@@ -26,6 +26,7 @@ interface User {
   login_type: string;
   is_seller: boolean;
   created: string;
+  is_active: boolean;
 }
 
 interface TOTALAMOUNT {
@@ -36,7 +37,10 @@ interface TOTALAMOUNT {
 
 const TableUser = () => {
   const [active, setActive] = useState(true);
-  const [lock, setLock] = useState(false);
+  const [lock, setLock] = useState({
+    id: "",
+    is_active: true,
+  });
   const [users, setUser] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -63,10 +67,6 @@ const TableUser = () => {
     fetchCardAmount();
   }, []);
 
-  const handleLock = () => {
-    setLock(!lock);
-  };
-
   const fetchStats = async (page: number) => {
     if (!searchQuery) setLoading(true);
     let url = `/root/customer/list?is_seller=${!active}&page=${page}`;
@@ -84,7 +84,7 @@ const TableUser = () => {
   };
   useEffect(() => {
     fetchStats(currentPage);
-  }, [active, currentPage, searchQuery]);
+  }, [active, currentPage, searchQuery, lock]);
 
   const handleSubmit = async () => {
     if (!formData.id) return;
@@ -101,6 +101,22 @@ const TableUser = () => {
   useEffect(() => {
     handleSubmit();
   }, [formData]);
+
+  const handleLock = async () => {
+    if (!lock.id) return;
+    try {
+      await axiosInstance.put(`/root/customer/${lock.id}/detail`, {
+        is_active: lock.is_active,
+      });
+      console.log("Karta muvaffaqiyatli yangilandi!");
+    } catch (error) {
+      console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+    }
+  };
+  useEffect(() => {
+    handleLock();
+  }, [lock]);
+
   if (loading) return <Loader />;
   return (
     <>
@@ -246,10 +262,15 @@ const TableUser = () => {
 
             <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
               <button
-                onClick={handleLock}
-                className="rounded bg-[orange] px-3 py-1 text-white"
+                onClick={() =>
+                  setLock({
+                    is_active: !user.is_active,
+                    id: user.id,
+                  })
+                }
+                className={`rounded ${user.is_active?"bg-[#424749]":"bg-[#ef3333]"} px-3 py-1 text-white`}
               >
-                {lock ? <FaLock /> : <FaLockOpen />}
+                {user.is_active ? <FaLockOpen /> : <FaLock />}
               </button>
 
               <Link
