@@ -126,7 +126,7 @@ const SettingBoxes = () => {
                     className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
                     htmlFor="phone"
                   >
-                    Telefon Nomer
+                    Telefon raqam
                   </label>
                   <div className="relative">
                     <span className="absolute left-4.5 top-1/2 -translate-y-1/2">
@@ -140,7 +140,7 @@ const SettingBoxes = () => {
                       id="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="Telefon nomer"
+                      placeholder="Telefon raqam"
                     />
                   </div>
                 </div>
