@@ -100,6 +100,10 @@ const TableInfos = ({ name }: TableInfosProps) => {
     fetchCards(selectedBot, selected);
   };
 
+  const formatNumber = (num: number) => {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  };
+
   if (loadings) return <Loader />;
 
   const DefaultSelectOption = ({
@@ -158,16 +162,16 @@ const TableInfos = ({ name }: TableInfosProps) => {
       </div>
 
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
-        <div className="col-span-2 flex items-center justify-center">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">{name}</p>
         </div>
-        <div className="col-span-2 flex items-center justify-center">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Sotilganlar soni</p>
         </div>
-        <div className="col-span-3 flex items-center justify-center">
+        <div className="col-span-3 flex items-center">
           <p className="font-medium">Umumiy narxi</p>
         </div>
-        <div className="col-span-3 flex items-center justify-center">
+        <div className="col-span-3 flex items-center">
           <p className="font-medium">Foyda</p>
         </div>
       </div>
@@ -177,44 +181,52 @@ const TableInfos = ({ name }: TableInfosProps) => {
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5"
           key={key}
         >
-          <div className="col-span-2 flex items-center justify-center">
+          <div className="col-span-2 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {key + 1}. {product.promocode}
             </p>
           </div>
-          <div className="col-span-2 flex items-center justify-center">
+          <div className="col-span-2 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {product.total_count}
             </p>
           </div>
-          <div className="col-span-3 flex items-center justify-center">
-            <div className="flex gap-4">
+          <div className="col-span-3 flex items-center">
+            <div className="flex flex-col gap-0">
               <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
-                {product.total_amount.USD}
+                {product.total_amount.USD
+                  ? formatNumber(product.total_amount.USD)
+                  : "0"}
                 <IoLogoUsd />
               </p>
 
               <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
-                {product.total_amount.UZS} S
+                {product.total_amount.UZS
+                  ? formatNumber(product.total_amount.UZS)
+                  : "0"}{" "}
+                S
               </p>
               <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
-                {product.total_amount.RUB}
+                {product.total_amount.RUB
+                  ? formatNumber(product.total_amount.RUB)
+                  : "0"}
                 <BiRuble />
               </p>
             </div>
           </div>
-          <div className="col-span-3 flex items-center justify-center">
-            <div className="flex gap-4">
+          <div className="col-span-3 flex items-center">
+            <div className="flex flex-col gap-0">
               <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
-                {product.benefit.USD}
+                {product.benefit.USD ? formatNumber(product.benefit.USD) : "0"}
                 <IoLogoUsd />
               </p>
 
               <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
-                {product.benefit.UZS} S
+                {product.benefit.UZS ? formatNumber(product.benefit.UZS) : "0"}{" "}
+                S
               </p>
               <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
-                {product.benefit.RUB}
+                {product.benefit.RUB ? formatNumber(product.benefit.RUB) : "0"}
                 <BiRuble />
               </p>
             </div>

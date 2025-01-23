@@ -6,6 +6,7 @@ import { FaEye, FaMoneyBillTransfer } from "react-icons/fa6";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
+import { FaLock, FaLockOpen } from "react-icons/fa";
 import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
 import Pagination from "../Pagination";
@@ -35,6 +36,7 @@ interface TOTALAMOUNT {
 
 const TableUser = () => {
   const [active, setActive] = useState(true);
+  const [lock, setLock] = useState(false);
   const [users, setUser] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -60,6 +62,10 @@ const TableUser = () => {
 
     fetchCardAmount();
   }, []);
+
+  const handleLock = () => {
+    setLock(!lock);
+  };
 
   const fetchStats = async (page: number) => {
     if (!searchQuery) setLoading(true);
@@ -169,7 +175,7 @@ const TableUser = () => {
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Yaratilgan vaqt</p>
           </div>
-          <div className="col-span-1 flex items-end justify-center gap-2">
+          <div className="col-span-1 flex items-end justify-start gap-2">
             Sotuvchi
           </div>
           <div className="col-span-1 flex items-end justify-end gap-2"></div>
@@ -224,7 +230,7 @@ const TableUser = () => {
                 </p>
               </div>
             </div>
-            <div className="col-span-1 flex items-center justify-center">
+            <div className="col-span-1 flex items-center justify-start">
               <SwitcherThree
                 isActive={user.is_seller}
                 onChange={(value: boolean) =>
@@ -239,12 +245,12 @@ const TableUser = () => {
             </div>
 
             <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
-              {/* <Link
-                href={`user-edit?${user.id}`}
+              <button
+                onClick={handleLock}
                 className="rounded bg-[orange] px-3 py-1 text-white"
               >
-                <FiEdit2 />
-              </Link> */}
+                {lock ? <FaLock /> : <FaLockOpen />}
+              </button>
 
               <Link
                 href={`money-received?${user.id}`}
