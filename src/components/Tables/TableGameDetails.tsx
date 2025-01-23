@@ -10,14 +10,16 @@ import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import { toast } from "react-toastify";
+import CurrencyInput from "../SelectOption/CurrencyInput";
+import SwitcherThree from "../SelectOption/SwitcherThree";
 
 interface Game {
   id: string;
   name: string;
   promocode_values: any;
-  customer_price_uzs: string;
-  customer_price_usd: string;
-  customer_price_rub: string;
+  customer_price_uzs: number;
+  customer_price_usd: number;
+  customer_price_rub: number;
   is_active: boolean;
 }
 const TableGameDetails = () => {
@@ -28,6 +30,14 @@ const TableGameDetails = () => {
   const [data, setData] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState("");
+  const [isSellerState, setIsSellerState] = useState<Record<string, boolean>>(
+    {},
+  );
+
+  const [protsent, setProtsent] = useState<Record<string, string>>({});
+  const [protsentSeller, setProtsentSeller] = useState<Record<string, string>>(
+    {},
+  );
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -99,6 +109,63 @@ const TableGameDetails = () => {
       toast.error("Promokodni yuborishda xatolik");
     }
   };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    productId: string,
+  ) => {
+    const value = e.target.value;
+    const regex = /^[0-9]*\.?[0-9]*$/;
+
+    if (regex.test(value)) {
+      setProtsent((prev) => ({
+        ...prev,
+        [productId]: value,
+      }));
+    }
+  };
+
+  const handleInputChangeSeller = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    productId: string,
+  ) => {
+    const value = e.target.value;
+    const regex = /^[0-9]*\.?[0-9]*$/;
+
+    if (regex.test(value)) {
+      setProtsentSeller((prev) => ({
+        ...prev,
+        [productId]: value,
+      }));
+    }
+  };
+
+  // Blur handler for both inputs
+  const handleBlur = (productId: string, isSeller: boolean) => {
+    const value = protsent[productId] || protsentSeller[productId];
+    sendDataToBackend(value, productId, isSeller);
+  };
+
+  const sendDataToBackend = (
+    percent: string,
+    productId: string,
+    isSeller: boolean,
+  ) => {
+    const data = {
+      percent: parseFloat(percent),
+      is_partner: isSeller, // `is_partner` parametrini qo'shish
+    };
+
+    axiosInstance
+      .post(`/root/game/mobile-legands/update/percent/${productId}`, data)
+      .then((response) => {
+        console.log("Backenddan javob:", response.data);
+      })
+      .catch((error) => {
+        console.error("Xatolik:", error);
+      });
+  };
+
   const [activeId, setActiveId] = useState();
   const ModalOpen = (productId: any) => {
     setModal(true);
@@ -115,9 +182,11 @@ const TableGameDetails = () => {
           <FaArrowLeft />
           <p className="font-medium">Promokod nomi</p>
         </div>
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium">Qolgan</p>
-        </div>
+        {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+          <div className="col-span-2 flex items-center">
+            <p className="font-medium">Qolgan</p>
+          </div>
+        )}
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Sotilgan</p>
         </div>
@@ -130,14 +199,18 @@ const TableGameDetails = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">RUBLE</p>
         </div>
-        <div className="col-span-2 flex items-center justify-end">
-          <Link
-            href="promo-create"
-            className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
-          >
-            +
-          </Link>
-        </div>
+        {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" ? (
+          <div className="col-span-2 flex items-center justify-end">
+            <Link
+              href="promo-create"
+              className="flex w-20 justify-center rounded bg-green-400 px-5 py-1 text-2xl text-white"
+            >
+              +
+            </Link>
+          </div>
+        ) : (
+          <CurrencyInput />
+        )}
       </div>
 
       {data.length > 0 &&
@@ -156,17 +229,19 @@ const TableGameDetails = () => {
                 </p>
               </div>
             </Link>
+            {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+              <Link
+                href={`${key}/${product.id}`}
+                className="col-span-2 flex items-center"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                    {product.promocode_values.not_sold}
+                  </p>
+                </div>
+              </Link>
+            )}
 
-            <Link
-              href={`${key}/${product.id}`}
-              className="col-span-2 flex items-center"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {product.promocode_values.not_sold}
-                </p>
-              </div>
-            </Link>
             <Link
               href={`${key}/${product.id}`}
               className="col-span-2 flex items-center"
@@ -193,7 +268,7 @@ const TableGameDetails = () => {
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {product.customer_price_usd}
+                  {product.customer_price_usd.toFixed(4)}
                 </p>
               </div>
             </Link>
@@ -203,29 +278,55 @@ const TableGameDetails = () => {
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {product.customer_price_rub}
+                  {product.customer_price_rub.toFixed(2)}
                 </p>
               </div>
             </Link>
 
-            <div className="col-span-2 flex cursor-pointer items-center justify-end gap-2">
+            {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+              <div className="col-span-2 flex">
+                <input
+                  type="text"
+                  value={protsent[product.id] || ""}
+                  onChange={(e) => handleInputChange(e, product.id)}
+                  onBlur={() => handleBlur(product.id, false)}
+                  className="mx-8 w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                  placeholder="Oddiy Mijoz"
+                />
+              </div>
+            )}
+            <div className="col-span-2 flex cursor-pointer items-center justify-end gap-5">
+              {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+                <input
+                  type="text"
+                  value={protsentSeller[product.id] || ""}
+                  onChange={(e) => handleInputChangeSeller(e, product.id)}
+                  onBlur={() => handleBlur(product.id, true)}
+                  className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+                  placeholder="Sotuvchi"
+                />
+              )}
               <Link href={`promo-create?${product.id}`}>
                 <div className="rounded bg-[orange] px-3 py-1 text-white">
                   <FiEdit2 />
                 </div>
               </Link>
-              <div
-                onClick={() => ModalOpen(product.id)}
-                className="rounded bg-[green] px-3 py-1 text-white"
-              >
-                <FaFileArrowUp />
-              </div>
-              <div
-                onClick={() => DeleteGame(product.id)}
-                className="rounded bg-[red] px-3 py-1 text-white"
-              >
-                <MdOutlineDeleteOutline />
-              </div>
+              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+                <div
+                  onClick={() => ModalOpen(product.id)}
+                  className="rounded bg-[green] px-3 py-1 text-white"
+                >
+                  <FaFileArrowUp />
+                </div>
+              )}
+              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+                <div
+                  onClick={() => DeleteGame(product.id)}
+                  className="rounded bg-[red] px-3 py-1 text-white"
+                >
+                  <MdOutlineDeleteOutline />
+                </div>
+              )}
             </div>
           </div>
         ))}
