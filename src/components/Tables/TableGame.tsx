@@ -142,12 +142,22 @@ const TableGame = () => {
                   <FiEdit2 size={20} />
                 </div>
               </Link>
-              <div
-                onClick={() => DeleteGame(game.id)}
-                className="rounded bg-[red] px-3 py-1 text-white"
-              >
-                <MdOutlineDeleteOutline size={20} />
-              </div>
+              {game.id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ? (
+                <div
+                  className={
+                    "cursor-not-allowed rounded bg-[#cecece] px-3 py-1 text-black"
+                  }
+                >
+                  <MdOutlineDeleteOutline size={20} />
+                </div>
+              ) : (
+                <div
+                  onClick={() => DeleteGame(game.id)}
+                  className={"rounded bg-[red] px-3 py-1 text-white"}
+                >
+                  <MdOutlineDeleteOutline size={20} />
+                </div>
+              )}
             </div>
           </div>
         ))}

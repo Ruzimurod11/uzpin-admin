@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
-import CustomCalendar2 from "../Charts/CustomCalendar2";
 import { BiRuble } from "react-icons/bi";
 import { IoLogoUsd } from "react-icons/io5";
 import Loader from "../common/Loader";
@@ -34,18 +33,15 @@ const TableInfos = ({ name }: TableInfosProps) => {
       end_date: endDate,
     }).toString();
 
-    // setTime(queryParams);
-    console.log(queryParams, "test");
-
-    fetchCards(selectedBot, selectedGame, queryParams);
+    setTime(queryParams);
   };
 
-  const fetchCards = async (bot = "", game = "", time = "") => {
+  const fetchCards = async (bot = "", game = "") => {
     setLoadings(true);
     try {
       const queryParams: string[] = [];
-      if (bot) queryParams.push(`bot=${bot}`);
-      if (game) queryParams.push(`game=${game}`);
+      if (bot && bot != "barchasi") queryParams.push(`bot=${bot}`);
+      if (game && game != "barchasi") queryParams.push(`game=${game}`);
       const queryString =
         queryParams.length > 0 ? `&${queryParams.join("&")}` : "";
 
@@ -77,6 +73,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     try {
       const response = await axiosInstance.get("/root/sold/types");
       setBots(response.data || []);
+      console.log(response.data);
     } catch (error) {
       console.error("Botlarni yuklashda xatolik:", error);
     } finally {
@@ -88,7 +85,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     fetchCards();
     fetchGames();
     fetchBots();
-  }, []);
+  }, [time]);
 
   const handleBotChange = (selected: string) => {
     setSelectedBot(selected);
@@ -104,7 +101,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
   };
 
-  if (loadings) return <Loader />;
+  // if (loadings) return <Loader />;
 
   const DefaultSelectOption = ({
     options,
@@ -140,7 +137,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         <div className="col-span-2 flex items-center justify-center">
           {bots.length > 0 && (
             <DefaultSelectOption
-              options={bots}
+              options={["barchasi", ...bots]}
               onChange={handleBotChange}
               value={selectedBot}
             />
@@ -149,7 +146,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         <div className="col-span-2 flex items-center justify-center">
           {games.length > 0 && (
             <DefaultSelectOption
-              options={games}
+              options={["barchasi", ...games]}
               onChange={handleGameChange}
               value={selectedGame}
             />
@@ -157,7 +154,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
         </div>
         <div className="col-span-3 flex items-center justify-center gap-2"></div>
         <div className="col-span-3 flex items-center justify-center gap-2">
-          Saralash: <CustomCalendar2 onDateChange={handleDateChange} />
+          Saralash: <CustomCalendar onDateChange={handleDateChange} />
         </div>
       </div>
 
