@@ -84,7 +84,7 @@ const TableUser = () => {
   };
   useEffect(() => {
     fetchStats(currentPage);
-  }, [active, currentPage, searchQuery, lock]);
+  }, [active, currentPage, searchQuery]);
 
   const handleSubmit = async () => {
     if (!formData.id) return;
@@ -268,7 +268,7 @@ const TableUser = () => {
                     id: user.id,
                   })
                 }
-                className={`rounded ${user.is_active?"bg-[#424749]":"bg-[#ef3333]"} px-3 py-1 text-white`}
+                className={`rounded ${user.is_active ? "bg-[#424749]" : "bg-[#ef3333]"} px-3 py-1 text-white`}
               >
                 {user.is_active ? <FaLockOpen /> : <FaLock />}
               </button>

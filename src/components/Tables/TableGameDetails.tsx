@@ -12,6 +12,8 @@ import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import { toast } from "react-toastify";
 import CurrencyInput from "../SelectOption/CurrencyInput";
 import SwitcherThree from "../SelectOption/SwitcherThree";
+import { IoLogoUsd } from "react-icons/io5";
+import { BiRuble } from "react-icons/bi";
 
 interface Game {
   id: string;
@@ -20,6 +22,14 @@ interface Game {
   customer_price_uzs: number;
   customer_price_usd: number;
   customer_price_rub: number;
+  body_price_usd: number;
+  body_price_uzs: number;
+  body_price_rub: number;
+  partner_price_uzs: number;
+  partner_price_usd: number;
+  partner_price_rub: number;
+  partner_percent: number;
+  percent: number;
   is_active: boolean;
 }
 const TableGameDetails = () => {
@@ -34,27 +44,28 @@ const TableGameDetails = () => {
     {},
   );
 
+  const [reload, setReload] = useState<Boolean>(false);
+
   const [protsent, setProtsent] = useState<Record<string, string>>({});
   const [protsentSeller, setProtsentSeller] = useState<Record<string, string>>(
     {},
   );
 
+  const fetchStats = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(`/root/game/promocodes/${id}`);
+      setData(response.data.results || []);
+      console.log(response.data.results);
+    } catch (error) {
+      console.error("Ma'lumotlarni yuklashda xatolik:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchStats = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get(`/root/game/promocodes/${id}`);
-        setData(response.data.results || []);
-        console.log(response.data.results);
-      } catch (error) {
-        console.error("Ma'lumotlarni yuklashda xatolik:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchStats();
-  }, []);
+  }, [reload]);
 
   const router = useRouter();
   const goBack = () => {
@@ -140,7 +151,6 @@ const TableGameDetails = () => {
     }
   };
 
-  // Blur handler for both inputs
   const handleBlur = (productId: string, isSeller: boolean) => {
     const value = protsent[productId] || protsentSeller[productId];
     sendDataToBackend(value, productId, isSeller);
@@ -153,17 +163,34 @@ const TableGameDetails = () => {
   ) => {
     const data = {
       percent: parseFloat(percent),
-      is_partner: isSeller, // `is_partner` parametrini qo'shish
+      is_partner: isSeller,
     };
 
     axiosInstance
       .post(`/root/game/mobile-legands/update/percent/${productId}`, data)
       .then((response) => {
         console.log("Backenddan javob:", response.data);
+        fetchStats();
       })
       .catch((error) => {
         console.error("Xatolik:", error);
       });
+  };
+
+  const formatNumber = (num: number) => {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  };
+
+  const UpdateData = async () => {
+    try {
+      const response = await axiosInstance.post(
+        `/root/game/mobile-legands/promocodes/${id}`,
+      );
+      toast.success("Muvaffaqiyatli yanilandi");
+      setReload((prev) => !prev);
+    } catch (error) {
+      console.error("Muvaffaqiyatli yanilishda xatolik:", error);
+    }
   };
 
   const [activeId, setActiveId] = useState();
@@ -174,6 +201,17 @@ const TableGameDetails = () => {
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
+      {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+        <div className="flex justify-between  py-4 pl-4">
+          <button
+            className="rounded bg-[green] px-4 py-3 text-white"
+            onClick={UpdateData}
+          >
+            Import qilish
+          </button>
+          <CurrencyInput setReload={setReload} />
+        </div>
+      )}
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
         <div
           onClick={goBack}
@@ -191,13 +229,13 @@ const TableGameDetails = () => {
           <p className="font-medium">Sotilgan</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">UZS</p>
+          <p className="font-medium">Tan Narxi</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">USD</p>
+          <p className="font-medium">Mijoz Narxi</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">RUBLE</p>
+          <p className="font-medium">Sotuchi Narxi</p>
         </div>
         {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" ? (
           <div className="col-span-2 flex items-center justify-end">
@@ -209,7 +247,14 @@ const TableGameDetails = () => {
             </Link>
           </div>
         ) : (
-          <CurrencyInput />
+          <>
+            <div className="col-span-2 flex items-center px-10">
+              <p className="font-medium">Mijoz uchun foiz</p>
+            </div>
+            <div className="col-span-2 flex items-center">
+              <p className="font-medium">Sotuvchi uchun foiz</p>
+            </div>
+          </>
         )}
       </div>
 
@@ -224,7 +269,7 @@ const TableGameDetails = () => {
               className="col-span-2 flex items-center"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-body-sm font-bold text-black dark:text-dark-8">
+                <p className="line-clamp-1 text-body-sm font-bold text-black dark:text-dark-8">
                   {key + 1}. {product.name}
                 </p>
               </div>
@@ -257,9 +302,27 @@ const TableGameDetails = () => {
               className="col-span-1 flex items-center"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {product.customer_price_uzs}
-                </p>
+                <div className="flex flex-col gap-0">
+                  <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.body_price_usd
+                      ? formatNumber(product.body_price_usd)
+                      : "0"}
+                    <IoLogoUsd />
+                  </p>
+
+                  <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.body_price_uzs
+                      ? formatNumber(product.body_price_uzs)
+                      : "0"}{" "}
+                    S
+                  </p>
+                  <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.body_price_rub
+                      ? formatNumber(product.body_price_rub)
+                      : "0"}
+                    <BiRuble />
+                  </p>
+                </div>
               </div>
             </Link>
             <Link
@@ -267,9 +330,27 @@ const TableGameDetails = () => {
               className="col-span-1 flex items-center"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {product.customer_price_usd.toFixed(4)}
-                </p>
+                <div className="flex flex-col gap-0">
+                  <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.customer_price_usd
+                      ? formatNumber(product.customer_price_usd)
+                      : "0"}
+                    <IoLogoUsd />
+                  </p>
+
+                  <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.customer_price_uzs
+                      ? formatNumber(product.customer_price_uzs)
+                      : "0"}{" "}
+                    S
+                  </p>
+                  <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.customer_price_rub
+                      ? formatNumber(product.customer_price_rub)
+                      : "0"}
+                    <BiRuble />
+                  </p>
+                </div>
               </div>
             </Link>
             <Link
@@ -277,17 +358,39 @@ const TableGameDetails = () => {
               className="col-span-1 flex items-center"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                  {product.customer_price_rub.toFixed(2)}
-                </p>
+                <div className="flex flex-col gap-0">
+                  <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.partner_price_usd
+                      ? formatNumber(product.partner_price_usd)
+                      : "0"}
+                    <IoLogoUsd />
+                  </p>
+
+                  <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.partner_price_uzs
+                      ? formatNumber(product.partner_price_uzs)
+                      : "0"}{" "}
+                    S
+                  </p>
+                  <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+                    {product.partner_price_rub
+                      ? formatNumber(product.partner_price_rub)
+                      : "0"}
+                    <BiRuble />
+                  </p>
+                </div>
               </div>
             </Link>
 
             {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-              <div className="col-span-2 flex">
+              <div className="col-span-2 flex items-center">
                 <input
                   type="text"
-                  value={protsent[product.id] || ""}
+                  value={
+                    protsent[product.id] !== undefined
+                      ? protsent[product.id]
+                      : product.percent
+                  }
                   onChange={(e) => handleInputChange(e, product.id)}
                   onBlur={() => handleBlur(product.id, false)}
                   className="mx-8 w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
@@ -299,18 +402,24 @@ const TableGameDetails = () => {
               {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
                 <input
                   type="text"
-                  value={protsentSeller[product.id] || ""}
+                  value={
+                    protsentSeller[product.id] !== undefined
+                      ? protsentSeller[product.id]
+                      : product.partner_percent
+                  }
                   onChange={(e) => handleInputChangeSeller(e, product.id)}
                   onBlur={() => handleBlur(product.id, true)}
                   className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
                   placeholder="Sotuvchi"
                 />
               )}
-              <Link href={`promo-create?${product.id}`}>
-                <div className="rounded bg-[orange] px-3 py-1 text-white">
-                  <FiEdit2 />
-                </div>
-              </Link>
+              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+                <Link href={`promo-create?${product.id}`}>
+                  <div className="rounded bg-[orange] px-3 py-1 text-white">
+                    <FiEdit2 />
+                  </div>
+                </Link>
+              )}
               {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
                 <div
                   onClick={() => ModalOpen(product.id)}
