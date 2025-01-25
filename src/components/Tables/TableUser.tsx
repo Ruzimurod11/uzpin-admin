@@ -108,6 +108,12 @@ const TableUser = () => {
       await axiosInstance.put(`/root/customer/${lock.id}/detail`, {
         is_active: lock.is_active,
       });
+      if (!lock.id) return;
+      setUser((prevUsers) =>
+        prevUsers.map((u) =>
+          u.id === lock.id ? { ...u, is_active: lock.is_active } : u,
+        ),
+      );
       console.log("Karta muvaffaqiyatli yangilandi!");
     } catch (error) {
       console.log("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
