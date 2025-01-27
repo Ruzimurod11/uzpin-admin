@@ -123,6 +123,10 @@ const TableUser = () => {
     handleLock();
   }, [lock]);
 
+  const formatNumber = (num: number) => {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  };
+
   if (loading) return <Loader />;
   return (
     <>
@@ -232,15 +236,15 @@ const TableUser = () => {
             <div className="col-span-1 flex items-center px-4">
               <div className="flex flex-col">
                 <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
-                  {user.account_usd}
+                  {user.account_usd ? formatNumber(user.account_usd) : "0"}
                   <IoLogoUsd />
                 </p>
 
                 <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
-                  {user.account_uzs} S
+                  {user.account_uzs ? formatNumber(user.account_uzs) : "0"} S
                 </p>
                 <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
-                  {user.account_rub}
+                  {user.account_rub ? formatNumber(user.account_rub) : "0"}
                   <BiRuble />
                 </p>
               </div>
