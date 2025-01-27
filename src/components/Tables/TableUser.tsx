@@ -136,7 +136,7 @@ const TableUser = () => {
             Dollor
           </div>
           <p className="dark:text-slate-200">
-            <b>{totalAmount?.USD ?? "0"}</b>
+            <b>{totalAmount?.USD ? formatNumber(totalAmount?.USD) : "0"}</b>
           </p>
           <IoLogoUsd />
         </div>
@@ -145,7 +145,7 @@ const TableUser = () => {
             Sum
           </div>
           <p className="dark:text-slate-200">
-            <b>{totalAmount?.UZS ?? "0"}</b>
+            <b>{totalAmount?.UZS ? formatNumber(totalAmount?.UZS) : "0"}</b>
           </p>
           S
         </div>
@@ -155,7 +155,7 @@ const TableUser = () => {
             Ruble
           </div>
           <p className="dark:text-slate-200">
-            <b>{totalAmount?.RUB ?? "0"}</b>
+            <b>{totalAmount?.RUB ? formatNumber(totalAmount?.RUB) : "0"}</b>
           </p>
           <BiRuble />
         </div>
