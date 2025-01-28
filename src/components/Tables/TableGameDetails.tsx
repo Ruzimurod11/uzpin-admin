@@ -14,6 +14,7 @@ import CurrencyInput from "../SelectOption/CurrencyInput";
 import SwitcherThree from "../SelectOption/SwitcherThree";
 import { IoLogoUsd } from "react-icons/io5";
 import { BiRuble } from "react-icons/bi";
+import Pagination from "../Pagination";
 
 interface Game {
   id: string;
@@ -39,6 +40,8 @@ const TableGameDetails = () => {
 
   const [data, setData] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState("");
   const [isSellerState, setIsSellerState] = useState<Record<string, boolean>>(
     {},
@@ -51,12 +54,14 @@ const TableGameDetails = () => {
     {},
   );
 
-  const fetchStats = async () => {
+  const fetchStats = async (page: number) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(`/root/game/promocodes/${id}`);
+      const response = await axiosInstance.get(
+        `/root/game/promocodes/${id}?page=${page} `,
+      );
       setData(response.data.results || []);
-      console.log(response.data.results);
+      setTotalPages(Math.ceil(response.data.count / 10));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -64,8 +69,8 @@ const TableGameDetails = () => {
     }
   };
   useEffect(() => {
-    fetchStats();
-  }, [reload]);
+    fetchStats(currentPage);
+  }, [reload, currentPage]);
 
   const router = useRouter();
   const goBack = () => {
@@ -170,7 +175,7 @@ const TableGameDetails = () => {
       .post(`/root/game/mobile-legands/update/percent/${productId}`, data)
       .then((response) => {
         console.log("Backenddan javob:", response.data);
-        fetchStats();
+        fetchStats(currentPage);
       })
       .catch((error) => {
         console.error("Xatolik:", error);
@@ -270,7 +275,7 @@ const TableGameDetails = () => {
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="line-clamp-1 text-body-sm font-bold text-black dark:text-dark-8">
-                  {key + 1}. {product.name}
+                  {(currentPage - 1) * 10 + key + 1}. {product.name}
                 </p>
               </div>
             </Link>
@@ -471,6 +476,12 @@ const TableGameDetails = () => {
         onConfirm={() => handleDelete(isModalOpen)}
         title="Siz ushbu malumotni o'chirmoqchimisiz?"
         description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
   );
