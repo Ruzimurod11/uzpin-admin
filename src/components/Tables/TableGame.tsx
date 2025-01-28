@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import SwitcherThree from "../SelectOption/SwitcherThree";
 import { toast } from "react-toastify";
 
 interface Game {
@@ -52,6 +53,23 @@ const TableGame = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
+
+  const handleStatus = async (gameId: string, status: boolean) => {
+    try {
+      await axiosInstance.patch(`/root/game/games/${gameId}/detail`, {
+        is_active: status,
+      });
+      setData((prevData) =>
+        prevData.map((game) =>
+          game.id === gameId ? { ...game, is_active: status } : game
+        )
+      );
+      toast.warn("Muvaffaqiyatli O'zgartirildi");
+    } catch (error) {
+      console.error("O'yinni o'chirishda xatolik:", error);
+    }
+  };
+
   if (loading) return <Loader />;
 
   return (
@@ -130,12 +148,13 @@ const TableGame = () => {
                 />
               </div>
             </Link>
-            <Link
-              href={`games/${game.id}`}
-              className="col-span-1 flex items-center"
-            >
-              {game.is_active ? "Faol" : "Faol emas"}
-            </Link>
+            <div className="col-span-1 flex items-center">
+              <SwitcherThree
+                isActive={game.is_active}
+                onChange={(value: boolean) => handleStatus(game.id, value)}
+                text="&nbsp;"
+              />
+            </div>
             <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
               <Link href={`games-create?${game.id}`}>
                 <div className="rounded bg-[orange] px-3 py-1 text-white">
