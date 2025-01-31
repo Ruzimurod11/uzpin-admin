@@ -34,7 +34,7 @@ const TableAllPromo = () => {
     return null;
   };
 
-  const id = getIdFromPathname();
+  const id = getIdFromPathname();  
 
   const fetchPromocodes = async (page: number) => {
     if (!id) {
@@ -104,86 +104,100 @@ const TableAllPromo = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-      <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
-        <div
-          onClick={goBack}
-          className="col-span-2 flex cursor-pointer items-center gap-4"
-        >
-          <FaArrowLeft />
-          <p className="font-medium">Promokod</p>
-        </div>
-        <div className="col-span-4 flex items-center">
-          <p className="font-medium">Kod</p>
-        </div>
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium">Holati</p>
-        </div>
-        <div className="col-span-2 flex items-center">
-          <p className="font-medium">Yaratilgan sana</p>
-        </div>
-        <div className="col-span-1 flex items-center justify-end">
-          <button
-            className="rounded bg-red-500 px-3 py-1 text-white"
-            onClick={deleteSelectedPromos}
-          >
-            <MdOutlineDeleteOutline />
-          </button>
-        </div>
+    <>
+      <div
+        className="flex cursor-pointer items-center gap-4 px-4 pb-4"
+        onClick={goBack}
+      >
+        <FaArrowLeft />
+        orqaga
       </div>
-
-      {productData.length > 0 &&
-        productData.map((product) => (
-          <div
-            className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
-            key={product?.id}
-          >
-            <div className="col-span-2 flex items-center gap-4">
-              <input
-                type="checkbox"
-                onChange={(e) =>
-                  handleCheckboxChange(product.id, e.target.checked)
+      <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
+        <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
+          <div className="col-span-2 flex cursor-pointer items-center gap-4">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedIds(productData.map((item) => item.id));
                 }
-                checked={selectedIds.includes(product.id)}
-              />
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product?.promocode}
-              </p>
-            </div>
-            <div className="col-span-4 flex items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product?.code}
-              </p>
-            </div>
-            <div className="col-span-2 flex items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product?.is_sold ? "Sotilgan" : "Sotilmagan"}
-              </p>
-            </div>
-            <div className="col-span-2 flex items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {convertTime(product?.created)}
-              </p>
-            </div>
-            <div className="col-span-1 flex cursor-pointer items-center gap-2"></div>
+              }}
+            />
+            <p className="font-medium">Promokod</p>
           </div>
-        ))}
+          <div className="col-span-4 flex items-center">
+            <p className="font-medium">Kod</p>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <p className="font-medium">Holati</p>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <p className="font-medium">Yaratilgan sana</p>
+          </div>
+          <div className="col-span-1 flex items-center justify-end">
+            <button
+              className="rounded bg-red-500 px-3 py-1 text-white"
+              onClick={deleteSelectedPromos}
+            >
+              <MdOutlineDeleteOutline />
+            </button>
+          </div>
+        </div>
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
+        {productData.length > 0 &&
+          productData.map((product, index) => (
+            <div
+              className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
+              key={product?.id}
+            >
+              <div className="col-span-2 flex items-center gap-4">
+                {index + 1}
+                <input
+                  type="checkbox"
+                  onChange={(e) =>
+                    handleCheckboxChange(product.id, e.target.checked)
+                  }
+                  checked={selectedIds.includes(product.id)}
+                />
+                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                  {product?.promocode}
+                </p>
+              </div>
+              <div className="col-span-4 flex items-center">
+                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                  {product?.code}
+                </p>
+              </div>
+              <div className="col-span-2 flex items-center">
+                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                  {product?.is_sold ? "Sotilgan" : "Sotilmagan"}
+                </p>
+              </div>
+              <div className="col-span-2 flex items-center">
+                <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                  {convertTime(product?.created)}
+                </p>
+              </div>
+              <div className="col-span-1 flex cursor-pointer items-center gap-2"></div>
+            </div>
+          ))}
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
+        <ConfirmDeleteModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={() => handleDelete()}
+          title="Siz ushbu malumotni o'chirmoqchimisiz?"
+          description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
         />
-      )}
-      <ConfirmDeleteModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={() => handleDelete()}
-        title="Siz ushbu malumotni o'chirmoqchimisiz?"
-        description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
-      />
-    </div>
+      </div>
+    </>
   );
 };
 
