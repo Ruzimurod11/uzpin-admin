@@ -120,6 +120,8 @@ const TableAllPromo = () => {
               onChange={(e) => {
                 if (e.target.checked) {
                   setSelectedIds(productData.map((item) => item.id));
+                }else{
+                  setSelectedIds([]);
                 }
               }}
             />
