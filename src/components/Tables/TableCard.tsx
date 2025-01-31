@@ -8,6 +8,7 @@ import axiosInstance from "@/libs/axios";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import { toast } from "react-toastify";
+import "./TableCard.css";
 
 interface Card {
   id: string;
@@ -109,8 +110,8 @@ const TableCard = () => {
             </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="cursor-pointer text-body-sm font-medium text-dark dark:text-dark-6 tooltip">
-              Ko'rish
+            <p className="tooltip cursor-pointer text-body-sm font-medium text-dark dark:text-dark-6">
+              Ko&apos;rish
               <span className="tooltiptext">{card.card_number}</span>
             </p>
           </div>
