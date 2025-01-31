@@ -109,8 +109,9 @@ const TableCard = () => {
             </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {card.card_number}
+            <p className="cursor-pointer text-body-sm font-medium text-dark dark:text-dark-6 tooltip">
+              Ko'rish
+              <span className="tooltiptext">{card.card_number}</span>
             </p>
           </div>
           <div className="col-span-1 flex items-center">
