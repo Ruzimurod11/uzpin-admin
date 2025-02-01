@@ -128,7 +128,7 @@ const TableGameDetails = () => {
         toast.success("Promokod muvaffaqiyatli qo'shildi");
         setModal(false);
         setPromocode("");
-        setData1((prevState) => [
+        setData1((prevState: any) => [
           ...(prevState || []),
           ...response.data.values,
         ]);
