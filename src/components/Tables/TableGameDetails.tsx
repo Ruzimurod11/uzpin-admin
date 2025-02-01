@@ -35,10 +35,12 @@ interface Game {
 }
 const TableGameDetails = () => {
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
   let pathname = usePathname();
   let id = pathname ? pathname.split("/").pop()?.replace("%7D", "") : "";
 
   const [data, setData] = useState<Game[]>([]);
+  const [data1, setData1] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -118,12 +120,28 @@ const TableGameDetails = () => {
         "/root/game/promocodevalues/create",
         payload,
       );
-      setModal(false);
-      toast.success("Promokod muvaffaqiyatli qo'shildi");
-      router.push(`/games/0/${productId}`);
+      if (response.data.values.length === 0) {
+        setModal(false);
+        toast.success("Promokod muvaffaqiyatli qo'shildi");
+        router.push(`/games/0/${productId}`);
+      } else {
+        toast.success("Promokod muvaffaqiyatli qo'shildi");
+        setModal(false);
+        setPromocode("");
+        setData1((prevState: any) => [
+          ...(prevState || []),
+          ...response.data.values,
+        ]);
+        setModal1(true);
+      }
     } catch (error) {
       toast.error("Promokodni yuborishda xatolik");
     }
+  };
+
+  const closeModal1 = () => {
+    setModal1(false);
+    setData1([]);
   };
 
   const handleInputChange = (
@@ -467,6 +485,23 @@ const TableGameDetails = () => {
             >
               Qo&apos;shish
             </button>
+          </div>
+        </div>
+      )}
+      {modal1 && (
+        <div className="z-5000 absolute left-[50%] top-[50%] flex h-[500px] w-[800px] translate-x-[-50%] translate-y-[-50%] flex-col rounded-lg border-[2px] border-red-600 bg-white px-4 py-4 shadow-2xl dark:bg-gray-dark dark:shadow-card">
+          <div className="mb-3 flex items-center justify-between">
+            <label className="block text-body-sm font-medium text-dark dark:text-white">
+              Bu promokodlar oldin qo&apos;shilgan
+            </label>
+            <button className="text-sm" onClick={closeModal1}>
+              ❌
+            </button>
+          </div>
+          <div className="mt-5 flex max-h-[400px] flex-col overflow-y-auto">
+            {data1?.map((item: string, index: number) => (
+              <p key={index}>{item}</p>
+            ))}
           </div>
         </div>
       )}
