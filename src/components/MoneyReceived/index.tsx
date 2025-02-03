@@ -42,7 +42,7 @@ export default function MoneyReceived() {
 
   return (
     <>
-      <div className="mb-4 flex w-full justify-end gap-4 rounded px-4 py-2">
+      {/* <div className="mb-4 flex w-full justify-end gap-4 rounded px-4 py-2">
         <button
           className={`rounded border border-slate-400 px-4 py-2 ${
             active ? "bg-primary text-white" : "dark:text-slate-200"
@@ -59,7 +59,7 @@ export default function MoneyReceived() {
         >
           Xarajatlar
         </button>
-      </div>
+      </div> */}
       <div className="mb-4 flex w-full justify-between gap-5">
         <div className="flex w-full items-center gap-2 rounded bg-white px-3 py-4 dark:bg-slate-900">
           <div className="rounded bg-[darkgreen] px-4 py-1 text-sm capitalize text-white">
@@ -85,6 +85,24 @@ export default function MoneyReceived() {
           <p className="dark:text-slate-200">
             <b>{formData?.account_rub ?? "0"}</b>
           </p>
+        </div>
+        <div className="flex w-max justify-end gap-4 rounded py-2">
+          <button
+            className={`rounded border border-slate-400 px-4 py-2 ${
+              active ? "bg-primary text-white" : "dark:text-slate-200"
+            }`}
+            onClick={() => setActive(true)}
+          >
+            Tushum
+          </button>
+          <button
+            className={`rounded border border-slate-400 px-4 py-2 ${
+              !active ? "bg-primary text-white" : "dark:text-slate-200"
+            }`}
+            onClick={() => setActive(false)}
+          >
+            Xarajatlar
+          </button>
         </div>
       </div>
       {active ? (

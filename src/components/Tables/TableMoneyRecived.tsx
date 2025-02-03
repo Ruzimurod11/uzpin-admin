@@ -67,7 +67,7 @@ const TableMoneyRecived = ({ id }: any) => {
           <div className="col-span-1 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {key + 1}. {product.amount}
+                {(currentPage - 1) * 10 + key + 1}. {product.amount}
               </p>
             </div>
           </div>
@@ -82,8 +82,10 @@ const TableMoneyRecived = ({ id }: any) => {
             </p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.chek ? "Tasdiqlangan" : "Bekor qilingan"}
+            <p
+              className={`text-body-sm font-medium dark:text-dark-6 ${product.status == "ACCEPTED" ? "text-green" : "text-red"} `}
+            >
+              {product.status == "ACCEPTED" ? "Tasdiqlangan" : "Bekor qilingan"}
             </p>
           </div>
         </div>

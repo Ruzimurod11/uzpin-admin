@@ -75,7 +75,7 @@ const ChartThree: React.FC = () => {
             options={chartData.options}
             series={chartData.series}
             type="pie"
-            width={380}
+            width={600}
           />
         </div>
       </div>
