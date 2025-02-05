@@ -248,7 +248,9 @@ const TableGameDetails = () => {
             <p className="font-medium">Qolgan</p>
           </div>
         )}
-        <div className="col-span-2 flex items-center">
+        <div
+          className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ? "justify-center" : ""} items-center`}
+        >
           <p className="font-medium">Sotilgan</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -312,7 +314,7 @@ const TableGameDetails = () => {
 
             <Link
               href={`${key}/${product.id}`}
-              className="col-span-2 flex items-center"
+              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ? "justify-center" : ""} items-center`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -436,13 +438,11 @@ const TableGameDetails = () => {
                   placeholder="Sotuvchi"
                 />
               )}
-              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-                <Link href={`promo-create?${product.id}`}>
-                  <div className="rounded bg-[orange] px-3 py-1 text-white">
-                    <FiEdit2 />
-                  </div>
-                </Link>
-              )}
+              <Link href={`promo-create?${product.id}`}>
+                <div className="rounded bg-[orange] px-3 py-1 text-white">
+                  <FiEdit2 />
+                </div>
+              </Link>
               {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
                 <div
                   onClick={() => ModalOpen(product.id)}

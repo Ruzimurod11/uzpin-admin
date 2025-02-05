@@ -66,7 +66,6 @@ const GamesPromoCreate = () => {
           setBodyPriceRUB(response.data.body_price_rub || "");
           setBodyPriceUSD(response.data.body_price_usd || "");
           setGameId(response.data.game.id);
-          console.log(response.data);
         } catch (error) {
           console.error("Failed to fetch card details:", error);
         }
@@ -140,17 +139,21 @@ const GamesPromoCreate = () => {
 
       <div className="grid grid-cols-6 gap-5.5 p-6.5">
         <div className="col-span-6">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            O&apos;yin turi
-          </label>
-          <SelectGroupOne
-            options={games.map((game) => ({
-              value: game.id,
-              label: game.name_uz,
-            }))}
-            selectedOption={gameId}
-            onChange={(value) => setGameId(value)}
-          />
+          {gameId !== "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+            <>
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                O&apos;yin turi
+              </label>
+              <SelectGroupOne
+                options={games.map((game) => ({
+                  value: game.id,
+                  label: game.name_uz,
+                }))}
+                selectedOption={gameId}
+                onChange={(value) => setGameId(value)}
+              />
+            </>
+          )}
         </div>
         <div className="col-span-3">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
@@ -171,105 +174,122 @@ const GamesPromoCreate = () => {
             className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
           />
         </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Mijoz uchun narx (USD)
-          </label>
-          <input
-            type="number"
-            value={customerPriceUSD}
-            onChange={(e) => setCustomerPriceUSD(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Mijoz uchun narx (UZS)
-          </label>
-          <input
-            type="number"
-            value={customerPriceUZS}
-            onChange={(e) => setCustomerPriceUZS(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Mijoz uchun narx (RUB)
-          </label>
-          <input
-            type="number"
-            value={customerPriceRUB}
-            onChange={(e) => setCustomerPriceRUB(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Sotuvchi uchun narx (USD)
-          </label>
-          <input
-            type="number"
-            value={partnerPriceUSD}
-            onChange={(e) => setPartnerPriceUSD(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Sotuvchi uchun narx (UZS)
-          </label>
-          <input
-            type="number"
-            value={partnerPriceUZS}
-            onChange={(e) => setPartnerPriceUZS(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Sotuvchi uchun narx (RUB)
-          </label>
-          <input
-            type="number"
-            value={partnerPriceRUB}
-            onChange={(e) => setPartnerPriceRUB(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Tan narx (USD)
-          </label>
-          <input
-            type="number"
-            value={bodyPriceUSD}
-            onChange={(e) => setBodyPriceUSD(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Tan narx (UZS)
-          </label>
-          <input
-            type="number"
-            value={bodyPriceUZS}
-            onChange={(e) => setBodyPriceUZS(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
-        <div className="col-span-2">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            Tan narx (RUB)
-          </label>
-          <input
-            type="number"
-            value={bodyPriceRUB}
-            onChange={(e) => setBodyPriceRUB(Number(e.target.value) || "")}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-          />
-        </div>
+
+        {gameId !== "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+          <>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Mijoz uchun narx (USD)
+              </label>
+              <input
+                type="number"
+                value={customerPriceUSD}
+                onChange={(e) =>
+                  setCustomerPriceUSD(Number(e.target.value) || "")
+                }
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Mijoz uchun narx (UZS)
+              </label>
+              <input
+                type="number"
+                value={customerPriceUZS}
+                onChange={(e) =>
+                  setCustomerPriceUZS(Number(e.target.value) || "")
+                }
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Mijoz uchun narx (RUB)
+              </label>
+              <input
+                type="number"
+                value={customerPriceRUB}
+                onChange={(e) =>
+                  setCustomerPriceRUB(Number(e.target.value) || "")
+                }
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Sotuvchi uchun narx (USD)
+              </label>
+              <input
+                type="number"
+                value={partnerPriceUSD}
+                onChange={(e) =>
+                  setPartnerPriceUSD(Number(e.target.value) || "")
+                }
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Sotuvchi uchun narx (UZS)
+              </label>
+              <input
+                type="number"
+                value={partnerPriceUZS}
+                onChange={(e) =>
+                  setPartnerPriceUZS(Number(e.target.value) || "")
+                }
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Sotuvchi uchun narx (RUB)
+              </label>
+              <input
+                type="number"
+                value={partnerPriceRUB}
+                onChange={(e) =>
+                  setPartnerPriceRUB(Number(e.target.value) || "")
+                }
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Tan narx (USD)
+              </label>
+              <input
+                type="number"
+                value={bodyPriceUSD}
+                onChange={(e) => setBodyPriceUSD(Number(e.target.value) || "")}
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Tan narx (UZS)
+              </label>
+              <input
+                type="number"
+                value={bodyPriceUZS}
+                onChange={(e) => setBodyPriceUZS(Number(e.target.value) || "")}
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Tan narx (RUB)
+              </label>
+              <input
+                type="number"
+                value={bodyPriceRUB}
+                onChange={(e) => setBodyPriceRUB(Number(e.target.value) || "")}
+                className="w-full rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+          </>
+        )}
 
         <div className="col-span-6 flex justify-end">
           <button

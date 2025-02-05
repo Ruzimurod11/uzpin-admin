@@ -97,8 +97,8 @@ const TableSalesPromoBox = () => {
           key={key}
         >
           <div className="col-span-2 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-nowrap text-body-sm font-medium text-dark dark:text-dark-6">
+            <div className="flex flex-col max-w-[220px] gap-4 sm:flex-row sm:items-center">
+              <p className="line-clamp-1 text-body-sm font-medium text-dark dark:text-dark-6">
                 {(currentPage - 1) * 10 + key + 1}. 💵 {product.promocode}
               </p>
             </div>
