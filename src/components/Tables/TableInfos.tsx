@@ -175,35 +175,45 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
       {cards.map((product, key) => (
         <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5"
+          className={`grid grid-cols-6 border-t ${key === 0 && "bg-[#fffaed] dark:bg-[#2a3746]"} border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5`}
           key={key}
         >
           <div className="col-span-2 flex items-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+            <p
+              className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+            >
               {key + 1}. {product.promocode}
             </p>
           </div>
           <div className="col-span-2 flex items-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+            <p
+              className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+            >
               {product.total_count}
             </p>
           </div>
           <div className="col-span-3 flex items-center">
             <div className="flex flex-col gap-0">
-              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+              <p
+                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              >
                 {product.total_amount.USD
                   ? formatNumber(product.total_amount.USD)
                   : "0"}
                 <IoLogoUsd />
               </p>
 
-              <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+              <p
+                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              >
                 {product.total_amount.UZS
                   ? formatNumber(product.total_amount.UZS)
                   : "0"}{" "}
                 S
               </p>
-              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+              <p
+                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              >
                 {product.total_amount.RUB
                   ? formatNumber(product.total_amount.RUB)
                   : "0"}
@@ -213,16 +223,22 @@ const TableInfos = ({ name }: TableInfosProps) => {
           </div>
           <div className="col-span-3 flex items-center">
             <div className="flex flex-col gap-0">
-              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+              <p
+                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              >
                 {product.benefit.USD ? formatNumber(product.benefit.USD) : "0"}
                 <IoLogoUsd />
               </p>
 
-              <p className="flex text-body-xs font-medium text-dark dark:text-dark-6">
+              <p
+                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              >
                 {product.benefit.UZS ? formatNumber(product.benefit.UZS) : "0"}{" "}
                 S
               </p>
-              <p className="flex items-center text-body-xs font-medium text-dark dark:text-dark-6">
+              <p
+                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              >
                 {product.benefit.RUB ? formatNumber(product.benefit.RUB) : "0"}
                 <BiRuble />
               </p>
