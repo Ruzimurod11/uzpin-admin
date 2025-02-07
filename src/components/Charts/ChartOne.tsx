@@ -69,6 +69,7 @@ const ChartOne = () => {
             colors: ["#5750F1"],
             chart: {
               fontFamily: "Satoshi, sans-serif",
+              fontSize: "12px",
               height: 310,
               type: "area",
               toolbar: {
@@ -127,6 +128,7 @@ const ChartOne = () => {
               },
               x: {
                 show: false,
+                fontSize: "12px",
               },
               y: {
                 title: {
