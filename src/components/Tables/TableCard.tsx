@@ -105,8 +105,9 @@ const TableCard = () => {
             </div>
           </div>
           <div className="col-span-3 flex items-center">
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {card.card_name}
+            <p className="tooltip cursor-pointer text-body-sm font-medium text-dark dark:text-dark-6">
+              <span>{card.card_name?.slice(0, 26)}</span>
+              <span className="tooltiptext">{card.card_name}</span>
             </p>
           </div>
           <div className="col-span-2 flex items-center">
