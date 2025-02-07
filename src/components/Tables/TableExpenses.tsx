@@ -40,11 +40,15 @@ const TableExpenses = ({ id }: any) => {
   }, [id, currentPage]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
-    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000; 
+    const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
     const adjustedDate = new Date(localDate.getTime() - offsetInMs);
     return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
-  
+
+  const formatNumber = (num: number) => {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  };
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -89,12 +93,12 @@ const TableExpenses = ({ id }: any) => {
             </div>
             <div className="col-span-1 flex items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.price}
+                {product.price ? formatNumber(product.price) : 0}
               </p>
             </div>
             <div className="col-span-2 flex items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {product.amount}
+                {product.amount ? formatNumber(product.amount) : 0}
               </p>
             </div>
             <div className="col-span-1 flex items-center">
