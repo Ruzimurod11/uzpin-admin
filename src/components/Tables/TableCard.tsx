@@ -70,17 +70,17 @@ const TableCard = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5">
+      <div className="grid grid-cols-12 border-t border-stroke px-4 py-4.5 dark:border-dark-3 max-sm:grid-cols-7 md:px-6 2xl:px-7.5">
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Karta rasmi</p>
         </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Karta nomi</p>
+        <div className="col-span-3 flex items-center">
+          <p className="ml-4 font-medium">Karta nomi</p>
         </div>
-        <div className="col-span-1 flex items-center">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Karta raqami</p>
         </div>
-        <div className="col-span-1 flex items-center">
+        <div className="col-span-3 flex items-center">
           <p className="font-medium">Karta egasi</p>
         </div>
         <div className="col-span-1 flex items-center">
@@ -96,7 +96,7 @@ const TableCard = () => {
 
       {cards.map((card, index) => (
         <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-7 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-12 border-t border-stroke px-4 py-4.5 dark:border-dark-3 max-sm:grid-cols-7 md:px-6 2xl:px-7.5"
           key={index}
         >
           <div className="col-span-1 flex items-center">
@@ -104,18 +104,18 @@ const TableCard = () => {
               <Image src={card.photo} width={60} height={50} alt="Card Image" />
             </div>
           </div>
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-3 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {card.card_name}
             </p>
           </div>
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-2 flex items-center">
             <p className="tooltip cursor-pointer text-body-sm font-medium text-dark dark:text-dark-6">
               <span>{card.card_number?.slice(0, 10)}</span>
               <span className="tooltiptext">{card.card_number}</span>
             </p>
           </div>
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-3 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {card.card_holder}
             </p>
