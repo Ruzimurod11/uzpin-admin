@@ -111,7 +111,7 @@ const TableCard = () => {
           </div>
           <div className="col-span-1 flex items-center">
             <p className="tooltip cursor-pointer text-body-sm font-medium text-dark dark:text-dark-6">
-              Ko&apos;rish
+              <span>{card.card_number?.slice(0, 10)}</span>
               <span className="tooltiptext">{card.card_number}</span>
             </p>
           </div>

@@ -54,6 +54,10 @@ const TableSalesPromoBox = () => {
     return adjustedDate.toISOString().slice(0, 19).replace("T", " ");
   }
 
+  const formatNumber = (num: number) => {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  };
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -97,7 +101,7 @@ const TableSalesPromoBox = () => {
           key={key}
         >
           <div className="col-span-2 flex items-center">
-            <div className="flex flex-col max-w-[220px] gap-4 sm:flex-row sm:items-center">
+            <div className="flex max-w-[220px] flex-col gap-4 sm:flex-row sm:items-center">
               <p className="line-clamp-1 text-body-sm font-medium text-dark dark:text-dark-6">
                 {(currentPage - 1) * 10 + key + 1}. 💵 {product.promocode}
               </p>
@@ -115,12 +119,12 @@ const TableSalesPromoBox = () => {
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.price}
+              {product.price ? formatNumber(product.price) : "0"}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.amount}
+              {product.amount ? formatNumber(product.amount) : "0"}
             </p>
           </div>
           <div className="col-span-1 flex items-center">
