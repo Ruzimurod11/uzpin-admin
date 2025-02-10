@@ -167,7 +167,12 @@ const ChartOne = () => {
   const router = useRouter();
 
   const formatNumber = (num: number) => {
-    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+    const str = num.toString();
+    if (str.includes(".")) {
+      const [integerPart, decimalPart] = str.split(".");
+      return `${integerPart}.${decimalPart.slice(0, 3)}`;
+    }
+    return str;
   };
 
   if (error) return <p className="text-red-500">{error}</p>;
