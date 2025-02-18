@@ -66,11 +66,17 @@ export default function MoneyReceived() {
     fetchCardDetails();
   }, [extractedValue]);
 
-  
   const formatNumber = (num: number) => {
-    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+    if (Number.isInteger(num)) {
+      return num.toLocaleString("fr-FR").replace(/\s/g, " ");
+    }
+
+    return num
+      .toFixed(3)
+      .replace(",", ".")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
-  
+
   console.log(dataStatistics);
   return (
     <>
@@ -83,9 +89,7 @@ export default function MoneyReceived() {
             <div className="flex gap-1">
               <p>Jami:</p>
               <b>
-                {dataStatistics?.usd
-                  ? formatNumber(dataStatistics?.usd)
-                  : "0"}
+                {dataStatistics?.usd ? formatNumber(dataStatistics?.usd) : "0"}
               </b>
             </div>
             <div className="flex gap-1">
@@ -107,9 +111,7 @@ export default function MoneyReceived() {
             <div className="flex gap-1">
               <p>Jami:</p>
               <b>
-                {dataStatistics?.uzs
-                  ? formatNumber(dataStatistics?.uzs)
-                  : "0"}
+                {dataStatistics?.uzs ? formatNumber(dataStatistics?.uzs) : "0"}
               </b>
             </div>
             <div className="flex gap-1">
@@ -131,9 +133,7 @@ export default function MoneyReceived() {
             <div className="flex gap-1">
               <p>Jami:</p>
               <b>
-                {dataStatistics?.rub
-                  ? formatNumber(dataStatistics?.rub)
-                  : "0"}
+                {dataStatistics?.rub ? formatNumber(dataStatistics?.rub) : "0"}
               </b>
             </div>
             <div className="flex gap-1">

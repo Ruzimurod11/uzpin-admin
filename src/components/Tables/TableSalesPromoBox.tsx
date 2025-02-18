@@ -55,12 +55,14 @@ const TableSalesPromoBox = () => {
   }
 
   const formatNumber = (num: number) => {
-    const str = num.toString();
-    if (str.includes(".")) {
-      const [integerPart, decimalPart] = str.split(".");
-      return `${integerPart}.${decimalPart.slice(0, 3)}`;
+    if (Number.isInteger(num)) {
+      return num.toLocaleString("fr-FR").replace(/\s/g, " ");
     }
-    return str;
+
+    return num
+      .toFixed(3)
+      .replace(",", ".")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
   if (loading) return <Loader />;
