@@ -84,7 +84,16 @@ const DataStatsOne: React.FC<dataStats> = () => {
                 <h4 className="mb-1 text-sm text-dark dark:text-white">
                   {item.title}
                 </h4>
-                <span className="text-body-sm font-medium">{item.value}</span>
+                <span className="text-body-sm font-medium">
+                  {Number(item.value)
+                    .toLocaleString("fr-FR", {
+                      useGrouping: true,
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 3,
+                    })
+                    .replace(/\s/g, " ")
+                    .replace(",", ".")}
+                </span>
               </div>
             </div>
           </div>

@@ -46,7 +46,14 @@ const TableExpenses = ({ id }: any) => {
   }
 
   const formatNumber = (num: number) => {
-    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+    if (Number.isInteger(num)) {
+      return num.toLocaleString("fr-FR").replace(/\s/g, " ");
+    }
+
+    return num
+      .toFixed(3)
+      .replace(",", ".")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
   if (loading) return <Loader />;
