@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdOutlineClose } from "react-icons/md";
 
@@ -16,6 +16,11 @@ const SwitcherThree: React.FC<SwitcherThreeProps> = ({
   id,
 }) => {
   const [enabled, setEnabled] = useState(isActive);
+
+  // isActive qiymati o'zgarganda enabled holatini yangilash
+  useEffect(() => {
+    setEnabled(isActive);
+  }, [isActive]);
 
   const handleToggle = () => {
     const newValue = !enabled;
