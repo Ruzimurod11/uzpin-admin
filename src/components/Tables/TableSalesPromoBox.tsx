@@ -34,10 +34,10 @@ const TableSalesPromoBox = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/root/sold/list?search=${searchQuery}&page=${page}`,
+        `/root/sold/list?search=${searchQuery}&page=${page}&page_size=30`,
       );
       setData(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 10));
+      setTotalPages(Math.ceil(response.data.count / 30));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
