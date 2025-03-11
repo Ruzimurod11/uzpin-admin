@@ -96,8 +96,12 @@ const GamesBoxCreate = () => {
       desc_ru: descRu,
       desc_en: descEn,
       no_promocode: no_promocode,
-      channel_id: channelId,
-    };
+    } as Record<string, any>
+
+    // channel_id faqat bo'sh bo'lmasa qo'shish
+    if (channelId?.trim()) {
+      payload.channel_id = String(channelId)
+    }
 
     try {
       if (extractedValue) {
