@@ -81,7 +81,7 @@ const GamesBoxCreate = () => {
   };
 
   const handleSubmit = async () => {
-    const payload = {
+    const payload: Record<string, any> = {
       name_uz: nameUz,
       name_ru: nameRu,
       name_en: nameEn,
@@ -96,12 +96,8 @@ const GamesBoxCreate = () => {
       desc_ru: descRu,
       desc_en: descEn,
       no_promocode: no_promocode,
-    } as Record<string, any>
-
-    // channel_id faqat bo'sh bo'lmasa qo'shish
-    if (channelId?.trim()) {
-      payload.channel_id = String(channelId)
-    }
+      channel_id: channelId,
+    };
 
     try {
       if (extractedValue) {
