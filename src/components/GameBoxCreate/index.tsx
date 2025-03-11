@@ -19,6 +19,9 @@ const GamesBoxCreate = () => {
   const [nameUz, setNameUz] = useState("");
   const [nameRu, setNameRu] = useState("");
   const [nameEn, setNameEn] = useState("");
+  const [note_uz, setNote_uz] = useState("");
+  const [note_ru, setNote_ru] = useState("");
+  const [note_en, setNote_en] = useState("");
   const [cover, setCover] = useState("");
   const [photo, setPhoto] = useState("");
   const [video, setVideo] = useState("");
@@ -41,6 +44,9 @@ const GamesBoxCreate = () => {
           setNameUz(response.data.name_uz || "");
           setNameRu(response.data.name_ru || "");
           setNameEn(response.data.name_en || "");
+          setNote_uz(response.data.note_uz || "");
+          setNote_ru(response.data.note_ru || "");
+          setNote_en(response.data.note_en || "");
           setCover(response.data.cover || "");
           setPhoto(response.data.photo || "");
           setVideo(response.data.video || "");
@@ -79,6 +85,9 @@ const GamesBoxCreate = () => {
       name_uz: nameUz,
       name_ru: nameRu,
       name_en: nameEn,
+      note_uz: note_uz,
+      note_ru: note_ru,
+      note_en: note_en,
       type: selectedGame,
       cover,
       photo,
@@ -210,6 +219,42 @@ const GamesBoxCreate = () => {
             placeholder="O'yin Nomi"
             value={nameEn}
             onChange={(e) => setNameEn(e.target.value)}
+            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="col-span-2">
+          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            Note [UZ]
+          </label>
+          <input
+            type="text"
+            placeholder="Note Uz"
+            value={note_uz}
+            onChange={(e) => setNote_uz(e.target.value)}
+            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="col-span-2">
+          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            Note [RU]
+          </label>
+          <input
+            type="text"
+            placeholder="Note Ru"
+            value={note_ru}
+            onChange={(e) => setNote_ru(e.target.value)}
+            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="col-span-2">
+          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            Note [EN]
+          </label>
+          <input
+            type="text"
+            placeholder="Note En"
+            value={note_en}
+            onChange={(e) => setNote_en(e.target.value)}
             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
           />
         </div>
