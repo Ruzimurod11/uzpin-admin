@@ -16,6 +16,7 @@ interface Game {
   cover: string;
   photo: string;
   is_active: boolean;
+  order: number;
 }
 
 const TableGame = () => {
@@ -23,19 +24,18 @@ const TableGame = () => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState("");
 
+  const fetchStats = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("/root/game/games");
+      setData(response.data.results || []);
+    } catch (error) {
+      console.error("Ma'lumotlarni yuklashda xatolik:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchStats = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get("/root/game/games");
-        setData(response.data.results || []);
-      } catch (error) {
-        console.error("Ma'lumotlarni yuklashda xatolik:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchStats();
   }, []);
 
@@ -61,12 +61,30 @@ const TableGame = () => {
       });
       setData((prevData) =>
         prevData.map((game) =>
-          game.id === gameId ? { ...game, is_active: status } : game
-        )
+          game.id === gameId ? { ...game, is_active: status } : game,
+        ),
       );
       toast.warn("Muvaffaqiyatli O'zgartirildi");
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
+    }
+  };
+
+  const handleOrder = async (gameId: string, order: number) => {
+    try {
+      await axiosInstance.patch(`/root/game/games/${gameId}/detail`, {
+        order: order,
+      });
+      setData((prevData) =>
+        prevData.map((game) =>
+          game.id === gameId ? { ...game, order: order } : game,
+        ),
+      );
+      toast.warn("Muvaffaqiyatli O'zgartirildi");
+    } catch (error) {
+      console.error("O'yinni o'chirishda xatolik:", error);
+    } finally {
+      fetchStats();
     }
   };
 
@@ -110,16 +128,28 @@ const TableGame = () => {
             className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
             key={game.id}
           >
-            <Link
+            {/* <Link
               href={`games/${game.id}}`}
               className="col-span-2 flex items-center"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            > */}
+            <div className="col-span-2 flex items-center">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <input
+                  type="text"
+                  maxLength={2}
+                  defaultValue={game?.order}
+                  onBlur={(e) => handleOrder(game.id, Number(e.target.value))}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Faqat raqam qoldirish
+                  }}
+                  className="max-w-[34px] rounded-md px-[5px] outline-none"
+                />
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {index + 1}. {game?.name_uz}
                 </p>
               </div>
-            </Link>
+            </div>
+            {/* </Link> */}
             <Link
               href={`games/${game.id}`}
               className="col-span-2 flex items-center"

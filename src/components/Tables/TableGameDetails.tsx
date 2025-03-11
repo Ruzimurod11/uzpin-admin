@@ -32,6 +32,7 @@ interface Game {
   partner_percent: number;
   percent: number;
   is_active: boolean;
+  order: number;
 }
 const TableGameDetails = () => {
   const [modal, setModal] = useState(false);
@@ -223,6 +224,24 @@ const TableGameDetails = () => {
     }
   };
 
+  const handleOrder = async (productId: string, order: number) => {
+    try {
+      await axiosInstance.patch(`/root/game/promocodes/${productId}/detail`, {
+        order: order,
+      });
+      setData((prevData) =>
+        prevData.map((game) =>
+          game.id === productId ? { ...game, order: order } : game,
+        ),
+      );
+      toast.warn("Muvaffaqiyatli O'zgartirildi");
+    } catch (error) {
+      console.error("O'yinni o'chirishda xatolik:", error);
+    } finally {
+      fetchStats(currentPage);
+    }
+  };
+
   const [activeId, setActiveId] = useState();
   const ModalOpen = (productId: any) => {
     setModal(true);
@@ -296,27 +315,43 @@ const TableGameDetails = () => {
             className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
             key={key}
           >
-            <Link
+            {/* <Link
               href={`${key}/${product.id}`}
               className="col-span-2 flex items-center"
-            >
+            > */}
+            <div className="col-span-2 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <input
+                  type="text"
+                  maxLength={2}
+                  defaultValue={product?.order}
+                  onBlur={(e) =>
+                    handleOrder(product.id, Number(e.target.value))
+                  }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Faqat raqam qoldirish
+                  }}
+                  className="max-w-[34px] rounded-md px-[5px] outline-none"
+                />
                 <p className="line-clamp-1 text-body-sm font-bold text-black dark:text-dark-8">
                   {(currentPage - 1) * 10 + key + 1}. {product.name}
                 </p>
               </div>
-            </Link>
+            </div>
+            {/* </Link> */}
             {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-              <Link
-                href={`${key}/${product.id}`}
-                className="col-span-2 flex items-center"
-              >
+              // <Link
+              //   href={`${key}/${product.id}`}
+              //   className="col-span-2 flex items-center"
+              // >
+              <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                     {product.promocode_values.not_sold}
                   </p>
                 </div>
-              </Link>
+              </div>
+              // </Link>
             )}
 
             <Link
