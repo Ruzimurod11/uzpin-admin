@@ -21,7 +21,9 @@ const TableInfos = ({ name }: TableInfosProps) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [games, setGames] = useState<string[]>([]);
   const [bots, setBots] = useState<string[]>([]);
+  const [referals, setReferals] = useState<{ id: string; name: string }[]>([]);
   const [selectedBot, setSelectedBot] = useState<string>("");
+  const [selectedId, setSelectedId] = useState<string>("");
   const [selectedGame, setSelectedGame] = useState<string>("");
   const [loadings, setLoadings] = useState(false);
 
@@ -36,18 +38,24 @@ const TableInfos = ({ name }: TableInfosProps) => {
     setTime(queryParams);
   };
 
-  const fetchCards = async (bot = "", game = "") => {
+  const fetchCards = async (bot = "", game = "", partner = "") => {
     setLoadings(true);
+
     try {
       const queryParams: string[] = [];
-      if (bot && bot != "barchasi") queryParams.push(`bot=${bot}`);
-      if (game && game != "barchasi") queryParams.push(`game=${game}`);
-      const queryString =
-        queryParams.length > 0 ? `&${queryParams.join("&")}` : "";
 
-      const response = await axiosInstance.get(
-        `/root/analytics/bot?${time}${queryString}`,
-      );
+      if (bot && bot !== "barchasi") queryParams.push(`bot=${bot}`);
+      if (game && game !== "barchasi") queryParams.push(`game=${game}`);
+      if (partner && partner !== "barchasi")
+        queryParams.push(`partner=${partner}`);
+
+      console.log("QueryParams ro‘yxati:", queryParams);
+
+      const queryString =
+        queryParams.length > 0 ? `${queryParams.join("&")}` : "";
+      const url = `/root/analytics/bot?${time}${queryString}`;
+
+      const response = await axiosInstance.get(url);
       setCards(response.data || []);
     } catch (error) {
       console.error("Kartalarni yuklashda xatolik:", error);
@@ -62,7 +70,26 @@ const TableInfos = ({ name }: TableInfosProps) => {
       const response = await axiosInstance.get("/root/analytics/bot/games");
       setGames(response.data || []);
     } catch (error) {
-      console.error("O'yinlarni yuklashda xatolik:", error);
+    } finally {
+      setLoadings(false);
+    }
+  };
+
+  const fetchReferals = async (): Promise<void> => {
+    setLoadings(true);
+    try {
+      const response = await axiosInstance.get<any>("/root/partner/");
+
+      // Ma'lumotlarni formatlash
+      const formattedReferals: { id: string; name: string }[] =
+        response.data.results?.map(({ id, fullname }: any) => ({
+          id: String(id), // `id` ning string bo‘lishini ta’minlash
+          name: fullname || "Noma'lum", // fullname bo‘sh bo‘lsa, default qiymat
+        })) || [];
+
+      setReferals(formattedReferals || []);
+    } catch (error) {
+      console.error("Referallarni yuklashda xatolik:", error);
     } finally {
       setLoadings(false);
     }
@@ -73,9 +100,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
     try {
       const response = await axiosInstance.get("/root/sold/types");
       setBots(response.data || []);
-      console.log(response.data);
     } catch (error) {
-      console.error("Botlarni yuklashda xatolik:", error);
     } finally {
       setLoadings(false);
     }
@@ -86,10 +111,18 @@ const TableInfos = ({ name }: TableInfosProps) => {
     fetchGames();
     fetchBots();
   }, [time]);
+  useEffect(() => {
+    fetchReferals();
+  }, []);
 
   const handleBotChange = (selected: string) => {
     setSelectedBot(selected);
     fetchCards(selected, selectedGame);
+  };
+
+  const handleReferalChange = (selectedId: string) => {
+    setSelectedId(selectedId);
+    fetchCards(selectedBot, selectedGame, selectedId); // 🛠 PARTNER TO‘G‘RI O‘TAYOTGANINI TEKSHIRING
   };
 
   const handleGameChange = (selected: string) => {
@@ -138,9 +171,46 @@ const TableInfos = ({ name }: TableInfosProps) => {
     );
   };
 
+  const DefaultSelectOptionId = ({
+    options,
+    onChange,
+    value,
+  }: {
+    options: { id: string; name: string }[];
+    onChange: (selectedId: string) => void;
+    value: string;
+  }) => {
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      onChange(event.target.value); // Faqat `id` jo‘natiladi
+    };
+
+    return (
+      <select
+        value={value || ""}
+        onChange={handleChange}
+        className="select-class rounded border p-2 text-lg capitalize outline-none"
+      >
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
+        <div className="col-span-2 flex items-center justify-center">
+          {referals.length > 0 && (
+            <DefaultSelectOptionId
+              options={[{ id: "", name: "Barchasi" }, ...referals]}
+              onChange={handleReferalChange}
+              value={selectedId}
+            />
+          )}
+        </div>
         <div className="col-span-2 flex items-center justify-center">
           {bots.length > 0 && (
             <DefaultSelectOption
@@ -159,9 +229,11 @@ const TableInfos = ({ name }: TableInfosProps) => {
             />
           )}
         </div>
-        <div className="col-span-3 flex items-center justify-center gap-2"></div>
-        <div className="col-span-3 flex items-center justify-center gap-2">
-          Saralash: <CustomCalendar onDateChange={handleDateChange} />
+        <div className="col-span-1 flex items-center justify-center"></div>
+
+        <div className="col-span-3 flex items-center justify-end gap-4">
+          <span className="whitespace-nowrap">Saralash:</span>
+          <CustomCalendar onDateChange={handleDateChange} />
         </div>
       </div>
 
