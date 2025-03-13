@@ -71,6 +71,7 @@ const menuGroups = [
           { label: "Hamkorlar", route: "/partners/partner" },
           { label: "Ummumiy Ma'lumotlar", route: "/partners/tg-general" },
           { label: "Xabar Jo'natish", route: "/partners/message" },
+          { label: "Referal hamkorlar", route: "/partners/referal" },
         ],
       },
     ],
