@@ -115,7 +115,7 @@ export default function ReferalCreateBox() {
           </div>
           <div className="col-span-2">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Soni
+              Chegirma foizi
             </label>
             <input
               type="text"

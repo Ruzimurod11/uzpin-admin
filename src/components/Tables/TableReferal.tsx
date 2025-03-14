@@ -81,11 +81,8 @@ const TableReferal = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5">
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">#</p>
-        </div>
-        <div className="col-span-1 flex items-center">
+      <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Hamkor nomi</p>
         </div>
         <div className="col-span-3 flex items-center">
@@ -97,6 +94,9 @@ const TableReferal = () => {
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Userlar soni</p>
         </div>
+        <div className="col-span-2 flex items-center justify-start">
+          <p className="font-medium">Chegirma foizi</p>
+        </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium"></p>
         </div>
@@ -104,25 +104,18 @@ const TableReferal = () => {
 
       {referals.map((referal, index) => (
         <div
-          className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5"
           key={referal.id}
         >
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-2 flex items-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {index + 1}.
+                {index + 1}. {referal.fullname}
               </p>
             </div>
           </div>
-          <div className="col-span-1 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                {referal.fullname}
-              </p>
-            </div>
-          </div>
-          <div className="col-span-3 flex items-center">
-            <p className="max-w-[250px] text-body-sm font-medium text-dark dark:text-dark-6">
+          <div className="col-span-3 flex gap-2 items-center">
+            <p className="max-w-[200px] text-body-sm font-medium text-dark dark:text-dark-6">
               {referal.link}
             </p>
             <button
@@ -141,10 +134,17 @@ const TableReferal = () => {
               {referal.promo_code}
             </p>
           </div>
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-2 flex items-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {referal.users_count}
             </p>
+          </div>
+          <div className="col-span-2 flex items-center">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                {referal.discount}
+              </p>
+            </div>
           </div>
 
           <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
