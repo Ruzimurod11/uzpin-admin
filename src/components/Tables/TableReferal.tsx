@@ -55,12 +55,12 @@ const TableReferal = () => {
   };
   const handleDelete = async (gameId: string) => {
     try {
-      await axiosInstance.delete(`/root/bot/${gameId}/delete`);
+      await axiosInstance.delete(`/root/partner/${gameId}`);
       setReferals((prevData) => prevData.filter((game) => game.id !== gameId));
       setIsModalOpen("");
       toast.warn("Muvaffaqiyatli O'chirildi");
     } catch (error) {
-      console.error("O'yinni o'chirishda xatolik:", error);
+      console.error("Referal hamkor o'chirishda xatolik:", error);
     }
   };
 
@@ -114,7 +114,7 @@ const TableReferal = () => {
               </p>
             </div>
           </div>
-          <div className="col-span-3 flex gap-2 items-center">
+          <div className="col-span-3 flex items-center gap-2">
             <p className="max-w-[200px] text-body-sm font-medium text-dark dark:text-dark-6">
               {referal.link}
             </p>
@@ -155,7 +155,7 @@ const TableReferal = () => {
               <FiEdit2 />
             </Link>
             <div
-              //   onClick={() => DeleteGame(referal.id)}
+              onClick={() => DeleteGame(referal.id)}
               className="rounded bg-[red] px-3 py-1 text-white"
             >
               <MdOutlineDeleteOutline />
