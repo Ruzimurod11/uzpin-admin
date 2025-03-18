@@ -171,18 +171,39 @@ const TablePartner = () => {
           </div>
 
           <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
+            {/* 1544b528-4e21-4a4b-8c09-31c5771eb55e */}
+            {/* 596aece6-31dc-4d4b-b774-e1b5a461bf1d */}
             <Link
-              href={`/partnor-create?${partner.id}`}
-              className="rounded bg-[orange] px-3 py-1 text-white"
+              href={
+                partner.id === "596aece6-31dc-4d4b-b774-e1b5a461bf1d" ||
+                partner.id === "1544b528-4e21-4a4b-8c09-31c5771eb55e"
+                  ? `#`
+                  : `/partnor-create?${partner.id}`
+              }
+              className={`rounded bg-[orange] px-3 py-1 text-white ${
+                partner.id === "596aece6-31dc-4d4b-b774-e1b5a461bf1d" ||
+                partner.id === "1544b528-4e21-4a4b-8c09-31c5771eb55e"
+                  ? "cursor-not-allowed"
+                  : ""
+              }`}
             >
               <FiEdit2 />
             </Link>
-            <div
+            <button
+              disabled={
+                partner.id === "596aece6-31dc-4d4b-b774-e1b5a461bf1d" ||
+                partner.id === "1544b528-4e21-4a4b-8c09-31c5771eb55e"
+              }
               onClick={() => DeleteGame(partner.id)}
-              className="rounded bg-[red] px-3 py-1 text-white"
+              className={`rounded bg-[red] px-3 py-1 text-white ${
+                partner.id === "596aece6-31dc-4d4b-b774-e1b5a461bf1d" ||
+                partner.id === "1544b528-4e21-4a4b-8c09-31c5771eb55e"
+                  ? "cursor-not-allowed"
+                  : ""
+              }`}
             >
               <MdOutlineDeleteOutline />
-            </div>
+            </button>
           </div>
         </div>
       ))}
