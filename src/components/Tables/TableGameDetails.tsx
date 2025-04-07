@@ -250,18 +250,18 @@ const TableGameDetails = () => {
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-      {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
-        (id == "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
-          <div className="flex justify-between  py-4 pl-4">
-            <button
-              className="rounded bg-[green] px-4 py-3 text-white"
-              onClick={UpdateData}
-            >
-              Import qilish
-            </button>
-            <CurrencyInput setReload={setReload} />
-          </div>
-        ))}
+      {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
+        id == "322d0721-1dca-4720-a0a3-68371ba8ed22") && (
+        <div className="flex justify-between  py-4 pl-4">
+          <button
+            className="rounded bg-[green] px-4 py-3 text-white"
+            onClick={UpdateData}
+          >
+            Import qilish
+          </button>
+          <CurrencyInput setReload={setReload} />
+        </div>
+      )}
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
         <div
           onClick={goBack}
@@ -347,24 +347,25 @@ const TableGameDetails = () => {
               </div>
             </div>
             {/* </Link> */}
-            {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-              // <Link
-              //   href={`${key}/${product.id}`}
-              //   className="col-span-2 flex items-center"
-              // >
-              <div className="col-span-2 flex items-center">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-                    {product.promocode_values.not_sold}
-                  </p>
+            {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
+              id != "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+                // <Link
+                //   href={`${key}/${product.id}`}
+                //   className="col-span-2 flex items-center"
+                // >
+                <div className="col-span-2 flex items-center">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+                      {product.promocode_values.not_sold}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              // </Link>
-            )}
+                // </Link>
+              )}
 
             <Link
               href={`${key}/${product.id}`}
-              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ? "justify-center" : ""} items-center`}
+              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" || id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ? "justify-center" : ""} items-center`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -457,7 +458,8 @@ const TableGameDetails = () => {
               </div>
             </Link>
 
-            {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+            {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
+              id == "322d0721-1dca-4720-a0a3-68371ba8ed22") && (
               <div className="col-span-2 flex items-center">
                 <input
                   type="text"
@@ -474,7 +476,8 @@ const TableGameDetails = () => {
               </div>
             )}
             <div className="col-span-2 flex cursor-pointer items-center justify-end gap-5">
-              {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
+              {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
+                id == "322d0721-1dca-4720-a0a3-68371ba8ed22") && (
                 <input
                   type="text"
                   value={
@@ -493,22 +496,24 @@ const TableGameDetails = () => {
                   <FiEdit2 />
                 </div>
               </Link>
-              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-                <div
-                  onClick={() => ModalOpen(product.id)}
-                  className="rounded bg-[green] px-3 py-1 text-white"
-                >
-                  <FaFileArrowUp />
-                </div>
-              )}
-              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-                <div
-                  onClick={() => DeleteGame(product.id)}
-                  className="rounded bg-[red] px-3 py-1 text-white"
-                >
-                  <MdOutlineDeleteOutline />
-                </div>
-              )}
+              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
+                id != "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+                  <div
+                    onClick={() => ModalOpen(product.id)}
+                    className="rounded bg-[green] px-3 py-1 text-white"
+                  >
+                    <FaFileArrowUp />
+                  </div>
+                )}
+              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
+                id != "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+                  <div
+                    onClick={() => DeleteGame(product.id)}
+                    className="rounded bg-[red] px-3 py-1 text-white"
+                  >
+                    <MdOutlineDeleteOutline />
+                  </div>
+                )}
             </div>
           </div>
         ))}
