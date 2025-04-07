@@ -250,17 +250,18 @@ const TableGameDetails = () => {
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-      {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-        <div className="flex justify-between  py-4 pl-4">
-          <button
-            className="rounded bg-[green] px-4 py-3 text-white"
-            onClick={UpdateData}
-          >
-            Import qilish
-          </button>
-          <CurrencyInput setReload={setReload} />
-        </div>
-      )}
+      {id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
+        (id == "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+          <div className="flex justify-between  py-4 pl-4">
+            <button
+              className="rounded bg-[green] px-4 py-3 text-white"
+              onClick={UpdateData}
+            >
+              Import qilish
+            </button>
+            <CurrencyInput setReload={setReload} />
+          </div>
+        ))}
       <div className="grid grid-cols-11 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5">
         <div
           onClick={goBack}
@@ -269,13 +270,19 @@ const TableGameDetails = () => {
           <FaArrowLeft />
           <p className="font-medium">Promokod nomi</p>
         </div>
-        {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" && (
-          <div className="col-span-2 flex items-center">
-            <p className="font-medium">Qolgan</p>
-          </div>
-        )}
+        {id !== "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
+          id !== "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+            <div className="col-span-2 flex items-center">
+              <p className="font-medium">Qolgan</p>
+            </div>
+          )}
         <div
-          className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ? "justify-center" : ""} items-center`}
+          className={`col-span-2 flex ${
+            id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
+            id == "322d0721-1dca-4720-a0a3-68371ba8ed22"
+              ? "justify-center"
+              : ""
+          } items-center`}
         >
           <p className="font-medium">Sotilgan</p>
         </div>
@@ -288,7 +295,8 @@ const TableGameDetails = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Sotuchi Narxi</p>
         </div>
-        {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" ? (
+        {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
+        id != "322d0721-1dca-4720-a0a3-68371ba8ed22" ? (
           <div className="col-span-2 flex items-center justify-end">
             <Link
               href="promo-create"

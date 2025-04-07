@@ -96,8 +96,11 @@ const GamesBoxCreate = () => {
       desc_ru: descRu,
       desc_en: descEn,
       no_promocode: no_promocode,
-      channel_id: channelId,
     };
+
+    if (typeof channelId === "number" && !isNaN(channelId)) {
+      payload.channel_id = channelId;
+    }
 
     try {
       if (extractedValue) {
@@ -141,7 +144,7 @@ const GamesBoxCreate = () => {
             Kanal id
           </label>
           <input
-            type="text"
+            type="number"
             placeholder="Kanal id"
             value={channelId}
             onChange={(e) => setChannelId(e.target.value)}
