@@ -5,6 +5,13 @@ import UploadComponent from "@/components/UploadComponent";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
+// // 👇 Dinamik import orqali ReactQuill
+// import dynamic from "next/dynamic";
+// const ReactQuill = dynamic(() => import("react-quill"), {
+//   ssr: false,
+// });
+// import "react-quill/dist/quill.snow.css";
+
 export default function PartnorCreateBox() {
   const [formData, setFormData] = useState({
     token: "",
@@ -13,10 +20,11 @@ export default function PartnorCreateBox() {
     banner_ru: "",
     banner_en: "",
     logo: "",
+    start_image: "",
+    start_title: "",
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   const searchParams = useSearchParams();
 
   const fullQuery = searchParams?.toString();
@@ -29,8 +37,16 @@ export default function PartnorCreateBox() {
           const response = await axiosInstance.get(
             `/root/bot/${extractedValue}/detail`,
           );
-          const { token, partner_name, banner_uz, banner_ru, banner_en, logo } =
-            response.data;
+          const {
+            token,
+            partner_name,
+            banner_uz,
+            banner_ru,
+            banner_en,
+            logo,
+            start_image,
+            start_title,
+          } = response.data;
 
           setFormData({
             token: token || "",
@@ -39,6 +55,8 @@ export default function PartnorCreateBox() {
             banner_ru: banner_ru || "",
             banner_en: banner_en || "",
             logo: logo || "",
+            start_image: start_image || "",
+            start_title: start_title || "",
           });
         } catch (error) {
           console.error("Failed to fetch card details:", error);
@@ -77,7 +95,7 @@ export default function PartnorCreateBox() {
         toast.success("Hamkor muvaffaqiyatli qo'shildi!");
         router.push("/partners/partner");
       } catch (error) {
-        toast.error("Hamkor Qo'shishda Xatolik!");
+        toast.error("Hamkor qo'shishda xatolik!");
       } finally {
         setLoading(false);
       }
@@ -120,6 +138,7 @@ export default function PartnorCreateBox() {
               className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             />
           </div>
+
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Banner UZ
@@ -152,6 +171,32 @@ export default function PartnorCreateBox() {
               onUploadSuccess={(url) => handleUploadSuccess("logo", url)}
             />
           </div>
+          <div className="col-span-3">
+            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+              Start Image
+            </label>
+            <UploadComponent
+              onUploadSuccess={(url) => handleUploadSuccess("start_image", url)}
+            />
+          </div>
+
+          <div className="col-span-6">
+            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+              Start Title
+            </label>
+            <textarea name="start_title" onChange={handleChange}></textarea>
+            {/* <ReactQuill
+              value={formData.start_title}
+              onChange={(value) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  start_title: value,
+                }))
+              }
+              theme="snow"
+            /> */}
+          </div>
+
           <div className="col-span-6 flex justify-end">
             <button
               type="submit"

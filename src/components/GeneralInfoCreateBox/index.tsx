@@ -32,7 +32,6 @@ export default function GeneralInfoCreateBox() {
             type: type || "",
             video: video || "",
           });
-          console.log(response.data);
         } catch (error) {
           console.error("Failed to fetch card details:", error);
         }
@@ -96,11 +95,18 @@ export default function GeneralInfoCreateBox() {
         >
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              Video
+              Video Link
             </label>
-            <UploadComponent
-              onUploadSuccess={(url) => handleUploadSuccess("video", url)}
+            <input
+              type="text"
+              name="video"
+              value={formData.video}
+              onChange={handleChange}
+              className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
             />
+            {/* <UploadComponent
+              onUploadSuccess={(url) => handleUploadSuccess("video", url)}
+            /> */}
           </div>
           <div className="col-span-3">
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
