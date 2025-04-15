@@ -184,7 +184,11 @@ export default function PartnorCreateBox() {
             <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
               Start Title
             </label>
-            <textarea name="start_title" onChange={handleChange}></textarea>
+            <textarea
+              name="start_title"
+              onChange={handleChange}
+              className="w-full min-h-[300px] cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-stroke file:px-2.5 file:py-1 file:text-body-xs file:font-medium file:text-dark-5 focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-dark dark:border-dark-3 dark:bg-dark-2 dark:file:border-dark-3 dark:file:bg-white/30 dark:file:text-white"
+            ></textarea>
             {/* <ReactQuill
               value={formData.start_title}
               onChange={(value) =>
