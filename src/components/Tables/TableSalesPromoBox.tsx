@@ -32,6 +32,7 @@ const TableSalesPromoBox = () => {
   const searchQuery = searchParams.get("search") || "";
   const [filter, setFilter] = useState("");
   const [status, setStatus] = useState("");
+  console.log(status);
 
   const fetchStats = async (page: number) => {
     if (!searchQuery) setLoading(true);
@@ -108,6 +109,21 @@ const TableSalesPromoBox = () => {
   const handleChange = (selectedId: string) => {
     setFilter(selectedId);
   };
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    try {
+      const response = await axiosInstance.patch(`/root/sold/update/${id}`, {
+        status: newStatus,
+      });
+      setData((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, status: newStatus } : item,
+        ),
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error("Statusni yangilashda xatolik:", error);
+    }
+  };
 
   console.log(filter);
   if (loading) return <Loader />;
@@ -171,15 +187,16 @@ const TableSalesPromoBox = () => {
             </p>
           </div>
           <div className="col-span-1 flex items-center">
-            {/* <select className="w-full rounded-[5px] p-1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select> */}
-            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
-              {product.status}
-            </p>
+            <select
+              className="w-full rounded-[5px] p-1"
+              value={product.status}
+              onChange={(e) => handleStatusChange(product.id, e.target.value)}
+            >
+              <option value="NEW">Yangi</option>
+              <option value="ACCEPTED">Waiting</option>
+              <option value="DONE">Accept</option>
+              <option value="REJECTED">Reject</option>
+            </select>
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
