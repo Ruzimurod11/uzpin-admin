@@ -15,7 +15,6 @@ const SearchForm = () => {
 
   useEffect(() => {
     setSearchValue(searchQuery);
-    console.log("test", searchQuery);
   }, []);
 
   useEffect(() => {

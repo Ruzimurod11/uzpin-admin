@@ -11,6 +11,8 @@ interface Info {
   email: string;
   phone: string;
   fullname: string;
+  gamer_id: number;
+  status: string;
   game: string;
   promocode: string;
   count: number;
@@ -28,13 +30,15 @@ const TableSalesPromoBox = () => {
   const [totalPages, setTotalPages] = useState(1);
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
+  const [filter, setFilter] = useState("");
+  const [status, setStatus] = useState("");
 
   const fetchStats = async (page: number) => {
     if (!searchQuery) setLoading(true);
 
     try {
       const response = await axiosInstance.get(
-        `/root/sold/list?search=${searchQuery}&page=${page}&page_size=30`,
+        `/root/sold/list?search=${searchQuery}&status=${filter}&page=${page}&page_size=30`,
       );
       setData(response.data.results || []);
       setTotalPages(Math.ceil(response.data.count / 30));
@@ -46,7 +50,7 @@ const TableSalesPromoBox = () => {
   };
   useEffect(() => {
     fetchStats(currentPage);
-  }, [searchQuery, currentPage]);
+  }, [searchQuery, currentPage, filter]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
     const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
@@ -65,6 +69,47 @@ const TableSalesPromoBox = () => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
+  const options = [
+    { id: "NEW", name: "Yangi buyurtma" },
+    { id: "ACCEPTED", name: "Waiting" },
+    { id: "DONE", name: "Accept" },
+    { id: "REJECTED", name: "Reject" },
+  ];
+  const DefaultSelectOptionId1 = ({
+    onChange,
+    value,
+  }: {
+    onChange: (selectedId: string) => void;
+    value: string;
+  }) => {
+    // 👇 options endi lokal holatda, backenddan kelmaydi
+
+    // Dropdownda tanlov o'zgarganda chaqiriladi
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      onChange(event.target.value); // faqat id jo'natiladi
+    };
+
+    return (
+      <select
+        value={value || ""}
+        onChange={handleChange}
+        className="select-class rounded border p-2 text-lg capitalize outline-none"
+      >
+        <option value="">Barchasi</option>
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const handleChange = (selectedId: string) => {
+    setFilter(selectedId);
+  };
+
+  console.log(filter);
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -72,12 +117,18 @@ const TableSalesPromoBox = () => {
         <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
           Sotilgan promokodlar
         </h4>
+        <DefaultSelectOptionId1 onChange={handleChange} value={filter} />
         <SearchForm />
       </div>
-
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
-        <div className="col-span-2 flex items-center">
+      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5">
+        <div className="col-span-1 flex items-center">
           <p className="font-medium">Promokod</p>
+        </div>
+        <div className="col-span-1 flex items-center">
+          <p className="font-medium">Gamer id</p>
+        </div>
+        <div className="col-span-1 flex items-center">
+          <p className="font-medium">Status</p>
         </div>
         <div className="col-span-2 flex items-center">
           <p className="font-medium">Foydalanuvchi nomi</p>
@@ -97,24 +148,40 @@ const TableSalesPromoBox = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Sotuv turi</p>
         </div>
-        <div className="col-span-1 flex items-center">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Yaratilgan sana</p>
         </div>
       </div>
 
       {data.map((product, key) => (
         <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5"
+          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5"
           key={key}
         >
-          <div className="col-span-2 flex items-center">
+          <div className="col-span-1 flex items-center">
             <div className="flex max-w-[220px] flex-col gap-4 sm:flex-row sm:items-center">
               <p className="line-clamp-1 text-body-sm font-medium text-dark dark:text-dark-6">
-                {(currentPage - 1) * 10 + key + 1}. 💵 {product.promocode}
+                {(currentPage - 1) * 10 + key + 1}. {product.promocode}
               </p>
             </div>
           </div>
-          <div className="col-span-2 flex items-center">
+          <div className="col-span-1 flex items-center">
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {product.gamer_id}
+            </p>
+          </div>
+          <div className="col-span-1 flex items-center">
+            {/* <select className="w-full rounded-[5px] p-1">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select> */}
+            <p className="text-body-sm font-medium text-dark dark:text-dark-6">
+              {product.status}
+            </p>
+          </div>
+          <div className="col-span-2 flex items-center justify-center">
             <p className="text-body-sm font-medium text-dark dark:text-dark-6">
               {product.fullname}
             </p>
@@ -151,6 +218,7 @@ const TableSalesPromoBox = () => {
           </div>
         </div>
       ))}
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

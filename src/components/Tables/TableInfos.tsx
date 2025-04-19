@@ -49,8 +49,6 @@ const TableInfos = ({ name }: TableInfosProps) => {
       if (partner && partner !== "barchasi")
         queryParams.push(`partner=${partner}`);
 
-      console.log("QueryParams ro‘yxati:", queryParams);
-
       const queryString =
         queryParams.length > 0 ? `${queryParams.join("&")}` : "";
       const url = `/root/analytics/bot?${time}${queryString}`;
