@@ -21,6 +21,7 @@ export default function AddCardBox() {
     card_number: "",
     card_holder: "",
     currency: "",
+    video_url: "",
     is_active: true,
   });
 
@@ -41,6 +42,7 @@ export default function AddCardBox() {
             card_holder,
             currency,
             is_active,
+            video_url,
           } = response.data;
 
           setFormData({
@@ -49,6 +51,7 @@ export default function AddCardBox() {
             card_number: card_number || "",
             card_holder: card_holder || "",
             currency: currency || "",
+            video_url: video_url || "",
             is_active: is_active !== undefined ? is_active : true,
           });
 
@@ -192,6 +195,19 @@ export default function AddCardBox() {
                   className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
                 />
               )}
+            </div>
+            <div className="col-span-3">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                To&apos;lov video
+              </label>
+              <input
+                type="text"
+                name="video_url"
+                placeholder="Video link"
+                value={formData.video_url}
+                onChange={handleChange}
+                className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
+              />
             </div>
             <div className="col-span-6">
               <SwitcherThree
