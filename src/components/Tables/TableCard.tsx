@@ -1,13 +1,13 @@
 "use client";
+import axiosInstance from "@/libs/axios";
 import Image from "next/image";
-import { FiEdit2 } from "react-icons/fi";
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import axiosInstance from "@/libs/axios";
+import { FiEdit2 } from "react-icons/fi";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
-import { toast } from "react-toastify";
 import "./TableCard.css";
 
 interface Card {
@@ -29,7 +29,12 @@ const TableCard = () => {
     const fetchCards = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get("/root/card/list");
+        const response = await axiosInstance.get("/root/card/list", {
+          params: {
+            page: 1,
+            page_size: 20,
+          },
+        });
         setCards(response.data.results || []);
       } catch (error) {
         console.error("Kartalarni yuklashda xatolik:", error);
