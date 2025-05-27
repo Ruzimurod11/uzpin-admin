@@ -1,14 +1,15 @@
 "use client";
+import axiosInstance from "@/libs/axios";
 import Image from "next/image";
-import { FiEdit2 } from "react-icons/fi";
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import axiosInstance from "@/libs/axios";
+import { FiEdit2 } from "react-icons/fi";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import Pagination from "../Pagination";
 import SwitcherThree from "../SelectOption/SwitcherThree";
-import { toast } from "react-toastify";
 
 interface Game {
   id: string;
@@ -23,12 +24,17 @@ const TableGame = () => {
   const [data, setData] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get("/root/game/games");
+      const response = await axiosInstance.get(
+        `/root/game/games?page=${currentPage}`,
+      );
       setData(response.data.results || []);
+      setTotalPages(Math.ceil(response.data.count / 10));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -37,7 +43,7 @@ const TableGame = () => {
   };
   useEffect(() => {
     fetchStats();
-  }, []);
+  }, [currentPage]);
 
   const DeleteGame = (id: any) => {
     setIsModalOpen(id);
@@ -210,6 +216,11 @@ const TableGame = () => {
             </div>
           </div>
         ))}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
       <ConfirmDeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen("")}

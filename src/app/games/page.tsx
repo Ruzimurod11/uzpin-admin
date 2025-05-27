@@ -1,7 +1,6 @@
-import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLaout";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import GamesBox from "@/components/GamesBox";
+import DefaultLayout from "@/components/Layouts/DefaultLaout";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "ADMIN || O'YINLAR",
@@ -12,7 +11,6 @@ const GamesPage = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        {/* <Breadcrumb pageName="O'yinlar" /> */}
         <GamesBox />
       </div>
     </DefaultLayout>

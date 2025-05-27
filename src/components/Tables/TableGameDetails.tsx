@@ -1,20 +1,19 @@
 "use client";
-import { FaEye, FaFileArrowUp } from "react-icons/fa6";
-import { FiEdit2 } from "react-icons/fi";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { BiRuble } from "react-icons/bi";
+import { FaArrowLeft } from "react-icons/fa";
+import { FaFileArrowUp } from "react-icons/fa6";
+import { FiEdit2 } from "react-icons/fi";
+import { IoLogoUsd } from "react-icons/io5";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
-import { toast } from "react-toastify";
-import CurrencyInput from "../SelectOption/CurrencyInput";
-import SwitcherThree from "../SelectOption/SwitcherThree";
-import { IoLogoUsd } from "react-icons/io5";
-import { BiRuble } from "react-icons/bi";
 import Pagination from "../Pagination";
+import CurrencyInput from "../SelectOption/CurrencyInput";
 
 interface Game {
   id: string;
@@ -217,7 +216,7 @@ const TableGameDetails = () => {
       const response = await axiosInstance.post(
         `/root/game/mobile-legands/promocodes/${id}`,
       );
-      toast.success("Muvaffaqiyatli yanilandi");
+      toast.success("Muvaffaqiyatli yangilandi");
       setReload((prev) => !prev);
     } catch (error) {
       console.error("Muvaffaqiyatli yanilishda xatolik:", error);
@@ -251,7 +250,8 @@ const TableGameDetails = () => {
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
-        id == "322d0721-1dca-4720-a0a3-68371ba8ed22") && (
+        id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
+        id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2") && (
         <div className="flex justify-between  py-4 pl-4">
           <button
             className="rounded bg-[green] px-4 py-3 text-white"
@@ -271,7 +271,8 @@ const TableGameDetails = () => {
           <p className="font-medium">Promokod nomi</p>
         </div>
         {id !== "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
-          id !== "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+          id !== "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
+          id !== "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
             <div className="col-span-2 flex items-center">
               <p className="font-medium">Qolgan</p>
             </div>
@@ -279,7 +280,8 @@ const TableGameDetails = () => {
         <div
           className={`col-span-2 flex ${
             id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
-            id == "322d0721-1dca-4720-a0a3-68371ba8ed22"
+            id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
+            id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2"
               ? "justify-center"
               : ""
           } items-center`}
@@ -296,7 +298,8 @@ const TableGameDetails = () => {
           <p className="font-medium">Sotuchi Narxi</p>
         </div>
         {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
-        id != "322d0721-1dca-4720-a0a3-68371ba8ed22" ? (
+        id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
+        id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ? (
           <div className="col-span-2 flex items-center justify-end">
             <Link
               href="promo-create"
@@ -348,7 +351,8 @@ const TableGameDetails = () => {
             </div>
             {/* </Link> */}
             {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
-              id != "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+              id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
+              id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
                 // <Link
                 //   href={`${key}/${product.id}`}
                 //   className="col-span-2 flex items-center"
@@ -365,7 +369,7 @@ const TableGameDetails = () => {
 
             <Link
               href={`${key}/${product.id}`}
-              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" || id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ? "justify-center" : ""} items-center`}
+              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" || id == "322d0721-1dca-4720-a0a3-68371ba8ed22" || id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ? "justify-center" : ""} items-center`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -459,7 +463,8 @@ const TableGameDetails = () => {
             </Link>
 
             {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
-              id == "322d0721-1dca-4720-a0a3-68371ba8ed22") && (
+              id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
+              id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2") && (
               <div className="col-span-2 flex items-center">
                 <input
                   type="text"
@@ -477,7 +482,8 @@ const TableGameDetails = () => {
             )}
             <div className="col-span-2 flex cursor-pointer items-center justify-end gap-5">
               {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
-                id == "322d0721-1dca-4720-a0a3-68371ba8ed22") && (
+                id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
+                id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2") && (
                 <input
                   type="text"
                   value={
@@ -497,7 +503,8 @@ const TableGameDetails = () => {
                 </div>
               </Link>
               {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
-                id != "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+                id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
+                id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
                   <div
                     onClick={() => ModalOpen(product.id)}
                     className="rounded bg-[green] px-3 py-1 text-white"
@@ -506,7 +513,8 @@ const TableGameDetails = () => {
                   </div>
                 )}
               {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
-                id != "322d0721-1dca-4720-a0a3-68371ba8ed22" && (
+                id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
+                id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
                   <div
                     onClick={() => DeleteGame(product.id)}
                     className="rounded bg-[red] px-3 py-1 text-white"

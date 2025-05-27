@@ -1,7 +1,6 @@
-import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLaout";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import GamesBoxDetails from "@/components/GamesBoxDetails";
+import DefaultLayout from "@/components/Layouts/DefaultLaout";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "O'YINLAR",
