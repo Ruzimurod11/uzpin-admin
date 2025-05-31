@@ -349,14 +349,9 @@ const TableGameDetails = () => {
                 </p>
               </div>
             </div>
-            {/* </Link> */}
             {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
               id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
               id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
-                // <Link
-                //   href={`${key}/${product.id}`}
-                //   className="col-span-2 flex items-center"
-                // >
                 <div className="col-span-2 flex items-center">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                     <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -364,7 +359,6 @@ const TableGameDetails = () => {
                     </p>
                   </div>
                 </div>
-                // </Link>
               )}
 
             <Link

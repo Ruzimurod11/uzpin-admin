@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import axiosInstance from "@/libs/axios";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CurrencyInput = ({ setReload }: any) => {
   const [usd, setUsd] = useState<string>("");
   const [rub, setRub] = useState<string>("");
+  const [myr, setMyr] = useState<string>("");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -23,6 +23,7 @@ const CurrencyInput = ({ setReload }: any) => {
       const data = {
         usd_uzs: parseFloat(usd),
         usd_rub: parseFloat(rub),
+        usd_myr: parseFloat(myr),
       };
 
       await axiosInstance.post("/root/game/mobile-legands/settings", data);
@@ -41,6 +42,8 @@ const CurrencyInput = ({ setReload }: any) => {
       );
       setUsd(response.data.usd_uzs.toString());
       setRub(response.data.usd_rub.toString());
+      setMyr(response.data.usd_myr.toString());
+      console.log(response);
     } catch (error) {
       console.error("Xatolik yuz berdi:", error);
     }
@@ -54,6 +57,19 @@ const CurrencyInput = ({ setReload }: any) => {
     <div className="flex items-center justify-end gap-4 px-8">
       <div className="col-span-4 flex items-center gap-3 text-nowrap">
         <label htmlFor="usd" className="text-lg font-bold">
+          1$ - myrda:
+        </label>
+        <input
+          type="text"
+          name="usd"
+          value={myr}
+          onChange={(e) => handleInputChange(e, setMyr)}
+          className="w-full max-w-[120px] cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+          placeholder="MYR"
+        />
+      </div>
+      <div className="col-span-4 flex items-center gap-3 text-nowrap">
+        <label htmlFor="usd" className="text-lg font-bold">
           1$ - sumda:
         </label>
         <input
@@ -61,7 +77,7 @@ const CurrencyInput = ({ setReload }: any) => {
           name="usd"
           value={usd}
           onChange={(e) => handleInputChange(e, setUsd)}
-          className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+          className="w-full max-w-[120px] cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
           placeholder="SUM"
         />
       </div>
@@ -74,7 +90,7 @@ const CurrencyInput = ({ setReload }: any) => {
           name="rubl"
           value={rub}
           onChange={(e) => handleInputChange(e, setRub)}
-          className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
+          className="w-full max-w-[120px] cursor-pointer rounded-[7px] border-[1.5px] border-stroke px-3 py-[9px] outline-none transition"
           placeholder="RUB"
         />
       </div>
