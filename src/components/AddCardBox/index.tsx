@@ -321,7 +321,15 @@ export default function AddCardBox() {
               )}
             </div>
 
-            <div className="col-span-6">
+            <div className="col-span-3">
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                Video
+              </label>
+              <UploadComponent
+                onUploadSuccess={(url) => handleUploadSuccess("video_url", url)}
+              />
+            </div>
+            <div className="col-span-3">
               <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                 To&apos;lov video
               </label>
