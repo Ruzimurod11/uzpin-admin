@@ -1,10 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
 import axiosInstance from "@/libs/axios";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import SelectGroupOne from "../SelectGame/SelectGroupOne";
 import UploadComponent from "../UploadComponent";
-import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
 
 interface Game {
   id: string;
@@ -78,7 +78,9 @@ const GamesPromoCreate = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axiosInstance.get("/root/game/games");
+        const response = await axiosInstance.get("/root/game/games", {
+          params: { page: 1, page_size: 100 },
+        });
         setGames(response.data.results || []);
       } catch (error) {
         console.error("O'yinlar ro'yxatini olishda xatolik:", error);
