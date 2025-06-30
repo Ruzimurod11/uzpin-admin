@@ -49,7 +49,7 @@ const SearchForm = () => {
   return (
     <>
       {showSearch && (
-        <li className="hidden lg:block">
+        <li className="list-none lg:block">
           <div className="relative w-full max-w-[300px]">
             <button
               type="button"

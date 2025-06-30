@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
-import SelectGroupOne from "../SelectGame/SelectGroupOne";
-import UploadComponent from "../UploadComponent";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AlertError, AlertSuccess } from "../Alerts/AlertComponents";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import SelectGroupOne from "../SelectGame/SelectGroupOne";
 import SwitcherThree from "../SelectOption/SwitcherThree";
+import UploadComponent from "../UploadComponent";
 
 const GamesBoxCreate = () => {
   const router = useRouter();
@@ -29,6 +28,7 @@ const GamesBoxCreate = () => {
   const [descRu, setDescRu] = useState("");
   const [descEn, setDescEn] = useState("");
   const [no_promocode, setNo_promocode] = useState(false);
+  const [is_mml, setIs_mml] = useState(false);
   const [channelId, setChannelId] = useState("");
 
   const [selectedGame, setSelectedGame] = useState<string>("");
@@ -54,6 +54,7 @@ const GamesBoxCreate = () => {
           setDescRu(response.data.desc_ru || "");
           setDescEn(response.data.desc_en || "");
           setNo_promocode(response.data.no_promocode || false);
+          setIs_mml(response.data.is_mml || false);
           setChannelId(response.data.channel_id || "");
 
           // is_active: is_active !== undefined ? is_active : true,
@@ -96,12 +97,9 @@ const GamesBoxCreate = () => {
       desc_ru: descRu,
       desc_en: descEn,
       no_promocode: no_promocode,
+      is_mml: is_mml,
       channel_id: +channelId,
     };
-
-    // if (typeof channelId === "number" && !isNaN(channelId)) {
-    //   payload.channel_id = channelId;
-    // }
 
     try {
       if (extractedValue) {
@@ -304,6 +302,15 @@ const GamesBoxCreate = () => {
             <SwitcherThree
               isActive={no_promocode}
               onChange={(e) => setNo_promocode(e)}
+              text="&nbsp;"
+            />
+          </div>
+
+          <div className="flex items-center">
+            MLB
+            <SwitcherThree
+              isActive={is_mml}
+              onChange={(e) => setIs_mml(e)}
               text="&nbsp;"
             />
           </div>
