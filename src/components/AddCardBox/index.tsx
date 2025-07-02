@@ -24,6 +24,7 @@ export default function AddCardBox() {
     card_holder: "",
     currency: "",
     video_url: "",
+    qr_code: "",
     is_active: true,
     have_extra: false,
     extra_cards: [
@@ -53,6 +54,7 @@ export default function AddCardBox() {
             card_name,
             card_number,
             card_holder,
+            qr_code,
             currency,
             is_active,
             have_extra,
@@ -65,6 +67,7 @@ export default function AddCardBox() {
             card_name: card_name || "",
             card_number: card_number || "",
             card_holder: card_holder || "",
+            qr_code: qr_code || "",
             currency: currency || "",
             video_url: video_url || "",
             is_active: is_active !== undefined ? is_active : true,
@@ -342,32 +345,41 @@ export default function AddCardBox() {
                 className="w-full cursor-pointer rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-[9px] outline-none transition dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
               />
             </div>
-
             <div className="col-span-3">
-              <SwitcherThree
-                isActive={formData.is_active}
-                text="Holati"
-                onChange={(value: boolean) =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    is_active: value,
-                  }))
-                }
+              <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                QR Code
+              </label>
+              <UploadComponent
+                onUploadSuccess={(url) => handleUploadSuccess("qr_code", url)}
               />
             </div>
+            <div className="col-span-6 flex items-center gap-x-10">
+              <div className="col-span-3">
+                <SwitcherThree
+                  isActive={formData.is_active}
+                  text="Holati"
+                  onChange={(value: boolean) =>
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      is_active: value,
+                    }))
+                  }
+                />
+              </div>
 
-            <div className="col-span-3">
-              <SwitcherThree
-                isActive={formData.have_extra}
-                text="MultiCard"
-                onChange={(value: boolean) => {
-                  setHaveExtra(value);
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    have_extra: value,
-                  }));
-                }}
-              />
+              <div className="col-span-3">
+                <SwitcherThree
+                  isActive={formData.have_extra}
+                  text="MultiCard"
+                  onChange={(value: boolean) => {
+                    setHaveExtra(value);
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      have_extra: value,
+                    }));
+                  }}
+                />
+              </div>
             </div>
 
             <div className="col-span-6 flex flex-col gap-5">
