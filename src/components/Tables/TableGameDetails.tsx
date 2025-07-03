@@ -212,14 +212,26 @@ const TableGameDetails = () => {
   };
 
   const UpdateData = async () => {
-    try {
-      const response = await axiosInstance.post(
-        `/root/game/mobile-legands/promocodes/${id}`,
-      );
-      toast.success("Muvaffaqiyatli yangilandi");
-      setReload((prev) => !prev);
-    } catch (error) {
-      console.error("Muvaffaqiyatli yanilishda xatolik:", error);
+    if (id === "628861ab-0687-4868-971c-94ba7e5e2134") {
+      try {
+        const response = await axiosInstance.post(
+          `/root/game/mobile-legands/promocodes-smileone/magic-chess/${id}`,
+        );
+        toast.success("Muvaffaqiyatli yangilandi");
+        setReload((prev) => !prev);
+      } catch (error) {
+        console.error("Muvaffaqiyatli yanilishda xatolik:", error);
+      }
+    } else {
+      try {
+        const response = await axiosInstance.post(
+          `/root/game/mobile-legands/promocodes/${id}`,
+        );
+        toast.success("Muvaffaqiyatli yangilandi");
+        setReload((prev) => !prev);
+      } catch (error) {
+        console.error("Muvaffaqiyatli yanilishda xatolik:", error);
+      }
     }
   };
 
@@ -251,7 +263,8 @@ const TableGameDetails = () => {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
         id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
-        id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2") && (
+        id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
+        id == "628861ab-0687-4868-971c-94ba7e5e2134") && (
         <div className="flex justify-between  py-4 pl-4">
           <button
             className="rounded bg-[green] px-4 py-3 text-white"
@@ -272,7 +285,8 @@ const TableGameDetails = () => {
         </div>
         {id !== "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
           id !== "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
-          id !== "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
+          id !== "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
+          id !== "628861ab-0687-4868-971c-94ba7e5e2134" && (
             <div className="col-span-2 flex items-center">
               <p className="font-medium">Qolgan</p>
             </div>
@@ -281,7 +295,8 @@ const TableGameDetails = () => {
           className={`col-span-2 flex ${
             id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
             id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
-            id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2"
+            id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
+            id == "628861ab-0687-4868-971c-94ba7e5e2134"
               ? "justify-center"
               : ""
           } items-center`}
@@ -299,7 +314,8 @@ const TableGameDetails = () => {
         </div>
         {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
         id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
-        id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ? (
+        id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
+        id != "628861ab-0687-4868-971c-94ba7e5e2134" ? (
           <div className="col-span-2 flex items-center justify-end">
             <Link
               href="promo-create"
@@ -351,7 +367,8 @@ const TableGameDetails = () => {
             </div>
             {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
               id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
-              id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
+              id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
+              id != "628861ab-0687-4868-971c-94ba7e5e2134" && (
                 <div className="col-span-2 flex items-center">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                     <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -363,7 +380,7 @@ const TableGameDetails = () => {
 
             <Link
               href={`${key}/${product.id}`}
-              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" || id == "322d0721-1dca-4720-a0a3-68371ba8ed22" || id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ? "justify-center" : ""} items-center`}
+              className={`col-span-2 flex ${id == "00984e54-78f0-44f8-ad48-dac23d838bdc" || id == "322d0721-1dca-4720-a0a3-68371ba8ed22" || id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" || id == "628861ab-0687-4868-971c-94ba7e5e2134" ? "justify-center" : ""} items-center`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -458,7 +475,8 @@ const TableGameDetails = () => {
 
             {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
               id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
-              id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2") && (
+              id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
+              id == "628861ab-0687-4868-971c-94ba7e5e2134") && (
               <div className="col-span-2 flex items-center">
                 <input
                   type="text"
@@ -477,7 +495,8 @@ const TableGameDetails = () => {
             <div className="col-span-2 flex cursor-pointer items-center justify-end gap-5">
               {(id == "00984e54-78f0-44f8-ad48-dac23d838bdc" ||
                 id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
-                id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2") && (
+                id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
+                id == "628861ab-0687-4868-971c-94ba7e5e2134") && (
                 <input
                   type="text"
                   value={
@@ -498,7 +517,8 @@ const TableGameDetails = () => {
               </Link>
               {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
                 id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
-                id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
+                id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
+                id != "628861ab-0687-4868-971c-94ba7e5e2134" && (
                   <div
                     onClick={() => ModalOpen(product.id)}
                     className="rounded bg-[green] px-3 py-1 text-white"
@@ -508,7 +528,8 @@ const TableGameDetails = () => {
                 )}
               {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
                 id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
-                id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" && (
+                id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
+                id != "628861ab-0687-4868-971c-94ba7e5e2134" && (
                   <div
                     onClick={() => DeleteGame(product.id)}
                     className="rounded bg-[red] px-3 py-1 text-white"

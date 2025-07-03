@@ -11,7 +11,6 @@ const GamesPageDetails = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-7xl">
-        {/* <Breadcrumb pageName="PUBG" /> */}
         <GamesBoxDetails />
       </div>
     </DefaultLayout>
