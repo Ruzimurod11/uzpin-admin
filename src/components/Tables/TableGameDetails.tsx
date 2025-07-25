@@ -342,10 +342,6 @@ const TableGameDetails = () => {
             className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-11 md:px-6 2xl:px-7.5"
             key={key}
           >
-            {/* <Link
-              href={`${key}/${product.id}`}
-              className="col-span-2 flex items-center"
-            > */}
             <div className="col-span-2 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <input
@@ -526,17 +522,17 @@ const TableGameDetails = () => {
                     <FaFileArrowUp />
                   </div>
                 )}
-              {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
+              <div
+                onClick={() => DeleteGame(product.id)}
+                className="rounded bg-[red] px-3 py-1 text-white"
+              >
+                <MdOutlineDeleteOutline />
+              </div>
+              {/* {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&
                 id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
                 id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
                 id != "628861ab-0687-4868-971c-94ba7e5e2134" && (
-                  <div
-                    onClick={() => DeleteGame(product.id)}
-                    className="rounded bg-[red] px-3 py-1 text-white"
-                  >
-                    <MdOutlineDeleteOutline />
-                  </div>
-                )}
+                )} */}
             </div>
           </div>
         ))}
