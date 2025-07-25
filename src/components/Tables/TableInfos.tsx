@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
+import { useEffect, useState } from "react";
 import { BiRuble } from "react-icons/bi";
 import { IoLogoUsd } from "react-icons/io5";
-import Loader from "../common/Loader";
 import CustomCalendar from "../Charts/CustomCalendar";
 
 interface Card {
@@ -26,7 +25,6 @@ const TableInfos = ({ name }: TableInfosProps) => {
   const [selectedId, setSelectedId] = useState<string>("");
   const [selectedGame, setSelectedGame] = useState<string>("");
   const [loadings, setLoadings] = useState(false);
-
   const [time, setTime] = useState("");
 
   const handleDateChange = (startDate: string, endDate: string) => {
@@ -34,13 +32,16 @@ const TableInfos = ({ name }: TableInfosProps) => {
       start_date: startDate,
       end_date: endDate,
     }).toString();
-
     setTime(queryParams);
   };
 
-  const fetchCards = async (bot = "", game = "", partner = "") => {
+  const fetchCards = async (
+    bot = "",
+    game = "",
+    partner = "",
+    timeParam = time,
+  ) => {
     setLoadings(true);
-
     try {
       const queryParams: string[] = [];
 
@@ -49,10 +50,8 @@ const TableInfos = ({ name }: TableInfosProps) => {
       if (partner && partner !== "barchasi")
         queryParams.push(`partner=${partner}`);
 
-      const queryString =
-        queryParams.length > 0 ? `${queryParams.join("&")}` : "";
-      const url = `/root/analytics/bot?${time}${queryString}`;
-
+      const queryString = queryParams.join("&");
+      const url = `/root/analytics/bot?${timeParam}${queryString ? `&${queryString}` : ""}`;
       const response = await axiosInstance.get(url);
       setCards(response.data || []);
     } catch (error) {
@@ -77,14 +76,11 @@ const TableInfos = ({ name }: TableInfosProps) => {
     setLoadings(true);
     try {
       const response = await axiosInstance.get<any>("/root/partner/");
-
-      // Ma'lumotlarni formatlash
-      const formattedReferals: { id: string; name: string }[] =
+      const formattedReferals =
         response.data.results?.map(({ id, fullname }: any) => ({
-          id: String(id), // `id` ning string bo‘lishini ta’minlash
-          name: fullname || "Noma'lum", // fullname bo‘sh bo‘lsa, default qiymat
+          id: String(id),
+          name: fullname || "Noma'lum",
         })) || [];
-
       setReferals(formattedReferals || []);
     } catch (error) {
       console.error("Referallarni yuklashda xatolik:", error);
@@ -105,41 +101,39 @@ const TableInfos = ({ name }: TableInfosProps) => {
   };
 
   useEffect(() => {
-    fetchCards();
+    fetchCards(selectedBot, selectedGame, selectedId, time);
     fetchGames();
     fetchBots();
   }, [time]);
+
   useEffect(() => {
     fetchReferals();
   }, []);
 
   const handleBotChange = (selected: string) => {
     setSelectedBot(selected);
-    fetchCards(selected, selectedGame);
+    fetchCards(selected, selectedGame, selectedId);
   };
 
-  const handleReferalChange = (selectedId: string) => {
-    setSelectedId(selectedId);
-    fetchCards(selectedBot, selectedGame, selectedId); // 🛠 PARTNER TO‘G‘RI O‘TAYOTGANINI TEKSHIRING
+  const handleReferalChange = (selected: string) => {
+    setSelectedId(selected);
+    fetchCards(selectedBot, selectedGame, selected);
   };
 
   const handleGameChange = (selected: string) => {
     setSelectedGame(selected);
-    fetchCards(selectedBot, selected);
+    fetchCards(selectedBot, selected, selectedId);
   };
 
   const formatNumber = (num: number) => {
     if (Number.isInteger(num)) {
       return num.toLocaleString("fr-FR").replace(/\s/g, " ");
     }
-
     return num
       .toFixed(3)
       .replace(",", ".")
       .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
-
-  // if (loadings) return <Loader />;
 
   const DefaultSelectOption = ({
     options,
@@ -150,15 +144,11 @@ const TableInfos = ({ name }: TableInfosProps) => {
     onChange: (selected: string) => void;
     value: string;
   }) => {
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      onChange(event.target.value);
-    };
-
     return (
       <select
         value={value}
-        onChange={handleChange}
-        className="select-class rounded border p-2 text-lg capitalize outline-none"
+        onChange={(e) => onChange(e.target.value)}
+        className="select-class max-w-[250px] rounded border p-2 text-lg capitalize outline-none"
       >
         {options.map((option, index) => (
           <option key={index} value={option}>
@@ -175,18 +165,14 @@ const TableInfos = ({ name }: TableInfosProps) => {
     value,
   }: {
     options: { id: string; name: string }[];
-    onChange: (selectedId: string) => void;
+    onChange: (selected: string) => void;
     value: string;
   }) => {
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      onChange(event.target.value); // Faqat `id` jo‘natiladi
-    };
-
     return (
       <select
         value={value || ""}
-        onChange={handleChange}
-        className="select-class rounded border p-2 text-lg capitalize outline-none"
+        onChange={(e) => onChange(e.target.value)}
+        className="select-class w-full max-w-[150px] rounded border p-2 text-lg capitalize outline-none"
       >
         {options.map((option) => (
           <option key={option.id} value={option.id}>
@@ -199,8 +185,8 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
-        <div className="col-span-2 flex items-center justify-center">
+      <div className="grid grid-cols-10 border-t border-stroke px-4 py-4.5 dark:border-dark-3">
+        <div className="col-span-2 flex items-center justify-start">
           {referals.length > 0 && (
             <DefaultSelectOptionId
               options={[{ id: "", name: "Barchasi" }, ...referals]}
@@ -209,7 +195,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
             />
           )}
         </div>
-        <div className="col-span-2 flex items-center justify-center">
+        <div className="col-span-2 flex items-center justify-start">
           {bots.length > 0 && (
             <DefaultSelectOption
               options={["barchasi", ...bots]}
@@ -227,8 +213,7 @@ const TableInfos = ({ name }: TableInfosProps) => {
             />
           )}
         </div>
-        <div className="col-span-1 flex items-center justify-center"></div>
-
+        <div className="col-span-1" />
         <div className="col-span-3 flex items-center justify-end gap-4">
           <span className="whitespace-nowrap">Saralash:</span>
           <CustomCalendar onDateChange={handleDateChange} />
@@ -252,74 +237,50 @@ const TableInfos = ({ name }: TableInfosProps) => {
 
       {cards.map((product, key) => (
         <div
-          className={`grid grid-cols-6 border-t ${key === 0 && "bg-[#fffaed] dark:bg-[#2a3746]"} border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5`}
           key={key}
+          className={`grid grid-cols-6 border-t ${
+            key === 0 && "bg-[#fffaed] dark:bg-[#2a3746]"
+          } border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5`}
         >
           <div className="col-span-2 flex items-center">
             <p
-              className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              className={`flex items-center text-body-sm font-medium text-dark ${
+                key === 0 && "dark:text-[#fbf8f1]"
+              } dark:text-dark-6`}
             >
               {key + 1}. {product.promocode}
             </p>
           </div>
           <div className="col-span-2 flex items-center">
             <p
-              className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
+              className={`text-body-sm font-medium text-dark ${
+                key === 0 && "dark:text-[#fbf8f1]"
+              } dark:text-dark-6`}
             >
               {product.total_count}
             </p>
           </div>
-          <div className="col-span-3 flex items-center">
-            <div className="flex flex-col gap-0">
-              <p
-                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
-              >
-                {product.total_amount.USD
-                  ? formatNumber(product.total_amount.USD)
-                  : "0"}
-                <IoLogoUsd />
-              </p>
-
-              <p
-                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
-              >
-                {product.total_amount.UZS
-                  ? formatNumber(product.total_amount.UZS)
-                  : "0"}{" "}
-                S
-              </p>
-              <p
-                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
-              >
-                {product.total_amount.RUB
-                  ? formatNumber(product.total_amount.RUB)
-                  : "0"}
-                <BiRuble />
-              </p>
-            </div>
+          <div className="col-span-3 flex flex-col gap-0">
+            <p className="flex items-center gap-1">
+              {formatNumber(product.total_amount.USD)} <IoLogoUsd />
+            </p>
+            <p className="flex items-center gap-1">
+              {formatNumber(product.total_amount.UZS)} S
+            </p>
+            <p className="flex items-center gap-1">
+              {formatNumber(product.total_amount.RUB)} <BiRuble />
+            </p>
           </div>
-          <div className="col-span-3 flex items-center">
-            <div className="flex flex-col gap-0">
-              <p
-                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
-              >
-                {product.benefit.USD ? formatNumber(product.benefit.USD) : "0"}
-                <IoLogoUsd />
-              </p>
-
-              <p
-                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
-              >
-                {product.benefit.UZS ? formatNumber(product.benefit.UZS) : "0"}{" "}
-                S
-              </p>
-              <p
-                className={`flex items-center text-body-sm font-medium text-dark ${key === 0 && "dark:text-[#fbf8f1]"} dark:text-dark-6`}
-              >
-                {product.benefit.RUB ? formatNumber(product.benefit.RUB) : "0"}
-                <BiRuble />
-              </p>
-            </div>
+          <div className="col-span-3 flex flex-col gap-0">
+            <p className="flex items-center gap-1">
+              {formatNumber(product.benefit.USD)} <IoLogoUsd />
+            </p>
+            <p className="flex items-center gap-1">
+              {formatNumber(product.benefit.UZS)} S
+            </p>
+            <p className="flex items-center gap-1">
+              {formatNumber(product.benefit.RUB)} <BiRuble />
+            </p>
           </div>
         </div>
       ))}
