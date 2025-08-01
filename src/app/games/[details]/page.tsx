@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const GamesPageDetails = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto">
         <GamesBoxDetails />
       </div>
     </DefaultLayout>
