@@ -1,15 +1,13 @@
 "use client";
+import axiosInstance from "@/libs/axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { useEffect, useState } from "react";
-import axiosInstance from "@/libs/axios";
+import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
-import { FaTelegramPlane } from "react-icons/fa";
-import PartnorModalMsg from "../PartnorMsgModal";
-import { toast } from "react-toastify";
 
 interface Partner {
   id: string;
@@ -156,7 +154,7 @@ const TablePartner = () => {
               )}
             </div>
           </div>
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-1 flex flex-col items-center">
             <div className="h-12.5 w-15 rounded-md">
               {partner.logo && (
                 <Image
@@ -168,11 +166,25 @@ const TablePartner = () => {
                 />
               )}
             </div>
+            <p
+              className="cursor-pointer text-[10px]"
+              onClick={() => {
+                const text = `https://webapp.uzpin.games?bot=${partner.id}`;
+                navigator.clipboard
+                  .writeText(text)
+                  .then(() => {
+                    console.log("Copied!");
+                  })
+                  .catch((err) => {
+                    console.error("Failed to copy: ", err);
+                  });
+              }}
+            >
+              https://webapp.uzpin.games?bot={partner.id}
+            </p>
           </div>
 
           <div className="col-span-1 flex cursor-pointer items-center justify-end gap-2">
-            {/* 1544b528-4e21-4a4b-8c09-31c5771eb55e */}
-            {/* 596aece6-31dc-4d4b-b774-e1b5a461bf1d */}
             <Link
               href={
                 partner.id === "596aece6-31dc-4d4b-b774-e1b5a461bf1d" ||
