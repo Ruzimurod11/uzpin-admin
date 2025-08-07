@@ -222,6 +222,16 @@ const TableGameDetails = () => {
       } catch (error) {
         console.error("Muvaffaqiyatli yanilishda xatolik:", error);
       }
+    } else if (id === "a1028fb3-6580-4010-bdba-a6205f73c5eb") {
+      try {
+        const response = await axiosInstance.post(
+          `/root/game/mobile-legands-brasil/promocodes/${id}`,
+        );
+        toast.success("Muvaffaqiyatli yangilandi");
+        setReload((prev) => !prev);
+      } catch (error) {
+        console.error("Muvaffaqiyatli yanilishda xatolik:", error);
+      }
     } else if (id === "d9ffb574-169f-4f14-b728-3de3d7105c34") {
       try {
         const response = await axiosInstance.post(
@@ -275,7 +285,8 @@ const TableGameDetails = () => {
         id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
         id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
         id == "628861ab-0687-4868-971c-94ba7e5e2134" ||
-        id == "d9ffb574-169f-4f14-b728-3de3d7105c34") && (
+        id == "d9ffb574-169f-4f14-b728-3de3d7105c34" ||
+        id == "a1028fb3-6580-4010-bdba-a6205f73c5eb") && (
         <div className="flex justify-between  py-4 pl-4">
           <button
             className="rounded bg-[green] px-4 py-3 text-white"
@@ -298,7 +309,8 @@ const TableGameDetails = () => {
           id !== "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
           id !== "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
           id !== "628861ab-0687-4868-971c-94ba7e5e2134" &&
-          id !== "d9ffb574-169f-4f14-b728-3de3d7105c34" && (
+          id !== "d9ffb574-169f-4f14-b728-3de3d7105c34" &&
+          id !== "a1028fb3-6580-4010-bdba-a6205f73c5eb" && (
             <div className="col-span-2 flex items-center">
               <p className="font-medium">Qolgan</p>
             </div>
@@ -309,7 +321,8 @@ const TableGameDetails = () => {
             id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
             id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
             id == "628861ab-0687-4868-971c-94ba7e5e2134" ||
-            id == "d9ffb574-169f-4f14-b728-3de3d7105c34"
+            id == "d9ffb574-169f-4f14-b728-3de3d7105c34" ||
+            id == "a1028fb3-6580-4010-bdba-a6205f73c5eb"
               ? "justify-center"
               : ""
           } items-center`}
@@ -329,6 +342,7 @@ const TableGameDetails = () => {
         id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
         id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
         id != "628861ab-0687-4868-971c-94ba7e5e2134" &&
+        id != "a1028fb3-6580-4010-bdba-a6205f73c5eb" &&
         id != "d9ffb574-169f-4f14-b728-3de3d7105c34" ? (
           <div className="col-span-2 flex items-center justify-end">
             <Link
@@ -379,7 +393,8 @@ const TableGameDetails = () => {
               id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
               id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
               id != "628861ab-0687-4868-971c-94ba7e5e2134" &&
-              id != "d9ffb574-169f-4f14-b728-3de3d7105c34" && (
+              id != "d9ffb574-169f-4f14-b728-3de3d7105c34" &&
+              id != "a1028fb3-6580-4010-bdba-a6205f73c5eb" && (
                 <div className="col-span-2 flex items-center">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                     <p className="text-body-sm font-medium text-dark dark:text-dark-6">
@@ -488,7 +503,8 @@ const TableGameDetails = () => {
               id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
               id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
               id == "628861ab-0687-4868-971c-94ba7e5e2134" ||
-              id == "d9ffb574-169f-4f14-b728-3de3d7105c34") && (
+              id == "d9ffb574-169f-4f14-b728-3de3d7105c34" ||
+              id == "a1028fb3-6580-4010-bdba-a6205f73c5eb") && (
               <div className="col-span-2 flex items-center">
                 <input
                   type="text"
@@ -509,7 +525,8 @@ const TableGameDetails = () => {
                 id == "322d0721-1dca-4720-a0a3-68371ba8ed22" ||
                 id == "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" ||
                 id == "628861ab-0687-4868-971c-94ba7e5e2134" ||
-                id == "d9ffb574-169f-4f14-b728-3de3d7105c34") && (
+                id == "d9ffb574-169f-4f14-b728-3de3d7105c34" ||
+                id == "a1028fb3-6580-4010-bdba-a6205f73c5eb") && (
                 <input
                   type="text"
                   value={
@@ -532,7 +549,8 @@ const TableGameDetails = () => {
                 id != "322d0721-1dca-4720-a0a3-68371ba8ed22" &&
                 id != "7d64856a-ae76-4ddc-be75-3a361dcbf9a2" &&
                 id != "628861ab-0687-4868-971c-94ba7e5e2134" &&
-                id != "d9ffb574-169f-4f14-b728-3de3d7105c34" && (
+                id != "d9ffb574-169f-4f14-b728-3de3d7105c34" &&
+                id != "a1028fb3-6580-4010-bdba-a6205f73c5eb" && (
                   <div
                     onClick={() => ModalOpen(product.id)}
                     className="rounded bg-[green] px-3 py-1 text-white"
