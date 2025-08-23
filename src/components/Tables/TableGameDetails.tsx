@@ -242,6 +242,16 @@ const TableGameDetails = () => {
       } catch (error) {
         console.error("Muvaffaqiyatli yanilishda xatolik:", error);
       }
+    } else if (id === "322d0721-1dca-4720-a0a3-68371ba8ed22") {
+      try {
+        const response = await axiosInstance.post(
+          `/root/game/mobile-legands/promocodes-smileone/${id}`,
+        );
+        toast.success("Muvaffaqiyatli yangilandi");
+        setReload((prev) => !prev);
+      } catch (error) {
+        console.error("Muvaffaqiyatli yanilishda xatolik:", error);
+      }
     } else {
       try {
         const response = await axiosInstance.post(
