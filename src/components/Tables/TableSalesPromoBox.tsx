@@ -1,9 +1,10 @@
 "use client";
-import SearchForm from "../Header/SearchForm";
-import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import CustomCalendar from "../Charts/CustomCalendar";
 import Loader from "../common/Loader";
+import SearchForm from "../Header/SearchForm";
 import Pagination from "../Pagination";
 
 interface Info {
@@ -31,15 +32,22 @@ const TableSalesPromoBox = () => {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   const [filter, setFilter] = useState("");
-  const [status, setStatus] = useState("");
-  console.log(status);
+  const [time, setTime] = useState("");
 
-  const fetchStats = async (page: number) => {
+  const handleDateChange = (startDate: string, endDate: string) => {
+    const queryParams = new URLSearchParams({
+      start_date: startDate,
+      end_date: endDate,
+    }).toString();
+    setTime(queryParams);
+  };
+
+  const fetchStats = async (page: number, timeParam?: string) => {
     if (!searchQuery) setLoading(true);
 
     try {
       const response = await axiosInstance.get(
-        `/root/sold/list?search=${searchQuery}&status=${filter}&page=${page}&page_size=30`,
+        `/root/sold/list?${timeParam}&search=${searchQuery}&status=${filter}&page=${page}&page_size=30`,
       );
       setData(response.data.results || []);
       setTotalPages(Math.ceil(response.data.count / 30));
@@ -50,8 +58,8 @@ const TableSalesPromoBox = () => {
     }
   };
   useEffect(() => {
-    fetchStats(currentPage);
-  }, [searchQuery, currentPage, filter]);
+    fetchStats(currentPage, time);
+  }, [searchQuery, currentPage, filter, time]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
     const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
@@ -135,6 +143,11 @@ const TableSalesPromoBox = () => {
         </h4>
         <DefaultSelectOptionId1 onChange={handleChange} value={filter} />
         <SearchForm />
+
+        <div className="col-span-3 flex items-center justify-end gap-4">
+          <span className="whitespace-nowrap">Saralash:</span>
+          <CustomCalendar onDateChange={handleDateChange} />
+        </div>
       </div>
       <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-12 md:px-6 2xl:px-7.5">
         <div className="col-span-1 flex items-center">
