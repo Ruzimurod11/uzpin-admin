@@ -14,6 +14,7 @@ import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import Pagination from "../Pagination";
 import CurrencyInput from "../SelectOption/CurrencyInput";
+import SwitcherThree from "../SelectOption/SwitcherThree";
 
 interface Game {
   id: string;
@@ -45,12 +46,7 @@ const TableGameDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState("");
-  const [isSellerState, setIsSellerState] = useState<Record<string, boolean>>(
-    {},
-  );
-
   const [reload, setReload] = useState<Boolean>(false);
-
   const [protsent, setProtsent] = useState<Record<string, string>>({});
   const [protsentSeller, setProtsentSeller] = useState<Record<string, string>>(
     {},
@@ -288,6 +284,23 @@ const TableGameDetails = () => {
     setModal(true);
     setActiveId(productId);
   };
+
+  const handleStatus = async (productId: string, status: boolean) => {
+    try {
+      await axiosInstance.patch(`/root/game/promocodes/${productId}/detail`, {
+        is_active: status,
+      });
+      setData((prevData) =>
+        prevData.map((game) =>
+          game.id === productId ? { ...game, is_active: status } : game,
+        ),
+      );
+      toast.warn("Muvaffaqiyatli O'zgartirildi");
+    } catch (error) {
+      console.error("O'yinni o'chirishda xatolik:", error);
+    }
+  };
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -394,9 +407,18 @@ const TableGameDetails = () => {
                   }}
                   className="max-w-[34px] rounded-md px-[5px] outline-none"
                 />
-                <p className="line-clamp-1 text-body-sm font-bold text-black dark:text-dark-8">
-                  {(currentPage - 1) * 10 + key + 1}. {product.name}
-                </p>
+                <div className="">
+                  <p className="line-clamp-1 text-body-sm font-bold text-black dark:text-dark-8">
+                    {(currentPage - 1) * 10 + key + 1}. {product.name}
+                  </p>
+                  <SwitcherThree
+                    isActive={product.is_active}
+                    onChange={(value: boolean) =>
+                      handleStatus(product.id, value)
+                    }
+                    text=""
+                  />
+                </div>
               </div>
             </div>
             {id != "00984e54-78f0-44f8-ad48-dac23d838bdc" &&

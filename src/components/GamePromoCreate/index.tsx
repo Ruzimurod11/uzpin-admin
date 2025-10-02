@@ -66,6 +66,7 @@ const GamesPromoCreate = () => {
           setBodyPriceRUB(response.data.body_price_rub || "");
           setBodyPriceUSD(response.data.body_price_usd || "");
           setGameId(response.data.game.id);
+          console.log(response.data);
         } catch (error) {
           console.error("Failed to fetch card details:", error);
         }
