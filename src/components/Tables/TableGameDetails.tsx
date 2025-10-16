@@ -45,6 +45,7 @@ const TableGameDetails = () => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState("");
   const [reload, setReload] = useState<Boolean>(false);
   const [protsent, setProtsent] = useState<Record<string, string>>({});
@@ -52,14 +53,14 @@ const TableGameDetails = () => {
     {},
   );
 
-  const fetchStats = async (page: number) => {
+  const fetchStats = async (page: number, pageSize: number) => {
     setLoading(true);
     try {
       const response = await axiosInstance.get(
-        `/root/game/promocodes/${id}?page=${page} `,
+        `/root/game/promocodes/${id}?page=${page}&page_size=${pageSize}`,
       );
       setData(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 10));
+      setTotalPages(Math.ceil(response.data.count / pageSize));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -67,8 +68,8 @@ const TableGameDetails = () => {
     }
   };
   useEffect(() => {
-    fetchStats(currentPage);
-  }, [reload, currentPage]);
+    fetchStats(currentPage, pageSize);
+  }, [reload, currentPage, pageSize]);
 
   const router = useRouter();
   const goBack = () => {
@@ -189,7 +190,7 @@ const TableGameDetails = () => {
       .post(`/root/game/mobile-legands/update/percent/${productId}`, data)
       .then((response) => {
         console.log("Backenddan javob:", response.data);
-        fetchStats(currentPage);
+        fetchStats(currentPage, pageSize);
       })
       .catch((error) => {
         console.error("Xatolik:", error);
@@ -275,7 +276,7 @@ const TableGameDetails = () => {
     } catch (error) {
       console.error("O'yinni o'chirishda xatolik:", error);
     } finally {
-      fetchStats(currentPage);
+      fetchStats(currentPage, pageSize);
     }
   };
 
@@ -654,6 +655,11 @@ const TableGameDetails = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
+        pageSize={pageSize}
+        onPageSizeChange={(size) => {
+          setPageSize(size);
+          setCurrentPage(1);
+        }}
       />
     </div>
   );

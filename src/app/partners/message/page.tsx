@@ -1,5 +1,5 @@
-import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
+import { Metadata } from "next";
 
 import TableMessage from "@/components/Tables/TableMessage";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const MessagePage = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto mt-10 max-w-7xl">
+      <div className="mx-auto mt-10">
         <TableMessage />
       </div>
     </DefaultLayout>

@@ -15,16 +15,17 @@ const TableMoneyRecived = ({ id }: any) => {
   const [data, setData] = useState<Info[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const fetchStats = async (page: number) => {
+    const fetchStats = async (page: number, pageSize: number) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get(
-          `/root/customer/${id}/transactions?page=${page}`,
+          `/root/customer/${id}/transactions?page=${page}&page_size=${pageSize}`,
         );
         setData(response.data.results || []);
-        setTotalPages(Math.ceil(response.data.count / 10));
+        setTotalPages(Math.ceil(response.data.count / pageSize));
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
       } finally {
@@ -32,8 +33,8 @@ const TableMoneyRecived = ({ id }: any) => {
       }
     };
 
-    fetchStats(currentPage);
-  }, [id, currentPage]);
+    fetchStats(currentPage, pageSize);
+  }, [id, currentPage, pageSize]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
     const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
@@ -107,6 +108,11 @@ const TableMoneyRecived = ({ id }: any) => {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={(page) => setCurrentPage(page)}
+          pageSize={pageSize}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setCurrentPage(1);
+          }}
         />
       )}
     </div>

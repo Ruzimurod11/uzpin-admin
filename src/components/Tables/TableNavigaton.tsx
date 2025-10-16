@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { FaCheck, FaEye } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
 import axiosInstance from "@/libs/axios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import { FaCheck, FaEye } from "react-icons/fa6";
+import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import Pagination from "../Pagination";
-import { toast } from "react-toastify";
 
 interface Notif {
   id: string;
@@ -24,16 +24,17 @@ const TableNavigation = () => {
   const [productData, setProductData] = useState<Notif[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const fetchTransactions = async (page: number) => {
+  const fetchTransactions = async (page: number, pageSize: number) => {
     try {
       const response = await axiosInstance.get(
-        `/root/customer/transaction/waiting?page=${page}`,
+        `/root/customer/transaction/waiting?page=${page}&page_size=${pageSize}`,
       );
       setProductData(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 10));
+      setTotalPages(Math.ceil(response.data.count / pageSize));
       console.log(response.data);
     } catch (error) {
       console.error("API dan ma'lumotni yuklashda xatolik:", error);
@@ -42,8 +43,8 @@ const TableNavigation = () => {
     }
   };
   useEffect(() => {
-    fetchTransactions(currentPage);
-  }, [currentPage]);
+    fetchTransactions(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
   const handleAction = async (id: string, status: "ACCEPTED" | "REJECTED") => {
     try {
@@ -85,13 +86,13 @@ const TableNavigation = () => {
             <div className="col-span-1 flex items-center">
               <p className="font-medium">Isbot</p>
             </div>
-            <div className="col-span-1 flex justify-center items-center">
+            <div className="col-span-1 flex items-center justify-center">
               <p className="font-medium">Yaratilgan sana</p>
             </div>
-            <div className="col-span-1 flex justify-center items-center">
+            <div className="col-span-1 flex items-center justify-center">
               <p className="font-medium">Holati</p>
             </div>
-            <div className="col-span-1 flex justify-center items-center">
+            <div className="col-span-1 flex items-center justify-center">
               <p className="font-medium">Chek</p>
             </div>
             <div className="col-span-1 flex items-center">
@@ -122,17 +123,17 @@ const TableNavigation = () => {
               <div className="col-span-1 flex items-center">
                 {product.from_bot ? "Sayt orqali" : "Bot orqali"}
               </div>
-              <div className="col-span-1 flex justify-center items-center">
+              <div className="col-span-1 flex items-center justify-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {new Date(product.created).toLocaleDateString("uz-UZ")}
                 </p>
               </div>
-              <div className="col-span-1 flex justify-center items-center">
+              <div className="col-span-1 flex items-center justify-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {product.status === "WAITING" ? "Kutmoqda" : product.status}
                 </p>
               </div>
-              <div className="col-span-1 flex justify-center items-center">
+              <div className="col-span-1 flex items-center justify-center">
                 <FaEye
                   onClick={() => setSelectedImage(product.chek)}
                   className="cursor-pointer"
@@ -166,6 +167,11 @@ const TableNavigation = () => {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={(page) => setCurrentPage(page)}
+            pageSize={pageSize}
+            onPageSizeChange={(size) => {
+              setPageSize(size);
+              setCurrentPage(1);
+            }}
           />
 
           {selectedImage && (

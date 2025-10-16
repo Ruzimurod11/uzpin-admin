@@ -10,9 +10,7 @@ const GamesCreatePage = () => {
   return (
     <DefaultLayout>
       <Suspense fallback={<p>Yuklanmoqda...</p>}>
-        <div className="mx-auto max-w-7xl">
-          <UserEdit />
-        </div>
+        <UserEdit />
       </Suspense>
     </DefaultLayout>
   );

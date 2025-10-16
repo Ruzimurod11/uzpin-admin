@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import axiosInstance from "@/libs/axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import Pagination from "../Pagination";
+import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
-import { toast } from "react-toastify";
+import Pagination from "../Pagination";
 
 interface Promo {
   id: string;
@@ -26,6 +26,7 @@ const TableAllPromo = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
   const getIdFromPathname = () => {
     if (typeof window !== "undefined") {
       const pathParts = window.location.pathname.split("/");
@@ -34,9 +35,9 @@ const TableAllPromo = () => {
     return null;
   };
 
-  const id = getIdFromPathname();  
+  const id = getIdFromPathname();
 
-  const fetchPromocodes = async (page: number) => {
+  const fetchPromocodes = async (page: number, pageSize: number) => {
     if (!id) {
       console.error("ID aniqlanmadi!");
       return;
@@ -44,10 +45,10 @@ const TableAllPromo = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/root/game/promocodevalues/${id}?page=${page}`,
+        `/root/game/promocodevalues/${id}?page=${page}&page_size=${pageSize}`,
       );
       setProductData(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 10));
+      setTotalPages(Math.ceil(response.data.count / pageSize));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -56,8 +57,8 @@ const TableAllPromo = () => {
   };
 
   useEffect(() => {
-    fetchPromocodes(currentPage);
-  }, [currentPage, id]);
+    fetchPromocodes(currentPage, pageSize);
+  }, [currentPage, id, pageSize]);
 
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
@@ -120,7 +121,7 @@ const TableAllPromo = () => {
               onChange={(e) => {
                 if (e.target.checked) {
                   setSelectedIds(productData.map((item) => item.id));
-                }else{
+                } else {
                   setSelectedIds([]);
                 }
               }}
@@ -189,6 +190,11 @@ const TableAllPromo = () => {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={(page) => setCurrentPage(page)}
+            pageSize={pageSize}
+            onPageSizeChange={(size) => {
+              setPageSize(size);
+              setCurrentPage(1);
+            }}
           />
         )}
         <ConfirmDeleteModal

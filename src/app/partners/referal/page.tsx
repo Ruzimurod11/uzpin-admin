@@ -1,15 +1,12 @@
-import DefaultLayout from '@/components/Layouts/DefaultLaout'
-import TableReferal from '@/components/Tables/TableReferal'
-import React from 'react'
+import DefaultLayout from "@/components/Layouts/DefaultLaout";
+import TableReferal from "@/components/Tables/TableReferal";
 
 const PartnersReferal = () => {
   return (
     <DefaultLayout>
-      <div className='mx-auto max-w-7xl'>
-         <TableReferal/>
-      </div>
+      <TableReferal />
     </DefaultLayout>
-  )
-}
+  );
+};
 
-export default PartnersReferal
+export default PartnersReferal;

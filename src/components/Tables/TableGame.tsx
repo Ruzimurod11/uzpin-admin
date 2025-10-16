@@ -26,15 +26,16 @@ const TableGame = () => {
   const [isModalOpen, setIsModalOpen] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const fetchStats = async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get(
-        `/root/game/games?page=${currentPage}`,
+        `/root/game/games?page=${currentPage}&page_size=${pageSize}`,
       );
       setData(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 10));
+      setTotalPages(Math.ceil(response.data.count / pageSize));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -43,7 +44,7 @@ const TableGame = () => {
   };
   useEffect(() => {
     fetchStats();
-  }, [currentPage]);
+  }, [currentPage, pageSize]);
 
   const DeleteGame = (id: any) => {
     setIsModalOpen(id);
@@ -220,6 +221,11 @@ const TableGame = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
+        pageSize={pageSize}
+        onPageSizeChange={(size) => {
+          setPageSize(size);
+          setCurrentPage(1);
+        }}
       />
       <ConfirmDeleteModal
         isOpen={isModalOpen}

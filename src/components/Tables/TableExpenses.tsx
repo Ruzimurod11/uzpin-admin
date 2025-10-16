@@ -19,16 +19,17 @@ const TableExpenses = ({ id }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
-    const fetchStats = async (page: number) => {
+    const fetchStats = async (page: number, pageSize: number) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get(
-          `/root/customer/${id}/expenses?page=${page}`,
+          `/root/customer/${id}/expenses?page=${page}&page_size=${pageSize}`,
         );
         setData(response.data.results || []);
-        setTotalPages(Math.ceil(response.data.count / 10));
+        setTotalPages(Math.ceil(response.data.count / pageSize));
       } catch (error) {
         console.error("Ma'lumotlarni yuklashda xatolik:", error);
       } finally {
@@ -36,8 +37,8 @@ const TableExpenses = ({ id }: any) => {
       }
     };
 
-    fetchStats(currentPage);
-  }, [id, currentPage]);
+    fetchStats(currentPage, pageSize);
+  }, [id, currentPage, pageSize]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
     const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
@@ -121,15 +122,18 @@ const TableExpenses = ({ id }: any) => {
           </div>
         ))
       ) : (
-        <div className=" border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5">
-          <p></p>
-        </div>
+        <div className=" border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-10 md:px-6 2xl:px-7.5" />
       )}
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={(page) => setCurrentPage(page)}
+          pageSize={pageSize}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setCurrentPage(1);
+          }}
         />
       )}
     </div>

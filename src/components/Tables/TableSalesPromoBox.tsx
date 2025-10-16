@@ -28,6 +28,7 @@ const TableSalesPromoBox = () => {
   const [data, setData] = useState<Info[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
@@ -42,15 +43,19 @@ const TableSalesPromoBox = () => {
     setTime(queryParams);
   };
 
-  const fetchStats = async (page: number, timeParam?: string) => {
+  const fetchStats = async (
+    page: number,
+    pageSize: number,
+    timeParam?: string,
+  ) => {
     if (!searchQuery) setLoading(true);
 
     try {
       const response = await axiosInstance.get(
-        `/root/sold/list?${timeParam}&search=${searchQuery}&status=${filter}&page=${page}&page_size=30`,
+        `/root/sold/list?${timeParam}&search=${searchQuery}&status=${filter}&page=${page}&page_size=${pageSize}`,
       );
       setData(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 30));
+      setTotalPages(Math.ceil(response.data.count / pageSize));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -58,8 +63,8 @@ const TableSalesPromoBox = () => {
     }
   };
   useEffect(() => {
-    fetchStats(currentPage, time);
-  }, [searchQuery, currentPage, filter, time]);
+    fetchStats(currentPage, pageSize, time);
+  }, [searchQuery, currentPage, filter, time, pageSize]);
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
     const offsetInMs = localDate.getTimezoneOffset() * 60 * 1000;
@@ -133,7 +138,6 @@ const TableSalesPromoBox = () => {
     }
   };
 
-  console.log(filter);
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -253,6 +257,11 @@ const TableSalesPromoBox = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
+        pageSize={pageSize}
+        onPageSizeChange={(size) => {
+          setPageSize(size);
+          setCurrentPage(1);
+        }}
       />
     </div>
   );

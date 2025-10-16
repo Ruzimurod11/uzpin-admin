@@ -1,17 +1,14 @@
-import Image from "next/image";
-import Link from "next/link";
-import { BiRuble, BiTransfer } from "react-icons/bi";
-import { CiDollar } from "react-icons/ci";
-import { FaEye, FaMoneyBillTransfer } from "react-icons/fa6";
-import { FiEdit2 } from "react-icons/fi";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { useEffect, useState } from "react";
-import { FaLock, FaLockOpen } from "react-icons/fa";
-import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
-import Pagination from "../Pagination";
-import { IoLogoUsd } from "react-icons/io5";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { BiRuble } from "react-icons/bi";
+import { CiDollar } from "react-icons/ci";
+import { FaLock, FaLockOpen } from "react-icons/fa";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { IoLogoUsd } from "react-icons/io5";
+import SearchForm from "../Header/SearchForm";
+import Pagination from "../Pagination";
 import SwitcherThree from "../SelectOption/SwitcherThree";
 import Loader from "../common/Loader";
 
@@ -44,6 +41,7 @@ const TableUser = () => {
   const [users, setUser] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   const [formData, setFormData] = useState({
@@ -67,15 +65,15 @@ const TableUser = () => {
     fetchCardAmount();
   }, []);
 
-  const fetchStats = async (page: number) => {
+  const fetchStats = async (page: number, pageSize: number) => {
     if (!searchQuery) setLoading(true);
-    let url = `/root/customer/list?is_seller=${!active}&page=${page}`;
+    let url = `/root/customer/list?is_seller=${!active}&page=${page}&page_size=${pageSize}`;
     if (searchQuery)
-      url = `/root/customer/list?is_seller=${!active}&search=${searchQuery}&page=${page}`;
+      url = `/root/customer/list?is_seller=${!active}&search=${searchQuery}&page=${page}&page_size=${pageSize}`;
     try {
       const response = await axiosInstance.get(url);
       setUser(response.data.results || []);
-      setTotalPages(Math.ceil(response.data.count / 10));
+      setTotalPages(Math.ceil(response.data.count / pageSize));
     } catch (error) {
       console.error("Ma'lumotlarni yuklashda xatolik:", error);
     } finally {
@@ -83,8 +81,8 @@ const TableUser = () => {
     }
   };
   useEffect(() => {
-    fetchStats(currentPage);
-  }, [active, currentPage, searchQuery]);
+    fetchStats(currentPage, pageSize);
+  }, [active, currentPage, searchQuery, pageSize]);
 
   const handleSubmit = async () => {
     if (!formData.id) return;
@@ -309,6 +307,11 @@ const TableUser = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={(page) => setCurrentPage(page)}
+          pageSize={pageSize}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setCurrentPage(1);
+          }}
         />
       </div>
     </>

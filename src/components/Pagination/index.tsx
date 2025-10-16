@@ -3,13 +3,17 @@ import React from "react";
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  pageSize: number;
   onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
+  pageSize,
   onPageChange,
+  onPageSizeChange,
 }) => {
   const getDisplayedPages = () => {
     const pages: (number | string)[] = [];
@@ -36,26 +40,45 @@ const Pagination: React.FC<PaginationProps> = ({
   const displayedPages = getDisplayedPages();
 
   return (
-    <div className="my-4 flex items-center justify-end gap-2 pb-4 pr-4">
-      {displayedPages.map((page, index) =>
-        typeof page === "number" ? (
-          <button
-            key={index}
-            onClick={() => onPageChange(page)}
-            className={`rounded px-3 py-1 ${
-              page === currentPage
-                ? "bg-primary text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            {page}
-          </button>
-        ) : (
-          <span key={index} className="px-3 py-1 text-gray-700">
-            ...
-          </span>
-        ),
-      )}
+    <div className="my-4 flex flex-wrap items-center justify-between gap-4 pb-4 pr-4">
+      {/* 🧮 Page size select */}
+      <div className="ml-6 flex items-center gap-2">
+        <select
+          id="pageSize"
+          value={pageSize}
+          onChange={(e) => onPageSizeChange(Number(e.target.value))}
+          className="rounded border border-gray-300 bg-white px-2 py-1 text-sm text-gray-700 focus:border-primary focus:ring-primary"
+        >
+          {[10, 20, 30, 50, 100].map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* 🔢 Page buttons */}
+      <div className="flex items-center gap-2">
+        {displayedPages.map((page, index) =>
+          typeof page === "number" ? (
+            <button
+              key={index}
+              onClick={() => onPageChange(page)}
+              className={`rounded px-3 py-1 text-sm transition ${
+                page === currentPage
+                  ? "bg-primary text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {page}
+            </button>
+          ) : (
+            <span key={index} className="px-3 py-1 text-gray-700">
+              ...
+            </span>
+          ),
+        )}
+      </div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ export default function DefaultLayout({
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <main>
             <div
-              className={`mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 ${pathname === "/sales-promo" && "2xl:p-3"}`}
+              className={`mx-auto w-full p-4 md:p-6 2xl:p-10 ${pathname === "/sales-promo" && "2xl:p-3"}`}
             >
               {children}
             </div>

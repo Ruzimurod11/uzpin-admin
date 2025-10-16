@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import SearchForm from "../Header/SearchForm";
 import axiosInstance from "@/libs/axios";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Loader from "../common/Loader";
+import SearchForm from "../Header/SearchForm";
 import Pagination from "../Pagination";
 
 interface Notif {
@@ -23,16 +23,17 @@ const TableBalans = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   useEffect(() => {
-    const fetchTransactions = async (page: number) => {
-      let url = `root/customer/transaction/list?status=${active ? "ACCEPTED" : "REJECTED"}&page=${page}`;
+    const fetchTransactions = async (page: number, pageSize: number) => {
+      let url = `root/customer/transaction/list?status=${active ? "ACCEPTED" : "REJECTED"}&page=${page}&page_size=${pageSize}`;
       if (searchQuery) url += `&search=${searchQuery}`;
       try {
         const response = await axiosInstance.get(url);
         setProductData(response.data.results || []);
-        setTotalPages(Math.ceil(response.data.count / 10));
+        setTotalPages(Math.ceil(response.data.count / pageSize));
       } catch (error) {
         console.error("API dan ma'lumotni yuklashda xatolik:", error);
       } finally {
@@ -40,8 +41,8 @@ const TableBalans = () => {
       }
     };
 
-    fetchTransactions(currentPage);
-  }, [active, searchQuery, currentPage]);
+    fetchTransactions(currentPage, pageSize);
+  }, [active, searchQuery, currentPage, pageSize]);
 
   function convertTime(timeStr: string) {
     const localDate = new Date(timeStr);
@@ -151,6 +152,11 @@ const TableBalans = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
+        pageSize={pageSize}
+        onPageSizeChange={(size) => {
+          setPageSize(size);
+          setCurrentPage(1);
+        }}
       />
     </div>
   );

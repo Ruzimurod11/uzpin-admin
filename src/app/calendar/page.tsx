@@ -1,7 +1,6 @@
-import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLaout";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CalendarBox from "@/components/CalenderBox";
+import DefaultLayout from "@/components/Layouts/DefaultLaout";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Statistika",
@@ -11,9 +10,7 @@ export const metadata: Metadata = {
 const CalendarPage = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto max-w-7xl">
-        <CalendarBox />
-      </div>
+      <CalendarBox />
     </DefaultLayout>
   );
 };

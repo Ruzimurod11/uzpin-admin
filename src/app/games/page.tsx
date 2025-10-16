@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 const GamesPage = () => {
   return (
     <DefaultLayout>
-      <div className="mx-auto max-w-7xl">
-        <GamesBox />
-      </div>
+      <GamesBox />
     </DefaultLayout>
   );
 };
