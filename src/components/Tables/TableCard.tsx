@@ -18,12 +18,14 @@ interface Card {
   card_holder: string;
   currency: string;
   is_active: boolean;
+  order: number;
 }
 
 const TableCard = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState("");
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -44,7 +46,7 @@ const TableCard = () => {
     };
 
     fetchCards();
-  }, []);
+  }, [refetch]);
 
   const DeleteGame = (id: any) => {
     setIsModalOpen(id);
@@ -60,6 +62,26 @@ const TableCard = () => {
       console.error("O'yinni o'chirishda xatolik:", error);
     }
   };
+
+  const handleOrder = async (gameId: string, order: number) => {
+    try {
+      await axiosInstance.patch(`/root/card/${gameId}/detail`, {
+        order: order,
+      });
+      setCards((prevData) =>
+        prevData.map((game) =>
+          game.id === gameId ? { ...game, order: order } : game,
+        ),
+      );
+      toast.warn("Muvaffaqiyatli O'zgartirildi");
+      setRefetch(true);
+    } catch (error) {
+      console.error("O'yinni o'chirishda xatolik:", error);
+    } finally {
+      setRefetch(!refetch);
+    }
+  };
+
   if (loading) return <Loader />;
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -105,7 +127,17 @@ const TableCard = () => {
           key={index}
         >
           <div className="col-span-1 flex items-center">
-            <div className="flex h-12.5 w-15 items-center rounded-md">
+            <div className="flex h-12.5 w-15 items-center gap-2 rounded-md">
+              <input
+                type="text"
+                maxLength={2}
+                defaultValue={card?.order}
+                onBlur={(e) => handleOrder(card.id, Number(e.target.value))}
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.value = e.target.value.replace(/\D/g, ""); // Faqat raqam qoldirish
+                }}
+                className="max-w-[34px] rounded-md px-[5px] outline-none"
+              />
               <Image src={card.photo} width={60} height={50} alt="Card Image" />
             </div>
           </div>
