@@ -29,6 +29,7 @@ const GamesBoxCreate = () => {
   const [descEn, setDescEn] = useState("");
   const [no_promocode, setNo_promocode] = useState(false);
   const [is_mml, setIs_mml] = useState(false);
+  const [is_pubg, setIs_pubg] = useState(false);
   const [channelId, setChannelId] = useState("");
 
   const [selectedGame, setSelectedGame] = useState<string>("");
@@ -55,6 +56,7 @@ const GamesBoxCreate = () => {
           setDescEn(response.data.desc_en || "");
           setNo_promocode(response.data.no_promocode || false);
           setIs_mml(response.data.is_mml || false);
+          setIs_pubg(response.data.is_pubg || false);
           setChannelId(response.data.channel_id || "");
 
           // is_active: is_active !== undefined ? is_active : true,
@@ -98,6 +100,7 @@ const GamesBoxCreate = () => {
       desc_en: descEn,
       no_promocode: no_promocode,
       is_mml: is_mml,
+      is_pubg: is_pubg,
       channel_id: +channelId,
     };
 
@@ -302,6 +305,15 @@ const GamesBoxCreate = () => {
             <SwitcherThree
               isActive={no_promocode}
               onChange={(e) => setNo_promocode(e)}
+              text="&nbsp;"
+            />
+          </div>
+
+          <div className="flex items-center">
+            PUBG
+            <SwitcherThree
+              isActive={is_pubg}
+              onChange={(e) => setIs_pubg(e)}
               text="&nbsp;"
             />
           </div>
