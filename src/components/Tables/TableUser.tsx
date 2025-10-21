@@ -7,6 +7,7 @@ import { CiDollar } from "react-icons/ci";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { IoLogoUsd } from "react-icons/io5";
+import { toast } from "react-toastify";
 import SearchForm from "../Header/SearchForm";
 import Pagination from "../Pagination";
 import SwitcherThree from "../SelectOption/SwitcherThree";
@@ -24,6 +25,7 @@ interface User {
   is_seller: boolean;
   created: string;
   is_active: boolean;
+  telegram_id: string;
 }
 
 interface TOTALAMOUNT {
@@ -132,6 +134,19 @@ const TableUser = () => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
+  const handleCopy = async (user: User) => {
+    const raw = user.telegram_id ?? "";
+    const match = raw.match(/telegram_(\d+)/i);
+    const toCopy = match ? match[1] : (raw.match(/\d+/g)?.join("") ?? raw);
+
+    try {
+      await navigator.clipboard.writeText(toCopy);
+      toast.success(`Id: ${toCopy}`);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
   if (loading) return <Loader />;
   return (
     <>
@@ -189,16 +204,18 @@ const TableUser = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5">
+        <div className="grid grid-cols-5 border-t border-stroke px-4 py-4.5 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5">
           <div className="col-span-2 flex items-center">
             <p className="font-medium">E-Pochta</p>
           </div>
           <div className="col-span-1 flex items-center gap-1">
             <p className="font-medium">Ism</p>
           </div>
-
           <div className="col-span-1 flex items-center">
             <p className="font-medium">Telefon raqam</p>
+          </div>
+          <div className="col-span-1 flex items-center">
+            <p className="font-medium">Telegram id</p>
           </div>
           <div className="col-span-1 flex items-center px-4">
             <p className="font-medium">Joriy hisob</p>
@@ -214,7 +231,7 @@ const TableUser = () => {
 
         {users.map((user, key) => (
           <div
-            className="grid grid-cols-5 border-t border-stroke px-4 py-1 dark:border-dark-3 sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            className="grid grid-cols-5 border-t border-stroke px-4 py-1 dark:border-dark-3 sm:grid-cols-9 md:px-6 2xl:px-7.5"
             key={user.id}
           >
             <div className="col-span-2 flex items-center">
@@ -235,6 +252,16 @@ const TableUser = () => {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-body-sm font-medium text-dark dark:text-dark-6">
                   {user.phone}
+                </p>
+              </div>
+            </div>
+            <div className="col-span-1 flex items-center">
+              <div className="flex cursor-pointer flex-col gap-4 sm:flex-row sm:items-center">
+                <p
+                  onClick={() => handleCopy(user)}
+                  className="text-body-sm font-medium text-dark dark:text-dark-6"
+                >
+                  {user.telegram_id}
                 </p>
               </div>
             </div>
