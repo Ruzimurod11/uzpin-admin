@@ -8,6 +8,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { toast } from "react-toastify";
 import Loader from "../common/Loader";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import Pagination from "../Pagination";
 import "./TableCard.css";
 
 interface Card {
@@ -26,6 +27,9 @@ const TableCard = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState("");
   const [refetch, setRefetch] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -33,11 +37,12 @@ const TableCard = () => {
       try {
         const response = await axiosInstance.get("/root/card/list", {
           params: {
-            page: 1,
-            page_size: 20,
+            page: currentPage,
+            page_size: pageSize,
           },
         });
         setCards(response.data.results || []);
+        setTotalPages(Math.ceil(response.data.count / pageSize));
       } catch (error) {
         console.error("Kartalarni yuklashda xatolik:", error);
       } finally {
@@ -46,7 +51,7 @@ const TableCard = () => {
     };
 
     fetchCards();
-  }, [refetch]);
+  }, [refetch, pageSize, currentPage]);
 
   const DeleteGame = (id: any) => {
     setIsModalOpen(id);
@@ -134,7 +139,7 @@ const TableCard = () => {
                 defaultValue={card?.order}
                 onBlur={(e) => handleOrder(card.id, Number(e.target.value))}
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  e.target.value = e.target.value.replace(/\D/g, ""); // Faqat raqam qoldirish
+                  e.target.value = e.target.value.replace(/\D/g, "");
                 }}
                 className="max-w-[34px] rounded-md px-[5px] outline-none"
               />
@@ -190,6 +195,16 @@ const TableCard = () => {
         onConfirm={() => handleDelete(isModalOpen)}
         title="Siz ushbu malumotni o'chirmoqchimisiz?"
         description="Bu amalni qaytarib bo'lmaydi. Diqqat bilan tasdiqlang."
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+        pageSize={pageSize}
+        onPageSizeChange={(size) => {
+          setPageSize(size);
+          setCurrentPage(1);
+        }}
       />
     </div>
   );
