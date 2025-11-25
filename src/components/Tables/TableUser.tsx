@@ -135,13 +135,9 @@ const TableUser = () => {
   };
 
   const handleCopy = async (user: User) => {
-    const raw = user.telegram_id ?? "";
-    const match = raw.match(/telegram_(\d+)/i);
-    const toCopy = match ? match[1] : (raw.match(/\d+/g)?.join("") ?? raw);
-
     try {
-      await navigator.clipboard.writeText(toCopy);
-      toast.success(`Id: ${toCopy}`);
+      await navigator.clipboard.writeText(user.email);
+      toast.success(`Id: ${user.email}`);
     } catch (err) {
       console.error("Failed to copy:", err);
     }
